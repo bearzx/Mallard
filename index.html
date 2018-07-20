@@ -1,0 +1,9 @@
+<script>
+    var oldLog = console.log;
+    console.log = function (message) {
+        // DO MESSAGE HERE.
+        // console.log(`msg captured ${message}`);
+        oldLog.apply(console, arguments);
+    };
+    console.log('la');
+</script>
