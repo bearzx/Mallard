@@ -5,7 +5,7 @@
     "manifest_version": 2,
     "devtools_page": "devtools.html",
     "background": {
-        "scripts": ["bg.js"],
+        "scripts": ["jquery-3.2.1.js", "bg.js"],
         "persistent": true
     },
     "permissions": [
