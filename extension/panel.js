@@ -20,3 +20,13 @@ $(document).ready(function() {
         }
     });
 });
+
+function host_eval() {
+    let code = `console.log('yo from devtool to host')`;
+    chrome.devtools.inspectedWindow.eval(
+        code, (result, is_exception) => {
+            // console.log(result);
+            // console.log(is_exception);
+        }
+    );
+}
