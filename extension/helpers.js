@@ -24,3 +24,10 @@ function eval_stored_code(name) {
         eval(result.saved_scripts[name]);
     });
 }
+
+function remote_require(url) {
+    $.get(url, (code) => {
+        eval(code);
+        console.log(`${url} loaded`);
+    });
+}

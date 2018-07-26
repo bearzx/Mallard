@@ -30,10 +30,3 @@ function host_eval() {
         }
     );
 }
-
-function remote_require(url) {
-    $.get(url, (code) => {
-        eval(code);
-        console.log(`${url} loaded`);
-    });
-}
