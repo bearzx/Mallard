@@ -6,6 +6,15 @@ function show_code() {
 }
 
 function edit_code(name) {
+    chrome.storage.local.get(['saved_scripts'], function(result) {
+        $('#script-name').val(name);
+        let editor = ace.edit('editor');
+        editor.setValue(result.saved_scripts[name]);
+        editor.clearSelection();
+    });
+}
+
+function rename_code(old_name, new_name) {
     // todo
 }
 
@@ -26,8 +35,10 @@ function eval_stored_code(name) {
 }
 
 function remote_require(url) {
-    $.get(url, (code) => {
-        eval(code);
-        console.log(`${url} loaded`);
+    fetch(url).then((res) => {
+        res.text().then((code) => {
+            eval(code);
+            console.log(`${url} loaded`);
+        });
     });
 }
