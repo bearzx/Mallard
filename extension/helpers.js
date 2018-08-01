@@ -5,6 +5,12 @@ function show_code() {
     });
 }
 
+function print_code(name) {
+    chrome.storage.local.get(['saved_scripts'], function(result) {
+        console.log(result.saved_scripts[name]);
+    });
+}
+
 function edit_code(name) {
     chrome.storage.local.get(['saved_scripts'], function(result) {
         $('#script-name').val(name);

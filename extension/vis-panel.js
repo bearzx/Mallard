@@ -1,19 +1,27 @@
-window.vis_count = 0;
+window.plot_count = 0;
 
 $(document).ready(function() {
 
 });
 
-function add_new_vis() {
+function new_plot() {
     let template = `
-        <div id="vis-${window.vis_count}" class="vis-slot">
-            <h3 class="vis-placeholder">#vis-${window.vis_count}</h3>
+        <div id="plot-${window.plot_count}" class="plot-slot">
+            <h3 class="plot-placeholder">plots-${window.plot_count}</h3>
         </div>
     `;
-    window.vis_count += 1;
+    window.plot_count += 1;
     $('#wrap').append(template);
 }
 
-function rm_vis() {
+function set_canvas(plot_id) {
+
+}
+
+function set_html(plot_id, html) {
+    $(plot_id).html(html);
+}
+
+function rm_plot() {
     // todo
 }
