@@ -1,0 +1,21 @@
+{
+  "name": "react-extension",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^1.4.2",
+    "muicss": "^0.9.39",
+    "react": "^16.4.2",
+    "react-ace": "^6.1.4",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.4.2",
+    "react-scripts": "1.1.4",
+    "react-tabs": "^2.2.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
