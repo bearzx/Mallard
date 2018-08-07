@@ -21,22 +21,28 @@ import Chrome from './Chrome';
 class PlotPanel extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      plotIds: props.plotIds
-    };
   }
 
   render() {
     return (
-      this.state.plotIds.map((id) =>
+      this.props.plotIds.map((id) =>
         <div id={"plot-" + id} class="plot-slot">
-          <h3 class="plot-placeholder">{"plots-" + id}</h3>
+          <h3 class="plot-placeholder">{"#plot-" + id}</h3>
         </div>
       )
     )
   }
 }
+
+// function PlotPanel(props) {
+//     return (
+//       props.plotIds.map((id) =>
+//         <div id={"plot-" + id} class="plot-slot">
+//           <h3 class="plot-placeholder">{"plots-" + id}</h3>
+//         </div>
+//       )
+//     )
+// }
 
 class App extends Component {
   constructor(props) {
@@ -46,9 +52,23 @@ class App extends Component {
       this.setState(o);
     };
 
+    window.addPlot = () => {
+      const n = this.state.plotIds.length;
+      this.setState({
+        plotIds: this.state.plotIds.concat([n])
+      });
+    }
+
+    window.rmPlot = (i) => {
+      this.setState({
+        plotIds: this.state.plotIds.filter((n) => n != i)
+      });
+    };
+
     this.state = {
       fname: '',
-      plotCount: 0
+      plotCount: 0,
+      plotIds: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -96,7 +116,7 @@ class App extends Component {
           />
         </Tab>
         <Tab value="plot" label="Plot">
-            <PlotPanel plotIds={[1, 2, 3, 4, 5]} />
+            <PlotPanel plotIds={this.state.plotIds} />
         </Tab>
       </Tabs>
     );
