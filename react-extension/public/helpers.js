@@ -13,10 +13,10 @@ function print_code(name) {
 
 function edit_code(name) {
     chrome.storage.local.get(['saved_scripts'], function(result) {
-        $('#script-name').val(name);
-        let editor = ace.edit('editor');
-        editor.setValue(result.saved_scripts[name]);
-        editor.clearSelection();
+        window.changeAppState({
+            fname: name,
+            code: result.saved_scripts[name]
+        });
     });
 }
 
@@ -49,24 +49,10 @@ function remote_require(url) {
     });
 }
 
-function new_plot() {
-    let template = `
-        <div id="plot-${window.plot_count}" class="plot-slot">
-            <h3 class="plot-placeholder">plots-${window.plot_count}</h3>
-        </div>
-    `;
-    window.plot_count += 1;
-    $('#wrap').append(template);
-}
-
 function set_canvas(plot_id) {
 
 }
 
 function set_html(plot_id, html) {
     $(plot_id).html(html);
-}
-
-function rm_plot() {
-    // todo
 }

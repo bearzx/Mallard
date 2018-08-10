@@ -34,16 +34,6 @@ class PlotPanel extends Component {
   }
 }
 
-// function PlotPanel(props) {
-//     return (
-//       props.plotIds.map((id) =>
-//         <div id={"plot-" + id} class="plot-slot">
-//           <h3 class="plot-placeholder">{"plots-" + id}</h3>
-//         </div>
-//       )
-//     )
-// }
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -52,9 +42,10 @@ class App extends Component {
       this.setState(o);
     };
 
-    window.addPlot = () => {
+    window.newPlot = () => {
       const n = this.state.plotIds.length;
       this.setState({
+        tabId: 1,
         plotIds: this.state.plotIds.concat([n])
       });
     }
@@ -67,15 +58,17 @@ class App extends Component {
 
     this.state = {
       fname: '',
+      code: '',
       plotCount: 0,
-      plotIds: []
+      plotIds: [],
+      tabId: 0
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
   }
 
-  handleChange = (event) => {
-    this.setState({ fname: event.target.value });
+  handleTabChange = (e) => {
+    this.setState({ tabId: e });
   };
 
   saveCode = (_editor) => {
@@ -91,11 +84,10 @@ class App extends Component {
 
   render() {
     return (
-      <Tabs onChange={this.onChange} defaultSelectedIndex={0} justified={true}>
+      <Tabs onChange={this.handleTabChange} defaultSelectedIndex={0} selectedIndex={this.state.tabId} justified={true}>
         <Tab value="editor" label="Editor" onActive={this.onActive}>
           <Input
             value={this.state.fname}
-            onChange={this.handleChange}
             className="file-name"
             label="File name"
             floatingLabel={true}
@@ -103,7 +95,7 @@ class App extends Component {
           <AceEditor
             mode="javascript"
             theme="chrome"
-            onChange={this.onChange}
+            value={this.state.code}
             name="editor"
             editorProps={{$blockScrolling: true}}
             width="100%"

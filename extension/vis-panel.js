@@ -1,9 +1,5 @@
 window.plot_count = 0;
 
-$(document).ready(function() {
-
-});
-
 function new_plot() {
     let template = `
         <div id="plot-${window.plot_count}" class="plot-slot">
