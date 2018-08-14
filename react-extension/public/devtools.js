@@ -28,5 +28,17 @@ chrome.devtools.panels.create("REPL",
     function(panel) {
       // code invoked on panel creation
       console.log('repl panel created');
+      panel.onSearch.addListener(function (action, queryString) {
+        console.log(action);
+        console.log(queryString);
+      });
+
+      panel.onShown.addListener(function (window) {
+        console.log('panel shown');
+      });
+
+      panel.onHidden.addListener(function () {
+        console.log('panel hidden');
+      });
     }
 );

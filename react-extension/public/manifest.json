@@ -19,5 +19,14 @@
         "webRequestBlocking",
         "<all_urls>"
       ],
-      "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+      "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+      "content_scripts": [{
+        "matches": [
+            "<all_urls>"
+        ],
+        "js": [
+            "content.js"
+        ],
+        "run_at": "document_start"
+      }]
   }

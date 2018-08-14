@@ -26,10 +26,30 @@ class PlotPanel extends Component {
   render() {
     return (
       this.props.plotIds.map((id) =>
-        <div id={"plot-" + id} class="plot-slot">
-          <h3 class="plot-placeholder">{"#plot-" + id}</h3>
+        <div id={"plot-" + id} className="plot-slot">
+          <h3 className="plot-placeholder">{"#plot-" + id}</h3>
         </div>
       )
+    )
+  }
+}
+
+class ImagePanel extends Component {
+  preventDefault(event) {
+    event.preventDefault();
+    console.log('on drag over');
+  }
+
+  drop(event) {
+    event.preventDefault();
+    let data = event.dataTransfer.getData('text');
+    console.log(`on drop`);
+    console.log(data);
+  }
+
+  render() {
+    return (
+      <div id="drag-area" className="plot-slot" onDragOver={this.preventDefault} onDrop={this.drop}></div>
     )
   }
 }
@@ -52,7 +72,7 @@ class App extends Component {
 
     window.rmPlot = (i) => {
       this.setState({
-        plotIds: this.state.plotIds.filter((n) => n != i)
+        plotIds: this.state.plotIds.filter((n) => n !== i)
       });
     };
 
@@ -65,11 +85,16 @@ class App extends Component {
     };
 
     this.handleTabChange = this.handleTabChange.bind(this);
+    this.handleFnameChange = this.handleFnameChange.bind(this);
   }
 
   handleTabChange = (e) => {
     this.setState({ tabId: e });
   };
+
+  handleFnameChange = (e) => {
+    this.setState({ fname: e.target.value });
+  }
 
   saveCode = (_editor) => {
     let msg = {
@@ -91,6 +116,7 @@ class App extends Component {
             className="file-name"
             label="File name"
             floatingLabel={true}
+            onChange={this.handleFnameChange}
           />
           <AceEditor
             mode="javascript"
@@ -109,6 +135,9 @@ class App extends Component {
         </Tab>
         <Tab value="plot" label="Plot">
             <PlotPanel plotIds={this.state.plotIds} />
+        </Tab>
+        <Tab value="image" label="Image">
+            <ImagePanel />
         </Tab>
       </Tabs>
     );
