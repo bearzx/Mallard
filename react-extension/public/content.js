@@ -8,4 +8,6 @@ function js_load(url, cb) {
     (document.head || document.documentElement).appendChild(js);
 }
 
-js_load('https://www.bearzx.com/pgxz3/cl.js');
+let tableparser_load = () => js_load('https://www.bearzx.com/pgxz3/jquery.tableparser.js');
+let cl_load = () => js_load('https://www.bearzx.com/pgxz3/cl.js', tableparser_load);
+js_load('https://www.bearzx.com/pgxz2/jquery-3.2.1.js', cl_load);
