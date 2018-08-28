@@ -9,6 +9,8 @@ import 'brace/theme/chrome';
 import './App.css';
 import { Chrome } from './LibWrappers';
 import DataFrame from 'dataframe-js';
+import ConsoleApp from './jsconsole/core/containers/ConsoleApp'
+// import ConsoleApp from './jsconsole/core/components/ConsoleApp'
 
 class PlotPanel extends Component {
   constructor(props) {
@@ -171,6 +173,9 @@ class App extends Component {
         </Tab>
         <Tab value="image" label="Image">
             <ImagePanel />
+        </Tab>
+        <Tab value="console" label="Console">
+          <ConsoleApp />
         </Tab>
       </Tabs>
     );

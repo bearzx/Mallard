@@ -190,9 +190,13 @@ function toggleSelectionLayer() {
     window.crop_selector_active = !window.crop_selector_active;
 }
 
-window.onload = function() {
+function initDataDragger() {
     window.crop_selector_active = false;
 
     addDragHanlder();
-    addSelectionLayer();
+    // addSelectionLayer();
+}
+
+window.onload = function() {
+    // initDataDragger();
 };
