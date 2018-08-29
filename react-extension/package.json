@@ -20,6 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "styles": "cat src/jsconsole/*.css > src/jsconsole/core/jsconsole.css",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

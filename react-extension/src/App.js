@@ -116,7 +116,7 @@ class App extends Component {
       code: '',
       plotCount: 0,
       plotIds: [],
-      tabId: 0
+      tabId: 3
     };
 
     this.handleTabChange = this.handleTabChange.bind(this);
@@ -144,8 +144,8 @@ class App extends Component {
 
   render() {
     return (
-      <Tabs onChange={this.handleTabChange} defaultSelectedIndex={0} selectedIndex={this.state.tabId} justified={true}>
-        <Tab value="editor" label="Editor" onActive={this.onActive}>
+      <Tabs onChange={this.handleTabChange} selectedIndex={this.state.tabId} justified={true}>
+        <Tab value="editor" label="Editor">
           <Input
             value={this.state.fname}
             className="file-name"
@@ -174,7 +174,7 @@ class App extends Component {
         <Tab value="image" label="Image">
             <ImagePanel />
         </Tab>
-        <Tab value="console" label="Console">
+        <Tab value="console" label="Console" onActive={this.onActive}>
           <ConsoleApp />
         </Tab>
       </Tabs>

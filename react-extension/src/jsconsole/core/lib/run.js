@@ -74,9 +74,11 @@ export default async function run(command) {
       // the original constructor from ({}).toString.call(value)
 
       if (content.startsWith('(async () => ')) {
-        res.value = await container.contentWindow.eval(content);
+        // res.value = await container.contentWindow.eval(content);
+        res.value = await window.eval(content);
       } else {
-        res.value = container.contentWindow.eval(content);
+        // res.value = container.contentWindow.eval(content);
+        res.value = window.eval(content);
       }
 
       // if there's no extra code (usually to block out a const), then let's
@@ -116,6 +118,7 @@ export default async function run(command) {
 export function preProcess(content) {
   var wrapped = '(async () => {' + content + '})()';
   var root = parse(wrapped, { ecmaVersion: 8 });
+  console.log(root);
   var body = root.program.body[0].expression.callee.body;
 
   var changes = [];
