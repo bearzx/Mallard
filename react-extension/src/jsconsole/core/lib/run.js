@@ -118,7 +118,6 @@ export default async function run(command) {
 export function preProcess(content) {
   var wrapped = '(async () => {' + content + '})()';
   var root = parse(wrapped, { ecmaVersion: 8 });
-  console.log(root);
   var body = root.program.body[0].expression.callee.body;
 
   var changes = [];
@@ -230,6 +229,7 @@ export function preProcess(content) {
         ' = window.$_' +
         content.substr(last.declarations['0'].id.end - offset);
     }
+    console.log(content);
     return { content, additionalCode };
   }
 
@@ -240,6 +240,8 @@ export function preProcess(content) {
       change.text +
       wrapped.substr(change.end);
   }
+
+  console.log(wrapped);
 
   return { content: wrapped, additionalCode };
 }
