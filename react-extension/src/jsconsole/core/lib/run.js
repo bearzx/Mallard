@@ -74,11 +74,11 @@ export default async function run(command) {
       // the original constructor from ({}).toString.call(value)
 
       if (content.startsWith('(async () => ')) {
-        // res.value = await container.contentWindow.eval(content);
-        res.value = await window.eval(content);
+        res.value = await container.contentWindow.eval(content);
+        // res.value = await window.eval(content);
       } else {
-        // res.value = container.contentWindow.eval(content);
-        res.value = window.eval(content);
+        res.value = container.contentWindow.eval(content);
+        // res.value = window.eval(content);
       }
 
       // if there's no extra code (usually to block out a const), then let's
@@ -229,7 +229,7 @@ export function preProcess(content) {
         ' = window.$_' +
         content.substr(last.declarations['0'].id.end - offset);
     }
-    console.log(content);
+    // console.log(content);
     return { content, additionalCode };
   }
 
@@ -241,7 +241,7 @@ export function preProcess(content) {
       wrapped.substr(change.end);
   }
 
-  console.log(wrapped);
+  // console.log(wrapped);
 
   return { content: wrapped, additionalCode };
 }

@@ -36,7 +36,7 @@ class Line extends Component {
     if (type === 'command') {
       line = (
         <div className="prompt input">
-          <LineNav value={value} />
+          {/* <LineNav value={value} /> */}
           {value}
         </div>
       );
@@ -51,6 +51,7 @@ class Line extends Component {
       // value, which is nicer for the user
       line = (
         <div className={`prompt output ${type} ${error ? 'error' : ''}`}>
+          {/*
           <LineNav
             onFilter={filter => {
               this.setState({ filter });
@@ -62,6 +63,7 @@ class Line extends Component {
             }
             command={command}
           />
+          */}
 
           {(type === 'log' && Array.isArray(value) ? value : [value]).map(
             (value, i) => {

@@ -93,6 +93,14 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    window.resetAppState = () => {
+      // a function to test the forceUpdate behavior
+      this.state = {};
+      console.log(this.state);
+      console.log(this);
+      this.forceUpdate();
+    }
+
     window.changeAppState = (o) => {
       this.setState(o);
     };
@@ -103,7 +111,7 @@ class App extends Component {
         tabId: 1,
         plotIds: this.state.plotIds.concat([n])
       });
-    }
+    };
 
     window.rmPlot = (i) => {
       this.setState({

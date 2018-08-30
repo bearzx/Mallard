@@ -3,12 +3,12 @@
 }
 
 body, html, #root {
-  height: 100%;
+  /* height: 100%; */
 }
 
 .ConsoleApp {
   outline: none;
-  height: 100%;
+  /* height: 100%; */
   font-size: 0.85rem;
   line-height: 1.4rem;
   font-family: "Menlo", consolas, monospace;

@@ -105,6 +105,7 @@ const history = async ({ app, args: [n = null] }) => {
 };
 
 const clear = ({ console }) => {
+  console.log('console clear');
   console.clear();
 };
 
