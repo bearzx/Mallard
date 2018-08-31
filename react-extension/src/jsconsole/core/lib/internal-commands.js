@@ -43,7 +43,7 @@ const libs = {
 };
 
 const load = async ({ args: urls, console }) => {
-  const document = getContainer().contentDocument;
+  // const document = getContainer().contentDocument;
   urls.forEach(url => {
     url = libs[url] || url;
     const script = document.createElement('script');

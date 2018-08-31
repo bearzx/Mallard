@@ -20,14 +20,16 @@ export const bindConsole = __console => {
   ];
 
   apply.forEach(method => {
-    container.contentWindow.console[method] = (...args) => {
-      window.console[method].apply(window.console, args);
+    // container.contentWindow.console[method] = (...args) => {
+    window.console[method] = (...args) => {
+      // window.console[method].apply(window.console, args);
       __console[method].apply(__console, args);
     };
   });
 };
 
-export const getContainer = () => container;
+// export const getContainer = () => container;
+export const getContainer = () => window;
 
 export function createContainer() {
   container = document.createElement('iframe');
@@ -74,11 +76,11 @@ export default async function run(command) {
       // the original constructor from ({}).toString.call(value)
 
       if (content.startsWith('(async () => ')) {
-        res.value = await container.contentWindow.eval(content);
-        // res.value = await window.eval(content);
+        // res.value = await container.contentWindow.eval(content);
+        res.value = await window.eval(content);
       } else {
-        res.value = container.contentWindow.eval(content);
-        // res.value = window.eval(content);
+        // res.value = container.contentWindow.eval(content);
+        res.value = window.eval(content);
       }
 
       // if there's no extra code (usually to block out a const), then let's

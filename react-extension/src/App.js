@@ -93,6 +93,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    window.DataFrame = DataFrame;
+
     window.resetAppState = () => {
       // a function to test the forceUpdate behavior
       this.state = {};
