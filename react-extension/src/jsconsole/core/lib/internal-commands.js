@@ -35,6 +35,7 @@ const about = () => ({
 });
 
 const libs = {
+  tensorflow: 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.12.0',
   jquery: 'https://code.jquery.com/jquery.min.js',
   underscore: 'https://cdn.jsdelivr.net/underscorejs/latest/underscore-min.js',
   lodash: 'https://cdn.jsdelivr.net/lodash/latest/lodash.min.js',
@@ -54,6 +55,18 @@ const load = async ({ args: urls, console }) => {
   });
   return 'Loading script…';
 };
+
+const remoteLoad = async ({ args: url }) => {
+  console.log(`loading ${url}`);
+  fetch(url).then((res) => {
+      res.text().then((code) => {
+          eval(code);
+          console.log(`${url} loaded`);
+      });
+  });
+}
+
+const yo = () => { console.log('yo'); }
 
 const libraries = () => {
   return {
@@ -166,6 +179,8 @@ const commands = {
   history,
   set,
   welcome,
+  yo,
+  remoteLoad,
   version: () => version,
 };
 

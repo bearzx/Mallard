@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LineNav from './LineNav';
 import which from '../lib/which-type';
+import { Plot } from '../../../PlotPanel';
 
 class Line extends Component {
   constructor(props) {
@@ -32,6 +33,12 @@ class Line extends Component {
     let line = null;
 
     const { filter } = this.state;
+
+    if (type == 'vis') {
+      line = (
+        <Plot plotId={0} />
+      );
+    }
 
     if (type === 'command') {
       line = (

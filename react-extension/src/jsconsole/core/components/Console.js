@@ -152,6 +152,12 @@ class Console extends Component {
     });
   }
 
+  vis() {
+    this.push({
+      type: 'vis'
+    });
+  }
+
   render() {
     const commands = this.state.lines || {};
     const keys = Object.keys(commands);

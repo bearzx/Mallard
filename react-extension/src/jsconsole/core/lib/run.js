@@ -17,6 +17,7 @@ export const bindConsole = __console => {
     'assert',
     'debug',
     'clear',
+    'vis',
   ];
 
   apply.forEach(method => {
