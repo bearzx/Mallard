@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LineNav from './LineNav';
 import which from '../lib/which-type';
 import { Plot } from '../../../PlotPanel';
+import ImagePanel from '../../../ImagePanel';
 
 class Line extends Component {
   constructor(props) {
@@ -34,9 +35,15 @@ class Line extends Component {
 
     const { filter } = this.state;
 
-    if (type == 'vis') {
+    if (type === 'vis') {
       line = (
         <Plot plotId={0} />
+      );
+    }
+
+    if (type === 'ddrop') {
+      line = (
+        <ImagePanel />
       );
     }
 

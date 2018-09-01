@@ -1,4 +1,4 @@
-function addDragHanlder() {
+function addImgHandler() {
     let imgs = document.querySelectorAll('img');
     imgs.forEach((img, i) => {
         console.log(`adding drag handler to img ${i}`);
@@ -9,7 +9,9 @@ function addDragHanlder() {
             event.dataTransfer.setData('imgCode', img2base64URL(img));
         });
     });
+}
 
+function addTableHandler() {
     let tables = document.querySelectorAll('table');
     tables.forEach((table, i) => {
         console.log(`adding drag handler to table ${i}`);
@@ -20,7 +22,9 @@ function addDragHanlder() {
             event.dataTransfer.setData('columns', JSON.stringify(columns));
         });
     });
+}
 
+function addLinkHandler() {
     let as = document.querySelectorAll('a');
     as.forEach((a, i) => {
         console.log(`adding drag handler to link ${i}`);
@@ -30,6 +34,12 @@ function addDragHanlder() {
             event.dataTransfer.setData('href', link);
         });
     });
+}
+
+function addDragHanlder() {
+    addImgHandler();
+    addTableHandler();
+    // addLinkHandler();
 }
 
 function remoteRequire(url) {
@@ -198,5 +208,5 @@ function initDataDragger() {
 }
 
 window.onload = function() {
-    // initDataDragger();
+    initDataDragger();
 };

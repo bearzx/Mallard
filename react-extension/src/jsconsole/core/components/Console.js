@@ -158,6 +158,12 @@ class Console extends Component {
     });
   }
 
+  ddrop() {
+    this.push({
+      type: 'ddrop'
+    });
+  }
+
   render() {
     const commands = this.state.lines || {};
     const keys = Object.keys(commands);
