@@ -11,16 +11,16 @@ export class ImagePanel extends Component {
 
   preventDefault = (e) => {
     e.preventDefault();
-    // console.log('on drag over');
+    // console._log('on drag over');
   }
 
   drop = (e) => {
     e.preventDefault();
     let dragType = e.dataTransfer.getData('dragType');
-    console.log(dragType);
+    console._log(dragType);
     switch(dragType) {
       case 'img':
-        console.log('dropping img');
+        console._log('dropping img');
         let imgi = e.dataTransfer.getData('imgi');
         let imgCode = e.dataTransfer.getData('imgCode');
         this.setState({
@@ -28,7 +28,7 @@ export class ImagePanel extends Component {
         });
         break;
       case 'table':
-        console.log('dropping table');
+        console._log('dropping table');
         let _columns = JSON.parse(e.dataTransfer.getData('columns'));
         let data = {};
         let columns = [];

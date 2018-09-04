@@ -21,6 +21,8 @@ export const bindConsole = __console => {
     'ddrop',
   ];
 
+  const _log = window.console.log;
+
   apply.forEach(method => {
     // container.contentWindow.console[method] = (...args) => {
     window.console[method] = (...args) => {
@@ -28,6 +30,11 @@ export const bindConsole = __console => {
       __console[method].apply(__console, args);
     };
   });
+
+  window.console['_log'] = (...args) => {
+    // _log(args);
+    _log.apply(window.console, args);
+  };
 };
 
 // export const getContainer = () => container;

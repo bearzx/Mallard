@@ -102,12 +102,6 @@ class App extends Component {
             }]}
           />
         </Tab>
-        <Tab value="plot" label="Plot">
-            <PlotPanel plotIds={this.state.plotIds} />
-        </Tab>
-        <Tab value="image" label="Image">
-            <ImagePanel />
-        </Tab>
         <Tab value="console" label="Console" onActive={this.onActive}>
           <ConsoleApp />
         </Tab>
