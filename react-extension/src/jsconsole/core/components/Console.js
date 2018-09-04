@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Line from './Line';
+import { Chrome } from '../../../LibWrappers';
 
 let guid = 0;
 const getNext = () => guid++;
@@ -152,15 +153,40 @@ class Console extends Component {
     });
   }
 
-  vis() {
+  vis(_plotId) {
     this.push({
-      type: 'vis'
+      type: 'vis',
+      value: { plotId: _plotId }
     });
   }
 
   ddrop() {
     this.push({
       type: 'ddrop'
+    });
+  }
+
+  _edit_(name) {
+    Chrome.storage.local.get(['saved_scripts'], function(result) {
+      if (result.saved_scripts[name]) {
+        window.changeAppState({
+          fname: name,
+          code: result.saved_scripts[name],
+          tabId: 0
+        });
+      } else {
+        console.error('No such file');
+      }
+    });
+  }
+
+  _run_(name) {
+    Chrome.storage.local.get(['saved_scripts'], function(result) {
+      if (result.saved_scripts[name]) {
+        window.eval(result.saved_scripts[name]);
+      } else {
+        console.error('No such file');
+      }
     });
   }
 

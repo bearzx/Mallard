@@ -36,6 +36,10 @@ const about = () => ({
 
 const libs = {
   tensorflow: 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.12.0',
+  vega3: 'https://cdnjs.cloudflare.com/ajax/libs/vega/3.3.1/vega.js',
+  vega4: 'https://cdnjs.cloudflare.com/ajax/libs/vega/4.2.0/vega.js',
+  'vega-lite': 'https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.6.0/vega-lite.js',
+  'vega-embed': 'https://cdn.jsdelivr.net/npm/vega-embed@3',
   jquery: 'https://code.jquery.com/jquery.min.js',
   underscore: 'https://cdn.jsdelivr.net/underscorejs/latest/underscore-min.js',
   lodash: 'https://cdn.jsdelivr.net/lodash/latest/lodash.min.js',
@@ -56,13 +60,16 @@ const load = async ({ args: urls, console }) => {
   return 'Loading script…';
 };
 
-const remoteLoad = async ({ args: url }) => {
-  console.log(`loading ${url}`);
-  fetch(url).then((res) => {
-      res.text().then((code) => {
-          eval(code);
-          console.log(`${url} loaded`);
-      });
+const remoteLoad = async ({ args: urls }) => {
+  urls.forEach((url) => {
+    url = libs[url] || url;
+    console.log(`loading ${url}`);
+    fetch(url).then((res) => {
+        res.text().then((code) => {
+            eval.call(window, code);
+            console.log(`${url} loaded`);
+        });
+    });
   });
 }
 
@@ -120,6 +127,19 @@ const history = async ({ app, args: [n = null] }) => {
 const clear = ({ console }) => {
   console.log('console clear');
   console.clear();
+};
+
+const edit = async ({ args: [name], console }) => {
+  console._edit_(name);
+};
+
+const showCode = async () => {
+  window.show_code();
+};
+
+const run = async ({ args: [name], console }) => {
+  console._run_(name);
+  return `${name} evaled`; // [Xiong] more indicators?
 };
 
 const listen = async ({ args: [id], console: internalConsole }) => {
@@ -181,6 +201,9 @@ const commands = {
   welcome,
   yo,
   remoteLoad,
+  edit,
+  showCode,
+  run,
   version: () => version,
 };
 

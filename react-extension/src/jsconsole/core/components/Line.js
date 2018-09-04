@@ -37,7 +37,7 @@ class Line extends Component {
 
     if (type === 'vis') {
       line = (
-        <Plot plotId={0} />
+        <Plot plotId={value.plotId} />
       );
     }
 

@@ -92,7 +92,7 @@ class App extends Component {
             theme="chrome"
             value={this.state.code}
             name="editor"
-            editorProps={{$blockScrolling: true}}
+            editorProps={{ $blockScrolling: Infinity }}
             width="100%"
             height="100%"
             commands={[{
