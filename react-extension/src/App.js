@@ -31,6 +31,10 @@ class App extends Component {
       this.setState(o);
     };
 
+    window.printState = (o) => {
+      console._log(this.state);
+    };
+
     window.newPlot = () => {
       const n = this.state.plotIds.length;
       this.setState({
@@ -59,11 +63,13 @@ class App extends Component {
   }
 
   handleTabChange = (v) => {
-    console._log(v);
+    // console._log(v);
     this.setState({ tabId: v });
   };
 
   handleFnameChange = (e) => {
+    // console._log(e.target.value);
+    e.stopPropagation();
     this.setState({ fname: e.target.value });
   }
 
