@@ -55,14 +55,24 @@ class App extends Component {
 
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handleFnameChange = this.handleFnameChange.bind(this);
+    this.handleCodeChange = this.handleCodeChange.bind(this);
   }
 
-  handleTabChange = (e) => {
-    this.setState({ tabId: e });
+  handleTabChange = (v) => {
+    console._log(v);
+    this.setState({ tabId: v });
   };
 
   handleFnameChange = (e) => {
     this.setState({ fname: e.target.value });
+  }
+
+  handleCodeChange = (v) => {
+    this.setState({ code: v });
+  }
+
+  onLoad = (_editor) => {
+    // _editor.setValue(this.state.code);
   }
 
   saveCode = (_editor) => {
@@ -90,11 +100,13 @@ class App extends Component {
           <AceEditor
             mode="javascript"
             theme="chrome"
-            value={this.state.code}
             name="editor"
+            value={this.state.code}
             editorProps={{ $blockScrolling: Infinity }}
             width="100%"
             height="100%"
+            onLoad={this.onLoad}
+            onChange={this.handleCodeChange}
             commands={[{
               name: 'save',
               bindKey: { win: 'Ctrl-S', mac: 'Command-S' },

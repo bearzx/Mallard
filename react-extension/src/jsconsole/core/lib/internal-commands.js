@@ -47,7 +47,7 @@ const libs = {
   datefns: 'https://cdn.jsdelivr.net/gh/date-fns/date-fns/dist/date_fns.min.js',
 };
 
-const load = async ({ args: urls, console }) => {
+const _load = async ({ args: urls, console }) => {
   // const document = getContainer().contentDocument;
   urls.forEach(url => {
     url = libs[url] || url;
@@ -60,17 +60,28 @@ const load = async ({ args: urls, console }) => {
   return 'Loading script…';
 };
 
-const remoteLoad = async ({ args: urls }) => {
-  urls.forEach((url) => {
-    url = libs[url] || url;
-    console.log(`loading ${url}`);
-    fetch(url).then((res) => {
-        res.text().then((code) => {
-            eval.call(window, code);
-            console.log(`${url} loaded`);
-        });
-    });
-  });
+const load = async ({ args: url }) => {
+  await remoteLoad({ args: url });
+}
+
+const seqLoad = async ({ args: urls, console }) => {
+  for (const url of urls) {
+    await remoteLoad({ args: url });
+  }
+};
+
+const remoteLoad = async ({ args: url }) => {
+    return new Promise((resolve, reject) => {
+      url = libs[url] || url;
+      console.log(`loading ${url}`);
+      fetch(url).then((res) => {
+          res.text().then((code) => {
+              eval.call(window, code);
+              console.log(`${url} loaded`);
+              resolve();
+          });
+      });
+    })
 }
 
 const yo = () => { console.log('yo'); }
@@ -142,6 +153,12 @@ const run = async ({ args: [name], console }) => {
   return `${name} evaled`; // [Xiong] more indicators?
 };
 
+const seqrun = async({ args: names, console }) => {
+  for (const name of names) {
+    await run(name);
+  }
+};
+
 const listen = async ({ args: [id], console: internalConsole }) => {
   // create new eventsocket
   const res = await fetch(`${API}/remote/${id || ''}`);
@@ -201,9 +218,11 @@ const commands = {
   welcome,
   yo,
   remoteLoad,
+  seqLoad,
   edit,
   showCode,
   run,
+  seqrun,
   version: () => version,
 };
 
