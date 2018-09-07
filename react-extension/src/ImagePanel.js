@@ -4,6 +4,9 @@ import DataFrame from 'dataframe-js';
 export class ImagePanel extends Component {
   constructor(props) {
     super(props);
+
+    console.log(this.props);
+
     this.state = {
       imgCode: ''
     };
@@ -56,7 +59,12 @@ export class ImagePanel extends Component {
 
   render() {
     return (
-      <div id="drag-area" className="plot-slot" onDragOver={this.preventDefault} onDrop={this.drop}>
+      <div
+        id="drag-area"
+        className={this.props.isDragStart ? "drag-slot-start" : "drag-slot-end"}
+        onDragOver={this.preventDefault}
+        onDrop={this.drop}
+      >
         <img src={this.state.imgCode} />
       </div>
     )

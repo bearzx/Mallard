@@ -4,6 +4,8 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     // console.log(msg);
     if (msg.action == 'save-script') {
         save_script(msg, sendResponse);
+    } else if (msg.action == 'img-drag-start' || msg.action == 'img-drag-end') {
+        window.devtoolPort.postMessage(msg);
     }
 
     return true;
@@ -25,4 +27,18 @@ function save_script(msg, sendResponse) {
             });
         }
     });
+}
+
+chrome.runtime.onConnect.addListener((port) => {
+    if (port.name == 'devtool') {
+        // port.postMessage({ msg: 'yo' });
+        window.devtoolPort = port;
+        port.onMessage.addListener((msg) => {
+            console.log(msg);
+        });
+    }
+});
+
+function pingDevtool() {
+    window.devtoolPort.postMessage({ msg: 'la' });
 }

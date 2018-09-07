@@ -36,7 +36,7 @@
   margin-bottom: 0;
 }
 
-.plot-slot {
+.plot-slot, .drag-slot-end {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -44,6 +44,16 @@
   min-width: 200px;
   min-height: 200px;
   border: 1px dashed #ccc;
+}
+
+.drag-slot-start {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: center;
+  min-width: 200px;
+  min-height: 200px;
+  border: 2px dashed #000;
 }
 
 .plot-placeholder {

@@ -43,6 +43,8 @@ try {
   defaults.history = JSON.parse(
     sessionStorage.getItem('jsconsole.history') || '[]'
   );
+
+  defaults.isDragStart = false;
 } catch (e) {
   console.log(e);
 }

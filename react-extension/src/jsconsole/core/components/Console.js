@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Line from './Line';
 import { Chrome } from '../../../LibWrappers';
+import run from '../lib/run';
 
 let guid = 0;
 const getNext = () => guid++;
@@ -181,9 +182,22 @@ class Console extends Component {
   }
 
   _run_(name) {
+    const _this = this;
     Chrome.storage.local.get(['saved_scripts'], function(result) {
       if (result.saved_scripts[name]) {
-        window.eval(result.saved_scripts[name]);
+        try {
+          window.eval(result.saved_scripts[name]);
+        } catch (error) {
+          const res = {};
+          res.error = true;
+          res.value = error;
+          _this.push({
+            name,
+            type: 'response',
+            ...res,
+          });
+        }
+        // run(result.saved_scripts[name]);
       } else {
         console.error('No such file');
       }

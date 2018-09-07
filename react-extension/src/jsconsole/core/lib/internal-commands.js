@@ -153,10 +153,14 @@ const run = async ({ args: [name], console }) => {
   return `${name} evaled`; // [Xiong] more indicators?
 };
 
-const seqrun = async({ args: names, console }) => {
+const seqrun = async ({ args: names, console }) => {
   for (const name of names) {
     await run(name);
   }
+};
+
+const vis = async ({ args: id, console }) => {
+  console.vis(id);
 };
 
 const listen = async ({ args: [id], console: internalConsole }) => {
@@ -223,6 +227,7 @@ const commands = {
   showCode,
   run,
   seqrun,
+  vis,
   version: () => version,
 };
 

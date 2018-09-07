@@ -7,6 +7,12 @@ function addImgHandler() {
             event.dataTransfer.setData('dragType', 'img');
             event.dataTransfer.setData('imgi', i);
             event.dataTransfer.setData('imgCode', img2base64URL(img));
+            window.postMessage({ type: 'img-drag-start' }, '*');
+        });
+
+        img.addEventListener('dragend', function(event) {
+            console.log('drag end');
+            window.postMessage({ type: 'img-drag-end' }, '*');
         });
     });
 }

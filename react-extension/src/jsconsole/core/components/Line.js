@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import LineNav from './LineNav';
 import which from '../lib/which-type';
 import { Plot } from '../../../PlotPanel';
-import ImagePanel from '../../../ImagePanel';
+import ImagePanel from '../containers/ImagePanel';
 
 class Line extends Component {
   constructor(props) {

@@ -8,12 +8,28 @@ import Input from '../containers/Input';
 import run, { bindConsole, createContainer } from '../lib/run';
 import internalCommands from '../lib/internal-commands';
 
+import { Chrome } from '../../../LibWrappers';
+
 // this is lame, but it's a list of key.code that do stuff in the input that we _want_.
 const doStuffKeys = /^(Digit|Key|Num|Period|Semi|Comma|Slash|IntlBackslash|Backspace|Delete|Enter)/;
 
 class ConsoleApp extends Component {
   constructor(props) {
     super(props);
+
+    // console.log(props);
+
+    window.port = Chrome.runtime.connect({ name: 'devtool' });
+
+    window.port.onMessage.addListener((msg) => {
+      // console.log(msg);
+      if (msg.action == 'img-drag-start') {
+        this.props.dragStart();
+      } else if (msg.action == 'img-drag-end') {
+        this.props.dragEnd();
+      }
+    });
+
     this.onRun = this.onRun.bind(this);
     this.triggerFocus = this.triggerFocus.bind(this);
   }
