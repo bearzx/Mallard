@@ -5,7 +5,7 @@ export class ImagePanel extends Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props);
+    // console.log(this.props);
 
     this.state = {
       imgCode: ''
@@ -15,6 +15,20 @@ export class ImagePanel extends Component {
   preventDefault = (e) => {
     e.preventDefault();
     // console._log('on drag over');
+  }
+
+  imgCode2tensor = (imgCode) => {
+    let img = new Image();
+    img.onload = () => {
+      let canvas = document.createElement('canvas');
+      let ctx = canvas.getContext('2d');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+      let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      window.t = window.tf.tensor3d(new Float32Array(imgData.data), [img.naturalWidth, img.naturalHeight, 4]);
+    };
+    img.src = imgCode;
   }
 
   drop = (e) => {
@@ -29,6 +43,7 @@ export class ImagePanel extends Component {
         this.setState({
           imgCode: imgCode
         });
+        this.imgCode2tensor(imgCode);
         break;
       case 'table':
         console._log('dropping table');

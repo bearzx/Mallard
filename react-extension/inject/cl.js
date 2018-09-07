@@ -82,8 +82,8 @@ function img2array(img) {
     canvas.width = img.naturalWidth;
     canvas.height = img.naturalHeight;
     ctx.drawImage(img, 0, 0);
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    return new Float32Array(imageData.data);
+    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    return new Float32Array(imgData.data);
 }
 
 function addSelectionLayer() {
