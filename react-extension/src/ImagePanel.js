@@ -17,7 +17,8 @@ export class ImagePanel extends Component {
     // console._log('on drag over');
   }
 
-  imgCode2tensor = (imgCode) => {
+  // dummy way using a canvas element
+  _imgCode2tensor = (imgCode) => {
     let img = new Image();
     img.onload = () => {
       let canvas = document.createElement('canvas');
@@ -27,6 +28,17 @@ export class ImagePanel extends Component {
       ctx.drawImage(img, 0, 0);
       let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       window.t = window.tf.tensor3d(new Float32Array(imgData.data), [img.naturalWidth, img.naturalHeight, 4]);
+    };
+    img.src = imgCode;
+  }
+
+  // convenient way using tensorflow - tf required
+  imgCode2tensor = (imgCode) => {
+    let img = new Image();
+    img.onload = () => {
+      img.width = 224;
+      img.height = 224;
+      window.t = window.tf.fromPixels(img).toFloat();
     };
     img.src = imgCode;
   }

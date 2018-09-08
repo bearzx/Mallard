@@ -3,6 +3,9 @@ function addImgHandler() {
     imgs.forEach((img, i) => {
         console.log(`adding drag handler to img ${i}`);
         img.draggable = true;
+        // let imgSrc = img.getAttribute('src');
+        // img.crossOrigin = "Anonymous";
+        // img.src = imgSrc;
         img.addEventListener('dragstart', function(event) {
             event.dataTransfer.setData('dragType', 'img');
             event.dataTransfer.setData('imgi', i);
@@ -43,8 +46,8 @@ function addLinkHandler() {
 }
 
 function addDragHanlder() {
-    addImgHandler();
-    addTableHandler();
+    // addImgHandler();
+    // addTableHandler();
     // addLinkHandler();
 }
 
