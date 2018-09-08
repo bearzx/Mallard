@@ -36,8 +36,8 @@ export class ImagePanel extends Component {
   imgCode2tensor = (imgCode) => {
     let img = new Image();
     img.onload = () => {
-      img.width = 224;
-      img.height = 224;
+      // img.width = 224;
+      // img.height = 224;
       window.t = window.tf.fromPixels(img).toFloat();
     };
     img.src = imgCode;
