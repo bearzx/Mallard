@@ -37,13 +37,18 @@
 }
 
 .plot-slot, .drag-slot-end, .canvas-slot {
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
   flex-wrap: wrap;
   text-align: center;
   min-width: 200px;
   min-height: 200px;
   border: 1px dashed #ccc;
+}
+
+.canvas-slot canvas {
+  min-width: 200px;
+  min-height: 200px;
 }
 
 .drag-slot-start {

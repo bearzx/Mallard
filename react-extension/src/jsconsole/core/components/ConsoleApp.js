@@ -23,9 +23,9 @@ class ConsoleApp extends Component {
 
     window.port.onMessage.addListener((msg) => {
       // console.log(msg);
-      if (msg.action == 'img-drag-start') {
+      if (msg.action === 'img-drag-start') {
         this.props.dragStart();
-      } else if (msg.action == 'img-drag-end') {
+      } else if (msg.action === 'img-drag-end') {
         this.props.dragEnd();
       }
     });

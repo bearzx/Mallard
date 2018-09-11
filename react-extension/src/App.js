@@ -9,13 +9,13 @@ import 'brace/theme/chrome';
 import './App.css';
 import { Chrome } from './LibWrappers';
 import ConsoleApp from './jsconsole/core/containers/ConsoleApp';
-import PlotPanel from './PlotPanel';
-import ImagePanel from './ImagePanel';
 import DataFrame from 'dataframe-js';
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    window._$ = document.querySelector.bind(document);
 
     window.DataFrame = DataFrame;
 

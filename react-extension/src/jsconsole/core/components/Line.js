@@ -41,7 +41,7 @@ class Line extends Component {
       );
     }
 
-    if (type == 'canvas') {
+    if (type === 'canvas') {
       line = (
         <Canvas canvasId={value.canvasId} />
       );
