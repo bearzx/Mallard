@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import LineNav from './LineNav';
 import which from '../lib/which-type';
-import { Plot } from '../../../PlotPanel';
+import { Plot, Canvas } from '../../../PlotPanel';
 import ImagePanel from '../containers/ImagePanel';
 
 class Line extends Component {
@@ -38,6 +38,12 @@ class Line extends Component {
     if (type === 'vis') {
       line = (
         <Plot plotId={value.plotId} />
+      );
+    }
+
+    if (type == 'canvas') {
+      line = (
+        <Canvas canvasId={value.canvasId} />
       );
     }
 

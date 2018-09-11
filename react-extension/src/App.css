@@ -36,7 +36,7 @@
   margin-bottom: 0;
 }
 
-.plot-slot, .drag-slot-end {
+.plot-slot, .drag-slot-end, .canvas-slot {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

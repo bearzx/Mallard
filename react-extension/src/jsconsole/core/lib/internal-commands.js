@@ -163,6 +163,10 @@ const vis = async ({ args: id, console }) => {
   console.vis(id);
 };
 
+const canvas = async ({ args: id, console }) => {
+  console.canvas(id);
+};
+
 const listen = async ({ args: [id], console: internalConsole }) => {
   // create new eventsocket
   const res = await fetch(`${API}/remote/${id || ''}`);
@@ -228,6 +232,7 @@ const commands = {
   run,
   seqrun,
   vis,
+  canvas,
   version: () => version,
 };
 

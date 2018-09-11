@@ -28,4 +28,18 @@ export class Plot extends Component {
   }
 }
 
+export class Canvas extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="canvas-slot">
+        <canvas id={"canvas-" + this.props.canvasId}></canvas>
+      </div>
+    )
+  }
+}
+
 export default PlotPanel;
