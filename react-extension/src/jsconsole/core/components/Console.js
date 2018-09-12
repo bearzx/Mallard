@@ -168,9 +168,9 @@ class Console extends Component {
     });
   }
 
-  ddrop() {
+  dnd() {
     this.push({
-      type: 'ddrop'
+      type: 'dnd'
     });
   }
 

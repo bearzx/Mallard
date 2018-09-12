@@ -32,6 +32,10 @@
   height: 100%;
 }
 
+.code-editor {
+  min-height: 1000px;
+}
+
 .file-name {
   margin-bottom: 0;
 }

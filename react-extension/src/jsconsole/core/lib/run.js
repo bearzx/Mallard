@@ -18,7 +18,7 @@ export const bindConsole = __console => {
     'debug',
     'clear',
     'vis',
-    'ddrop',
+    'dnd',
   ];
 
   const _log = window.console.log;

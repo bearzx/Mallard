@@ -18,7 +18,6 @@ class ConsoleApp extends Component {
     super(props);
 
     // console.log(props);
-
     window.port = Chrome.runtime.connect({ name: 'devtool' });
 
     window.port.onMessage.addListener((msg) => {

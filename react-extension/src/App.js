@@ -78,7 +78,7 @@ class App extends Component {
   }
 
   onLoad = (_editor) => {
-    // _editor.setValue(this.state.code);
+    // console.log('editor load');
   }
 
   saveCode = (_editor) => {
@@ -107,6 +107,7 @@ class App extends Component {
             mode="javascript"
             theme="chrome"
             name="editor"
+            className="code-editor"
             value={this.state.code}
             editorProps={{ $blockScrolling: Infinity }}
             width="100%"

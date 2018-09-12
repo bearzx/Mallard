@@ -47,7 +47,7 @@ class Line extends Component {
       );
     }
 
-    if (type === 'ddrop') {
+    if (type === 'dnd') {
       line = (
         <ImagePanel />
       );
