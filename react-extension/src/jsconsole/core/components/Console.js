@@ -180,7 +180,7 @@ class Console extends Component {
         window.changeAppState({
           fname: name,
           code: result.saved_scripts[name],
-          tabId: 0
+          tabId: 1
         });
       } else {
         console.error('No such file');

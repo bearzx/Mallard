@@ -42,3 +42,14 @@ chrome.runtime.onConnect.addListener((port) => {
 function pingDevtool() {
     window.devtoolPort.postMessage({ msg: 'la' });
 }
+
+chrome.contextMenus.create({
+    title: 'Bla',
+    contexts: ['selection', 'link', 'image'],
+    onclick: bla
+});
+
+function bla(info) {
+    console.log('bla');
+    console.log(info);
+}

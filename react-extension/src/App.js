@@ -54,7 +54,7 @@ class App extends Component {
       code: '',
       plotCount: 0,
       plotIds: [],
-      tabId: 3
+      tabId: 0
     };
 
     this.handleTabChange = this.handleTabChange.bind(this);
@@ -95,6 +95,9 @@ class App extends Component {
   render() {
     return (
       <Tabs onChange={this.handleTabChange} selectedIndex={this.state.tabId} justified={true}>
+        <Tab value="console" label="Console" onActive={this.onActive}>
+          <ConsoleApp />
+        </Tab>
         <Tab value="editor" label="Editor">
           <Input
             value={this.state.fname}
@@ -120,9 +123,6 @@ class App extends Component {
               exec: this.saveCode
             }]}
           />
-        </Tab>
-        <Tab value="console" label="Console" onActive={this.onActive}>
-          <ConsoleApp />
         </Tab>
       </Tabs>
     );
