@@ -22,7 +22,7 @@ function create_vis_panel() {
   );
 }
 
-chrome.devtools.panels.create("REPL",
+chrome.devtools.panels.create(">_",
     "MyPanelIcon.png", // todo change icon
     "index.html",
     function(panel) {

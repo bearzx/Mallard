@@ -44,12 +44,16 @@ function pingDevtool() {
 }
 
 chrome.contextMenus.create({
-    title: 'Bla',
+    title: 'Inspect Data',
     contexts: ['selection', 'link', 'image'],
-    onclick: bla
+    onclick: inspectData
 });
 
-function bla(info) {
-    console.log('bla');
+function inspectData(info) {
     console.log(info);
+    if (info.linkUrl) {
+        console.log(`link url ${info.linkUrl}`);
+    } else if (info.mediaType) {
+        console.log(`image url ${info.srcUrl}`);
+    }
 }

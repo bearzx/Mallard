@@ -63,7 +63,7 @@ function remoteRequire(url) {
 function loadLib(name) {
     switch(name) {
         case 'dataframe.js':
-            remoteRequire('https://www.bearzx.com/pgxz3/dataframe.js');
+            remoteRequire('http://www.bearzx.com/pgxz3/dataframe.js');
             break;
         default:
             break;
