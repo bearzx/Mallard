@@ -26,6 +26,13 @@ class ConsoleApp extends Component {
         this.props.dragStart();
       } else if (msg.action === 'img-drag-end') {
         this.props.dragEnd();
+      } else if (msg.action === 'inspect-img') {
+        // console._log(msg.imgSrc);
+        let img = new Image();
+        img.onload = () => {
+          window.t = window.tf.fromPixels(img).toFloat();
+        };
+        img.src = msg.imgSrc;
       }
     });
 

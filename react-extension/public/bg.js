@@ -51,9 +51,11 @@ chrome.contextMenus.create({
 
 function inspectData(info) {
     console.log(info);
-    if (info.linkUrl) {
-        console.log(`link url ${info.linkUrl}`);
-    } else if (info.mediaType) {
+
+    if (info.mediaType) {
         console.log(`image url ${info.srcUrl}`);
+        window.devtoolPort.postMessage({ action: 'inspect-img', imgSrc: info.srcUrl });
+    } else if (info.linkUrl) {
+        console.log(`link url ${info.linkUrl}`);
     }
 }

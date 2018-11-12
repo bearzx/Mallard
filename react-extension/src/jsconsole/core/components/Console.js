@@ -174,6 +174,29 @@ class Console extends Component {
     });
   }
 
+  showTensor(tensor, canvas) {
+    const ctx = canvas.getContext('2d');
+    const [height, width] = tensor.shape;
+    canvas.width = width;
+    canvas.height = height;
+    const buffer = new Uint8ClampedArray(width * height * 4);
+    const imageData = new ImageData(width, height);
+    const data = tensor.dataSync();
+    var cnt = 0;
+    for(var y = 0; y < height; y++) {
+        for(var x = 0; x < width; x++) {
+            var pos = (y * width + x) * 4; // position in buffer based on x and y
+            buffer[pos  ] = data[cnt]; // some R value [0, 255]
+            buffer[pos + 1] = data[cnt + 1]; // some G value
+            buffer[pos + 2] = data[cnt + 2]; // some B value
+            buffer[pos + 3] = 255; // set alpha channel
+            cnt += 3;
+        }
+    }
+    imageData.data.set(buffer);
+    ctx.putImageData(imageData, 0, 0);
+  }
+
   _edit_(name) {
     Chrome.storage.local.get(['saved_scripts'], function(result) {
       if (result.saved_scripts[name]) {
