@@ -167,6 +167,10 @@ const canvas = async ({ args: id, console }) => {
   console.canvas(id);
 };
 
+const showTensor = async ({ args: [tensor, id], console }) => {
+  console.showTensor(window[tensor], window._$(`#canvas-${id}`));
+};
+
 const listen = async ({ args: [id], console: internalConsole }) => {
   // create new eventsocket
   const res = await fetch(`${API}/remote/${id || ''}`);
@@ -233,6 +237,7 @@ const commands = {
   seqrun,
   vis,
   canvas,
+  showTensor,
   version: () => version,
 };
 

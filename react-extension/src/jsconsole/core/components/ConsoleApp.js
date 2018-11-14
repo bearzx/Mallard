@@ -31,8 +31,13 @@ class ConsoleApp extends Component {
         let img = new Image();
         img.onload = () => {
           window.t = window.tf.fromPixels(img).toFloat();
+          console.log('Image loaded as window.t');
         };
         img.src = msg.imgSrc;
+      } else if (msg.action === 'inspect-tsv') {
+
+      } else if (msg.action === 'inspect-csv') {
+
       }
     });
 
@@ -42,6 +47,7 @@ class ConsoleApp extends Component {
 
   async onRun(command) {
     const console = this.console;
+    // window.console._log(console);
 
     if (command[0] !== ':') {
       console.push({

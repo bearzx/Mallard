@@ -174,6 +174,10 @@ class Console extends Component {
     });
   }
 
+  _log(...rest) {
+    window.console._log(rest);
+  }
+
   showTensor(tensor, canvas) {
     const ctx = canvas.getContext('2d');
     const [height, width] = tensor.shape;

@@ -20,6 +20,7 @@ export const bindConsole = __console => {
     'vis',
     'dnd',
     'showTensor',
+    '_log'
   ];
 
   const _log = window.console.log;
