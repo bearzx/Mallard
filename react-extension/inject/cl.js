@@ -26,7 +26,7 @@ function addTableHandler() {
         console.log(`adding drag handler to table ${i}`);
         table.draggable = true;
         table.addEventListener('dragstart', function(event) {
-            let columns = $(event.target).parsetable(true, true);
+            let columns = _$_(event.target).parsetable(true, true);
             event.dataTransfer.setData('dragType', 'table');
             event.dataTransfer.setData('columns', JSON.stringify(columns));
         });
@@ -91,7 +91,7 @@ function img2array(img) {
 
 function addSelectionLayer() {
     let selection_layer_template = `<div id="fs-selection-layer"></div>`;
-    $(selection_layer_template).css({
+    _$_(selection_layer_template).css({
         'width': '200px',
         'height': '200px',
         'background-color': 'black',
@@ -103,7 +103,7 @@ function addSelectionLayer() {
         'display': 'none',
         'pointer-events': 'none',
         'cursor': 'pointer'
-    }).appendTo($('body'));
+    }).appendTo(_$_('body'));
 
     let selection_layer_control = `
         <div id="selection-layer-control-wrap" class="selection-layer-control">
@@ -112,7 +112,7 @@ function addSelectionLayer() {
         </div>
     `;
 
-    $(selection_layer_control).css({
+    _$_(selection_layer_control).css({
         'position': 'fixed',
         'width': '200px',
         'height': '50px',
@@ -120,48 +120,48 @@ function addSelectionLayer() {
         'bottom': '10px',
         'display': 'none',
         'text-align': 'right'
-    }).appendTo($('body'));
+    }).appendTo(_$_('body'));
 
-    $('body *').hover(
+    _$_('body *').hover(
         function(e) {
             if (window.fs_selector_active || window.crop_selector_active || window.embed_selector_active) {
                 // console.log(e.target);
-                if (!$(e.target).hasClass('selection-layer-control')) {
-                    let pos = $(e.target).offset();
+                if (!_$_(e.target).hasClass('selection-layer-control')) {
+                    let pos = _$_(e.target).offset();
                     let bgc = e.altKey ? 'red' : 'black';
-                    $('#fs-selection-layer').css({
+                    _$_('#fs-selection-layer').css({
                         'top': pos.top,
                         'left': pos.left,
-                        'width': $(e.target).outerWidth(),
-                        'height': $(e.target).outerHeight(),
+                        'width': _$_(e.target).outerWidth(),
+                        'height': _$_(e.target).outerHeight(),
                         'background-color': bgc
                     }).show();
                 }
             }
         },
         function(e) {
-            $('#fs-selection-layer').hide();
+            _$_('#fs-selection-layer').hide();
         }
     );
 
-    $('#done-selection').click((e) => {
+    _$_('#done-selection').click((e) => {
         console.log('done selection');
         console.log(window.crop_selected_elements);
         console.log(window.crop_excluded_elements);
         if (window.crop_selected_elements.length) {
-            $(window.crop_selected_elements[0]).siblings().hide();
-            $(window.crop_selected_elements[0]).parents().siblings().hide();
-            $(window.crop_selected_elements[0]).parents().show();
+            _$_(window.crop_selected_elements[0]).siblings().hide();
+            _$_(window.crop_selected_elements[0]).parents().siblings().hide();
+            _$_(window.crop_selected_elements[0]).parents().show();
 
             for (let i = 0; i < window.crop_selected_elements.length; i++) {
-                $(window.crop_selected_elements[i]).css('border', window.css_preserving[window.crop_selected_elements[i]]);
-                $(window.crop_selected_elements[i]).show();
+                _$_(window.crop_selected_elements[i]).css('border', window.css_preserving[window.crop_selected_elements[i]]);
+                _$_(window.crop_selected_elements[i]).show();
             }
         }
 
         window.crop_excluded_elements.forEach(function(e) {
             console.log(e);
-            $($(e).get(0)).hide();
+            _$_(_$_(e).get(0)).hide();
         });
 
         window.postMessage({ type: 'add-crop-page', elements: { selected: window.crop_selected_elements, excluded: window.crop_excluded_elements } }, '*');
@@ -169,26 +169,26 @@ function addSelectionLayer() {
         hide_selection_layer();
     });
 
-    $('#cancel-selection').click((e) => {
+    _$_('#cancel-selection').click((e) => {
         console.log('cancel selection');
         hide_selection_layer();
     });
 
     function hide_selection_layer() {
         window.crop_selector_active = !window.crop_selector_active;
-        $('#selection-layer-control-wrap').hide();
+        _$_('#selection-layer-control-wrap').hide();
     }
 
-    $(document).on('click', function(e) {
+    _$_(document).on('click', function(e) {
         if (window.fs_selector_active) {
             window.fs_selected_element = e.target;
             console.log('fs element selected');
         } else if (window.crop_selector_active) {
-            if (!$(e.target).hasClass('selection-layer-control')) {
+            if (!_$_(e.target).hasClass('selection-layer-control')) {
                 // console.log(e.target);
                 toggleSelectionLayer();
 
-                let htable = $(e.target).parsetable(true, true);
+                let htable = _$_(e.target).parsetable(true, true);
                 let data = {};
                 let columns = [];
                 htable.forEach((c) => {

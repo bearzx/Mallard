@@ -6,10 +6,10 @@
  *
  */
 (function($) {
-    $.fn.parsetable = function(dupCols, dupRows) {
+    _$_.fn.parsetable = function(dupCols, dupRows) {
         if (dupRows == undefined) dupRows = false;
         if (dupCols == undefined) dupCols = false;
-        
+
         var columns = [],
         curr_x = 0,
         curr_y = 0;
@@ -50,4 +50,4 @@
 
         return columns;
     };
-})(jQuery);
+})(_jQuery_);
