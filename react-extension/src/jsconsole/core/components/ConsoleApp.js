@@ -10,6 +10,8 @@ import internalCommands from '../lib/internal-commands';
 
 import { Chrome } from '../../../LibWrappers';
 
+import DataFrame from 'dataframe-js';
+
 // this is lame, but it's a list of key.code that do stuff in the input that we _want_.
 const doStuffKeys = /^(Digit|Key|Num|Period|Semi|Comma|Slash|IntlBackslash|Backspace|Delete|Enter)/;
 
@@ -38,6 +40,19 @@ class ConsoleApp extends Component {
 
       } else if (msg.action === 'inspect-csv') {
 
+      } else if (msg.action === 'detect-table') {
+        Chrome.devtools.inspectedWindow.eval(
+          `searchTable()`,
+          (_columns, isException) => {
+            // console._log(result);
+            let data = {};
+            let columns = [];
+            _columns.forEach((c) => {
+                data[c[0]] = c.slice(1);
+                columns.push(c[0]);
+            });
+            window.df = new DataFrame(data, columns);
+        });
       }
     });
 

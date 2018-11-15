@@ -62,5 +62,7 @@ function inspectData(info) {
         } else if (info.linkUrl.endsWith('.csv')) {
             window.devtoolPort.postMessage({ action: 'inspect-csv', linkUrl: info.linkurl });
         }
+    } else {
+        window.devtoolPort.postMessage({ action: 'detect-table' });
     }
 }
