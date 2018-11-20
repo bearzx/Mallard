@@ -220,14 +220,19 @@ function searchTable() {
     const tableTags = ['TD', 'TR', 'TH', 'TBODY', 'THEAD', 'TABLE'];
     if (tableTags.includes(window.clickedEl.tagName)) {
         let cur = window.clickedEl;
-        while (cur.tagName != 'TABLE') {
+        while (cur && cur.tagName != 'TABLE') {
             cur = cur.parentElement;
         }
-        console.log('table detected');
-        console.log(cur);
-        let columns = _$_(cur).parsetable(true, true);
-        console.log(columns);
-        return columns;
+        if (cur) {
+            console.log('table detected');
+            console.log(cur);
+            let columns = _$_(cur).parsetable(true, true);
+            console.log(columns);
+            return columns;
+        } else {
+            // [Xiong] todo
+            // throw out an exception since we didn't find a table
+        }
     }
 }
 
