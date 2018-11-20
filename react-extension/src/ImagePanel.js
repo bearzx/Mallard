@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DataFrame from 'dataframe-js';
+import { loadImg, loadXSV, cols2DF } from './jsconsole/core/lib/utils';
 
 export class ImagePanel extends Component {
   constructor(props) {
@@ -33,15 +34,13 @@ export class ImagePanel extends Component {
   }
 
   // convenient way using tensorflow - tf required
-  imgCode2tensor = (imgCode) => {
-    let img = new Image();
-    img.onload = () => {
-      // img.width = 224;
-      // img.height = 224;
-      window.t = window.tf.fromPixels(img).toFloat();
-    };
-    img.src = imgCode;
-  }
+  // imgCode2tensor = (imgCode) => {
+  //   let img = new Image();
+  //   img.onload = () => {
+  //     window.t = window.tf.fromPixels(img).toFloat();
+  //   };
+  //   img.src = imgCode;
+  // }
 
   drop = (e) => {
     e.preventDefault();
@@ -55,29 +54,16 @@ export class ImagePanel extends Component {
         this.setState({
           imgCode: imgCode
         });
-        this.imgCode2tensor(imgCode);
+        loadImg(imgCode);
         break;
       case 'table':
         console._log('dropping table');
         let _columns = JSON.parse(e.dataTransfer.getData('columns'));
-        let data = {};
-        let columns = [];
-        _columns.forEach((c) => {
-            data[c[0]] = c.slice(1);
-            columns.push(c[0]);
-        });
-        window.df = new DataFrame(data, columns);
+        cols2DF(_columns);
         break;
       case 'link':
         let href = e.dataTransfer.getData('href');
-        let p;
-        if (href.endsWith('.tsv')) {
-          p = DataFrame.fromTSV(href).then(df => { window.df = df });
-
-        } else if (href.endsWith('.csv')) {
-          p = DataFrame.fromCSV(href).then(df => { window.df = df });
-        }
-        Promise.resolve(p);
+        loadXSV(href);
         break;
       default:
         break;

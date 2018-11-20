@@ -57,10 +57,8 @@ function inspectData(info) {
         window.devtoolPort.postMessage({ action: 'inspect-img', imgSrc: info.srcUrl });
     } else if (info.linkUrl) {
         console.log(`link url ${info.linkUrl}`);
-        if (info.linkUrl.endsWith('.tsv')) {
-            window.devtoolPort.postMessage({ action: 'inspect-tsv', linkUrl: info.linkurl });
-        } else if (info.linkUrl.endsWith('.csv')) {
-            window.devtoolPort.postMessage({ action: 'inspect-csv', linkUrl: info.linkurl });
+        if (info.linkUrl.endsWith('.tsv') || info.linkUrl.endsWith('.csv')) {
+            window.devtoolPort.postMessage({ action: 'inspect-xsv', linkUrl: info.linkUrl });
         }
     } else {
         window.devtoolPort.postMessage({ action: 'detect-table' });

@@ -12,6 +12,8 @@ import { Chrome } from '../../../LibWrappers';
 
 import DataFrame from 'dataframe-js';
 
+import { loadImg, loadXSV, cols2DF } from  '../lib/utils';
+
 // this is lame, but it's a list of key.code that do stuff in the input that we _want_.
 const doStuffKeys = /^(Digit|Key|Num|Period|Semi|Comma|Slash|IntlBackslash|Backspace|Delete|Enter)/;
 
@@ -29,29 +31,17 @@ class ConsoleApp extends Component {
       } else if (msg.action === 'img-drag-end') {
         this.props.dragEnd();
       } else if (msg.action === 'inspect-img') {
-        // console._log(msg.imgSrc);
-        let img = new Image();
-        img.onload = () => {
-          window.t = window.tf.fromPixels(img).toFloat();
-          console.log('Image loaded as window.t');
-        };
-        img.src = msg.imgSrc;
-      } else if (msg.action === 'inspect-tsv') {
-
-      } else if (msg.action === 'inspect-csv') {
-
+        loadImg(msg.imgSrc);
+      } else if (msg.action === 'inspect-xsv') {
+        console._log(msg.linkUrl);
+        console.log(`${msg.linkUrl} loaded as window.df`);
+        loadXSV(msg.linkUrl);
       } else if (msg.action === 'detect-table') {
         Chrome.devtools.inspectedWindow.eval(
           `searchTable()`,
           (_columns, isException) => {
             // console._log(result);
-            let data = {};
-            let columns = [];
-            _columns.forEach((c) => {
-                data[c[0]] = c.slice(1);
-                columns.push(c[0]);
-            });
-            window.df = new DataFrame(data, columns);
+            cols2DF(_columns);
         });
       }
     });
