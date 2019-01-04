@@ -28,6 +28,16 @@ chrome.devtools.panels.create(">_",
     function(panel) {
       // code invoked on panel creation
       console.log('repl panel created');
+
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        let tab = tabs[0];
+        chrome.runtime.sendMessage({
+          action: 'console-created',
+          tabId: tab.id
+        });
+      });
+
+
       panel.onSearch.addListener(function (action, queryString) {
         console.log(action);
         console.log(queryString);
