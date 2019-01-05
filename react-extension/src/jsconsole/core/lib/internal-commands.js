@@ -171,6 +171,14 @@ const showTensor = async ({ args: [tensor, id], console }) => {
   console.showTensor(window[tensor], window._$(`#canvas-${id}`));
 };
 
+const vexport = async ({ args: vname, console }) => {
+  console.log(`exporting variable ${vname}`);
+};
+
+const vimport = async ({ args: vname, console }) => {
+  console.log(`importing variable ${vname}`);
+};
+
 const listen = async ({ args: [id], console: internalConsole }) => {
   // create new eventsocket
   const res = await fetch(`${API}/remote/${id || ''}`);
@@ -238,6 +246,8 @@ const commands = {
   vis,
   canvas,
   showTensor,
+  vimport,
+  vexport,
   version: () => version,
 };
 

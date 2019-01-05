@@ -1,5 +1,9 @@
 console.log('yo from bg');
 
+// initializations
+window.sharedVariables = {};
+// end initializations
+
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     // console.log(msg);
     if (msg.action == 'save-script') {
@@ -11,6 +15,9 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         console.log(window[msg.vname]);
     } else if (msg.action == 'console-created') {
         console.log(`new console created: ${msg.tabId}`);
+        window.sharedVariables[msg.tabId] = {};
+    } else if (msg.action == 'export-variable') {
+
     }
 
     return true;
