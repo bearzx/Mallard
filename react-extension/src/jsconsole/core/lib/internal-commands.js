@@ -1,5 +1,6 @@
 /*global window EventSource fetch */
 import { getContainer } from './run';
+import { Chrome } from '../../../LibWrappers';
 
 const version = process.env.REACT_APP_VERSION;
 const API = process.env.REACT_APP_API || '';
@@ -171,12 +172,24 @@ const showTensor = async ({ args: [tensor, id], console }) => {
   console.showTensor(window[tensor], window._$(`#canvas-${id}`));
 };
 
-const vexport = async ({ args: vname, console }) => {
-  console.log(`exporting variable ${vname}`);
+const vexport = async ({ args: _vname, console }) => {
+  console.log(`exporting variable ${_vname}`);
+  // check if the variable exists
+  if (window[_vname]) {
+    Chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      let tab = tabs[0];
+      Chrome.runtime.sendMessage({ action: 'export-variable', tabId: tab.id, vname: _vname, vvalue: window[_vname] }, (response) => {
+
+      });
+    });
+  } else {
+    console.warn(`variable ${_vname} doesn't exist`);
+  }
 };
 
 const vimport = async ({ args: vname, console }) => {
   console.log(`importing variable ${vname}`);
+
 };
 
 const listen = async ({ args: [id], console: internalConsole }) => {
