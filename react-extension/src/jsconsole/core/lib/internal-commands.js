@@ -178,18 +178,31 @@ const vexport = async ({ args: _vname, console }) => {
   if (window[_vname]) {
     Chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       let tab = tabs[0];
-      Chrome.runtime.sendMessage({ action: 'export-variable', tabId: tab.id, vname: _vname, vvalue: window[_vname] }, (response) => {
-
-      });
+      let msg = {
+        action: 'export-variable',
+        tabId: tab.id,
+        vname: _vname,
+        vvalue: window[_vname]
+      };
+      Chrome.runtime.sendMessage(msg, (response) => { });
     });
   } else {
     console.warn(`variable ${_vname} doesn't exist`);
   }
 };
 
-const vimport = async ({ args: vname, console }) => {
-  console.log(`importing variable ${vname}`);
-
+const vimport = async ({ args: [_tabId, _vname], console }) => {
+  console.log(`importing variable ${_vname} from tab ${_tabId}`);
+  let msg = {
+    action: 'import-variable',
+    tabId: _tabId,
+    vname: _vname
+  };
+  Chrome.runtime.sendMessage(msg, (response) => {
+    console.log('import response bla');
+    console._log(response['vname']);
+    console._log(response['vvalue']);
+  });
 };
 
 const listen = async ({ args: [id], console: internalConsole }) => {

@@ -10,15 +10,20 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         save_script(msg, sendResponse);
     } else if (msg.action == 'img-drag-start' || msg.action == 'img-drag-end') {
         window.devtoolPort.postMessage(msg);
-    } else if (msg.action == 'get-variable') {
-        console.log(`getting ${msg.vname}`);
-        console.log(window[msg.vname]);
+    } else if (msg.action == 'import-variable') {
+        console.log(`importing ${msg.vname} from tab ${msg.tabId}`);
+        // console.log(window[msg.vname]);
+        sendResponse({
+            vname: msg.vname,
+            vvalue: window.sharedVariables[msg.tabId][msg.vname]
+        });
     } else if (msg.action == 'console-created') {
         console.log(`new console created: ${msg.tabId}`);
         window.sharedVariables[msg.tabId] = {};
     } else if (msg.action == 'export-variable') {
         console.log(`exporting ${msg.vname} from tab ${msg.tabId}:`);
         console.log(msg.vvalue);
+        window.sharedVariables[msg.tabId][msg.vname] = msg.vvalue;
     }
 
     return true;
