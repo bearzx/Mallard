@@ -232,6 +232,7 @@ function searchTable() {
         } else {
             // [Xiong] todo
             // throw out an exception since we didn't find a table
+            console.log('no table was found');
         }
     }
 }
