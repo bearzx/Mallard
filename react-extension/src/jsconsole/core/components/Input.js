@@ -93,7 +93,7 @@ class Input extends Component {
   onAceLoad(_editor) {
     _editor.renderer.setShowGutter(false);
     _editor.container.style.lineHeight = 20;
-    // _editor.renderer.updateFontSize();
+    _editor.renderer.updateFontSize();
   }
 
   render() {
