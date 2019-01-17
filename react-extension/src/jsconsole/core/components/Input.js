@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 // TODO import Autocomplete from './Autocomplete';
 import keycodes from '../lib/keycodes';
+import AceEditor from 'react-ace';
 
 class Input extends Component {
   constructor(props) {
@@ -89,11 +90,19 @@ class Input extends Component {
     }
   }
 
+  onAceLoad(_editor) {
+    _editor.renderer.setShowGutter(false);
+    _editor.container.style.lineHeight = 20;
+    // _editor.renderer.updateFontSize();
+  }
+
   render() {
     const { autoFocus } = this.props;
     return (
       <div className="Input">
         {/*<Autocomplete value={this.state.value} />*/}
+
+        {/*
         <textarea
           className="cli"
           rows={this.state.rows}
@@ -106,6 +115,24 @@ class Input extends Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyPress}
         />
+        */}
+
+        <AceEditor
+          mode="javascript"
+          theme="clouds"
+          name="editor"
+          className="ace-cli"
+          editorProps={{ $blockScrolling: Infinity }}
+          width="100%"
+          height="20px"
+          commands={[{
+            name: 'save',
+            bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
+            exec: this.saveCode
+          }]}
+          onLoad={this.onAceLoad}
+        />
+
       </div>
     );
   }

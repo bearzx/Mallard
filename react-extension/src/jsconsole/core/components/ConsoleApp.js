@@ -121,7 +121,7 @@ class ConsoleApp extends Component {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (e.code && !doStuffKeys.test(e.code)) return;
 
-    this.input.focus();
+    // this.input.focus();
   }
 
   render() {

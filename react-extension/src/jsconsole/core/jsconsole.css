@@ -141,7 +141,8 @@ body, html, #root {
   content: '';
   background-image: url(/prompt.svg);
   background-size: contain;
-  top: 0.9rem;
+  /* top: 0.9rem; */
+  top: 0.3rem;
   left: 0.4rem;
   width: 12px;
   height: 12px;
@@ -167,7 +168,10 @@ body, html, #root {
   font-size: inherit;
   line-height: inherit;
 }
-.Line {
+
+.ace-cli {
+  margin-left: 1.4rem;
+}.Line {
   line-height: 1.4rem;
   /* padding: 0.6rem;*/
   border-bottom: 1px solid #eee;
