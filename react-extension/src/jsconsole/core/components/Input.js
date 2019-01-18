@@ -156,7 +156,7 @@ class Input extends Component {
 
         <AceEditor
           mode="javascript"
-          theme="clouds"
+          theme="chrome"
           name="editor"
           className="ace-cli"
           editorProps={{ $blockScrolling: Infinity }}
