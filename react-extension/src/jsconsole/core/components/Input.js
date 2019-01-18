@@ -91,9 +91,18 @@ class Input extends Component {
   }
 
   onAceLoad(_editor) {
+    _editor.setHighlightActiveLine(false);
     _editor.renderer.setShowGutter(false);
-    _editor.container.style.lineHeight = 20;
-    _editor.renderer.updateFontSize();
+    // _editor.setOptions({
+    //   fontSize: '20px'
+    // });
+    _editor.container.style.lineHeight = '20px';
+    // _editor.renderer.updateFontSize();
+  }
+
+  runCell(_editor) {
+    let code = _editor.getValue();
+    console.log(code);
   }
 
   render() {
@@ -125,11 +134,11 @@ class Input extends Component {
           editorProps={{ $blockScrolling: Infinity }}
           width="100%"
           height="20px"
-          commands={[{
-            name: 'save',
-            bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
-            exec: this.saveCode
-          }]}
+          commands={[
+            { name: 'run',
+              bindKey: { mac: 'Enter' },
+              exec: this.runCell }
+          ]}
           onLoad={this.onAceLoad}
         />
 
