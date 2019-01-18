@@ -17,6 +17,8 @@ class Input extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.runCell = this.runCell.bind(this);
+    this.upHistory = this.upHistory.bind(this);
   }
 
   onChange() {
@@ -93,16 +95,42 @@ class Input extends Component {
   onAceLoad(_editor) {
     _editor.setHighlightActiveLine(false);
     _editor.renderer.setShowGutter(false);
-    // _editor.setOptions({
-    //   fontSize: '20px'
-    // });
+    // _editor.setOptions('showPrintMargin', false);
+    _editor.setShowPrintMargin(false);
     _editor.container.style.lineHeight = '20px';
     // _editor.renderer.updateFontSize();
   }
 
-  runCell(_editor) {
-    let code = _editor.getValue();
-    console.log(code);
+  async runCell(_editor) {
+    const command = _editor.getValue();
+    const { history } = this.props;
+    // const command = this.input.value;
+    if (!command) {
+      // e.preventDefault();
+      return;
+    }
+
+    this.props.addHistory(command);
+    this.setState({ historyCursor: history.length + 1, value: '' });
+    // e.preventDefault();
+    await this.props.onRun(command);
+    // Don't use `this.input.scrollIntoView();` as it messes with iframes
+    window.scrollTo(0, document.body.scrollHeight);
+    return;
+  }
+
+  upHistory(_editor) {
+    const { history } = this.props;
+    let { historyCursor } = this.state;
+    historyCursor--;
+    if (historyCursor < 0) {
+      this.setState({ historyCursor: 0 });
+      return;
+    }
+    this.setState({ historyCursor, value: history[historyCursor] });
+    // this.onChange();
+    // e.preventDefault();
+    return;
   }
 
   render() {
@@ -134,10 +162,14 @@ class Input extends Component {
           editorProps={{ $blockScrolling: Infinity }}
           width="100%"
           height="20px"
+          value={this.state.value}
           commands={[
             { name: 'run',
               bindKey: { mac: 'Enter' },
-              exec: this.runCell }
+              exec: this.runCell },
+            { name: 'up',
+              bindKey: 'Up',
+              exec: this.upHistory}
           ]}
           onLoad={this.onAceLoad}
         />
