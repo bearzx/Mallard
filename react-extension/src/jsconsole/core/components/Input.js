@@ -19,6 +19,7 @@ class Input extends Component {
     this.onKeyPress = this.onKeyPress.bind(this);
     this.runCell = this.runCell.bind(this);
     this.upHistory = this.upHistory.bind(this);
+    this.downHistory = this.downHistory.bind(this);
   }
 
   onChange() {
@@ -46,6 +47,7 @@ class Input extends Component {
     }
 
     if (!multiline) {
+      // replaced by upHistory
       if (code === 'up arrow') {
         historyCursor--;
         if (historyCursor < 0) {
@@ -58,6 +60,7 @@ class Input extends Component {
         return;
       }
 
+      // replaced by downHistory
       if (code === 'down arrow') {
         historyCursor++;
         if (historyCursor >= history.length) {
@@ -70,6 +73,7 @@ class Input extends Component {
       }
     }
 
+    // replaced by runCell
     const command = this.input.value;
 
     if (code === 'enter') {
@@ -130,7 +134,18 @@ class Input extends Component {
     this.setState({ historyCursor, value: history[historyCursor] });
     // this.onChange();
     // e.preventDefault();
-    return;
+  }
+
+  downHistory(_editor) {
+    const { history } = this.props;
+    let { historyCursor } = this.state;
+    historyCursor++;
+    if (historyCursor >= history.length) {
+      this.setState({ historyCursor: history.length, value: '' });
+      return;
+    }
+    this.setState({ historyCursor, value: history[historyCursor] });
+    // e.preventDefault();
   }
 
   render() {
@@ -169,7 +184,10 @@ class Input extends Component {
               exec: this.runCell },
             { name: 'up',
               bindKey: 'Up',
-              exec: this.upHistory}
+              exec: this.upHistory },
+            { name: 'down',
+              bindKey: 'Down',
+              exec: this.downHistory }
           ]}
           onLoad={this.onAceLoad}
         />
