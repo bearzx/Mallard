@@ -10,6 +10,7 @@ import './App.css';
 import { Chrome } from './LibWrappers';
 import ConsoleApp from './jsconsole/core/containers/ConsoleApp';
 import DataFrame from 'dataframe-js';
+import MonacoEditor from 'react-monaco-editor';
 
 class App extends Component {
   constructor(props) {
@@ -122,6 +123,18 @@ class App extends Component {
               bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
               exec: this.saveCode
             }]}
+          />
+        </Tab>
+        <Tab value="monaco-editor" label="Monaco">
+          <MonacoEditor
+          width="100%"
+          height="100%"
+          language="javascript"
+          theme="vs-dark"
+          // value={code}
+          // options={options}
+          // onChange={::this.onChange}
+          // editorDidMount={::this.editorDidMount}
           />
         </Tab>
       </Tabs>
