@@ -17,13 +17,15 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
             vname: msg.vname,
             vvalue: window.sharedVariables[msg.tabId][msg.vname]
         });
-    } else if (msg.action == 'console-created') {
-        console.log(`new console created: ${msg.tabId}`);
-        window.sharedVariables[msg.tabId] = {};
     } else if (msg.action == 'export-variable') {
         console.log(`exporting ${msg.vname} from tab ${msg.tabId}:`);
         console.log(msg.vvalue);
         window.sharedVariables[msg.tabId][msg.vname] = msg.vvalue;
+    } else if (msg.action == 'console-created') {
+        console.log(`new console created: ${msg.tabId}`);
+        window.sharedVariables[msg.tabId] = {};
+    } else if (msg.action == 'console-closed') {
+        console.log(`console closed ${msg.tabId}`);
     }
 
     return true;

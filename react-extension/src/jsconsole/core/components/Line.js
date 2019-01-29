@@ -97,8 +97,7 @@ class Line extends Component {
                   allowOpen={true}
                   bare={type === 'log'}
                   key={`type-${i}`}
-                  shallow={false}
-                >
+                  shallow={false} >
                   {value}
                 </Type>
               );

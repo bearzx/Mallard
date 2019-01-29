@@ -10,7 +10,6 @@ import './App.css';
 import { Chrome } from './LibWrappers';
 import ConsoleApp from './jsconsole/core/containers/ConsoleApp';
 import DataFrame from 'dataframe-js';
-import MonacoEditor from 'react-monaco-editor';
 
 class App extends Component {
   constructor(props) {
@@ -50,6 +49,14 @@ class App extends Component {
       });
     };
 
+    window.onbeforeunload = (e) => {
+      let msg = {
+        action: 'console-closed',
+        tabId: this.state.tabId
+      };
+      Chrome.runtime.sendMessage(msg, (response) => { });
+    }
+
     this.state = {
       fname: '',
       code: '',
@@ -57,6 +64,11 @@ class App extends Component {
       plotIds: [],
       tabId: 0
     };
+
+    Chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      let tab = tabs[0];
+      this.state.tabId = tab.id;
+    });
 
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handleFnameChange = this.handleFnameChange.bind(this);
@@ -88,7 +100,7 @@ class App extends Component {
       name: this.state.fname,
       code: _editor.getValue()
     };
-    Chrome.runtime.sendMessage(msg, function(response) {
+    Chrome.runtime.sendMessage(msg, (response) => {
         console.log(response);
     });
   };
@@ -123,18 +135,6 @@ class App extends Component {
               bindKey: { win: 'Ctrl-S', mac: 'Command-S' },
               exec: this.saveCode
             }]}
-          />
-        </Tab>
-        <Tab value="monaco-editor" label="Monaco">
-          <MonacoEditor
-          width="100%"
-          height="100%"
-          language="javascript"
-          theme="vs-dark"
-          // value={code}
-          // options={options}
-          // onChange={::this.onChange}
-          // editorDidMount={::this.editorDidMount}
           />
         </Tab>
       </Tabs>

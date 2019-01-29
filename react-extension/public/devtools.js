@@ -37,7 +37,6 @@ chrome.devtools.panels.create(">_",
         });
       });
 
-
       panel.onSearch.addListener(function (action, queryString) {
         console.log(action);
         console.log(queryString);
