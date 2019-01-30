@@ -243,7 +243,7 @@ window.onload = function() {
     document.addEventListener("mousedown", function(event) {
         //right click
         if(event.button == 2) {
-            console.log(event.target);
+            // console.log(event.target);
             window.clickedEl = event.target;
         }
     }, true);
