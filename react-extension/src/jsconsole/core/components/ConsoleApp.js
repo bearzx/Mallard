@@ -12,7 +12,7 @@ import { Chrome } from '../../../LibWrappers';
 
 import DataFrame from 'dataframe-js';
 
-import { loadImg, loadXSV, cols2DF } from  '../lib/utils';
+import { loadImg, loadImgTensor, loadXSV, cols2DF } from  '../lib/utils';
 
 // this is lame, but it's a list of key.code that do stuff in the input that we _want_.
 const doStuffKeys = /^(Digit|Key|Num|Period|Semi|Comma|Slash|IntlBackslash|Backspace|Delete|Enter)/;

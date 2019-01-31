@@ -7,7 +7,7 @@ window.sharedVariables = {};
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     // console.log(msg);
     if (msg.action == 'save-script') {
-        save_script(msg, sendResponse);
+        saveScript(msg, sendResponse);
     } else if (msg.action == 'img-drag-start' || msg.action == 'img-drag-end') {
         window.devtoolPort.postMessage(msg);
     } else if (msg.action == 'import-variable') {
@@ -31,7 +31,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     return true;
 });
 
-function save_script(msg, sendResponse) {
+function saveScript(msg, sendResponse) {
     // console.log(`saving new script ${msg.name}`);
     // console.log(msg.code);
     chrome.storage.local.get(['saved_scripts'], (result) => {

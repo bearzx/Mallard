@@ -1,13 +1,20 @@
 import DataFrame from 'dataframe-js';
 
 // requires tensorflow
-export var loadImg = function(imgSrc) {
-    let img = new Image();
-    img.onload = () => {
-      window.t = window.tf.fromPixels(img).toFloat();
-      console.log('Image loaded as window.t');
+export var loadImgTensor = function(imgSrc) {
+    loadImg(imgSrc, () => {
+        window.t = window.tf.fromPixels(window._img_).toFloat();
+        // console.log('Image loaded as window.t');
+    });
+}
+
+export var loadImg = function(imgSrc, imgOnload) {
+    window._img_ = new Image();
+    window._img_.onload = () => {
+        console.log('Image loaded');
+        imgOnload();
     };
-    img.src = imgSrc;
+    window._img_.src = imgSrc;
 }
 
 export var loadXSV = function(link) {
