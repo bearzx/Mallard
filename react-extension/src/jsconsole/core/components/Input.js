@@ -102,6 +102,7 @@ class Input extends Component {
     // _editor.setOptions('showPrintMargin', false);
     _editor.setShowPrintMargin(false);
     _editor.container.style.lineHeight = '20px';
+    _editor.setFontSize('0.85rem');
     // _editor.renderer.updateFontSize();
   }
 
