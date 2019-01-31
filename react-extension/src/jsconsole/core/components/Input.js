@@ -188,7 +188,10 @@ class Input extends Component {
               exec: this.upHistory },
             { name: 'down',
               bindKey: 'Down',
-              exec: this.downHistory }
+              exec: this.downHistory },
+            { name: 'clear',
+              bindKey: 'Ctrl-l',
+              exec: this.props.onClear },
           ]}
           onLoad={this.onAceLoad}
         />
