@@ -65,7 +65,7 @@ function pingDevtool() {
 
 chrome.contextMenus.create({
     title: 'Inspect Data',
-    contexts: ['selection', 'link', 'image'],
+    contexts: ['selection', 'link', 'image', 'video'],
     onclick: inspectData
 });
 
@@ -73,8 +73,9 @@ function inspectData(info) {
     console.log(info);
 
     if (info.mediaType) {
-        console.log(`image url ${info.srcUrl}`);
-        window.devtoolPort.postMessage({ action: 'inspect-img', imgSrc: info.srcUrl });
+        // mediaType can only be image, video or audio
+        console.log(`${info.mediaType} url ${info.srcUrl}`);
+        window.devtoolPort.postMessage({ action: `inspect-${info.mediaType}`, srcUrl: info.srcUrl });
     } else if (info.linkUrl) {
         console.log(`link url ${info.linkUrl}`);
         if (info.linkUrl.endsWith('.tsv') || info.linkUrl.endsWith('.csv')) {

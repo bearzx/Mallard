@@ -12,7 +12,7 @@ import { Chrome } from '../../../LibWrappers';
 
 import DataFrame from 'dataframe-js';
 
-import { loadImg, loadImgTensor, loadXSV, cols2DF } from  '../lib/utils';
+import { loadImg, loadVideo, loadImgTensor, loadXSV, cols2DF } from  '../lib/utils';
 
 // this is lame, but it's a list of key.code that do stuff in the input that we _want_.
 const doStuffKeys = /^(Digit|Key|Num|Period|Semi|Comma|Slash|IntlBackslash|Backspace|Delete|Enter)/;
@@ -30,8 +30,12 @@ class ConsoleApp extends Component {
         this.props.dragStart();
       } else if (msg.action === 'img-drag-end') {
         this.props.dragEnd();
-      } else if (msg.action === 'inspect-img') {
-        loadImg(msg.imgSrc);
+      } else if (msg.action === 'inspect-image') {
+        loadImg(msg.srcUrl);
+      } else if (msg.action === 'inspect-video') {
+        loadVideo(msg.srcUrl);
+      } else if (msg.action === 'inspect-audio' ) {
+        // TODO
       } else if (msg.action === 'inspect-xsv') {
         console._log(msg.linkUrl);
         console.log(`${msg.linkUrl} loaded as window.df`);
