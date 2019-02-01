@@ -99,7 +99,6 @@ class Input extends Component {
   onAceLoad(_editor) {
     _editor.setHighlightActiveLine(false);
     _editor.renderer.setShowGutter(false);
-    // _editor.setOptions('showPrintMargin', false);
     _editor.setShowPrintMargin(false);
     _editor.container.style.lineHeight = '20px';
     _editor.setFontSize('0.85rem');
@@ -175,19 +174,19 @@ class Input extends Component {
           theme="chrome"
           name="editor"
           className="ace-cli"
-          editorProps={{ $blockScrolling: Infinity }}
+          editorProps={{ $blockScrolling: Infinity, $maxLines: 100 }}
           width="100%"
-          height="20px"
+          min-height="20px"
           value={this.state.value}
           commands={[
             { name: 'run',
-              bindKey: { mac: 'Enter' },
+              bindKey: { mac: 'Ctrl-Enter' },
               exec: this.runCell },
             { name: 'up',
-              bindKey: 'Up',
+              bindKey: 'Alt-Up',
               exec: this.upHistory },
             { name: 'down',
-              bindKey: 'Down',
+              bindKey: 'Alt-Down',
               exec: this.downHistory },
             { name: 'clear',
               bindKey: 'Ctrl-l',
