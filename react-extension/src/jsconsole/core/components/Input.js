@@ -131,7 +131,11 @@ class Input extends Component {
       this.setState({ historyCursor: 0 });
       return;
     }
-    this.setState({ historyCursor, value: history[historyCursor] });
+    this.setState({ historyCursor, value: history[historyCursor] }, () => {
+      const n = _editor.getSession().getValue().split('\n').length;
+      _editor.gotoLine(n);
+      _editor.navigateLineEnd();
+    });
     // this.onChange();
     // e.preventDefault();
   }
@@ -144,7 +148,11 @@ class Input extends Component {
       this.setState({ historyCursor: history.length, value: '' });
       return;
     }
-    this.setState({ historyCursor, value: history[historyCursor] });
+    this.setState({ historyCursor, value: history[historyCursor] }, () => {
+      const n = _editor.getSession().getValue().split('\n').length;
+      _editor.gotoLine(n);
+      _editor.navigateLineEnd();
+    });
     // e.preventDefault();
   }
 
