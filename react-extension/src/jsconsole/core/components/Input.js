@@ -97,12 +97,16 @@ class Input extends Component {
   }
 
   onAceLoad(_editor) {
-    _editor.setHighlightActiveLine(false);
+    // _editor.setHighlightActiveLine(false);
     _editor.renderer.setShowGutter(false);
     _editor.setShowPrintMargin(false);
     _editor.container.style.lineHeight = '20px';
     _editor.setFontSize('0.85rem');
     // _editor.renderer.updateFontSize();
+    _editor.setOptions({
+      minLines: 1,
+      maxLines: 5
+    });
   }
 
   async runCell(_editor) {
@@ -119,7 +123,8 @@ class Input extends Component {
     // e.preventDefault();
     await this.props.onRun(command);
     // Don't use `this.input.scrollIntoView();` as it messes with iframes
-    window.scrollTo(0, document.body.scrollHeight);
+    // window.scrollTo(0, document.body.scrollHeight);
+    window.scrollTo(0, document.body.clientHeight);
     return;
   }
 
@@ -131,11 +136,7 @@ class Input extends Component {
       this.setState({ historyCursor: 0 });
       return;
     }
-    this.setState({ historyCursor, value: history[historyCursor] }, () => {
-      const n = _editor.getSession().getValue().split('\n').length;
-      _editor.gotoLine(n);
-      _editor.navigateLineEnd();
-    });
+  this.setState({ historyCursor, value: history[historyCursor] }, () => this.setCursor(_editor));
     // this.onChange();
     // e.preventDefault();
   }
@@ -148,12 +149,14 @@ class Input extends Component {
       this.setState({ historyCursor: history.length, value: '' });
       return;
     }
-    this.setState({ historyCursor, value: history[historyCursor] }, () => {
-      const n = _editor.getSession().getValue().split('\n').length;
-      _editor.gotoLine(n);
-      _editor.navigateLineEnd();
-    });
+    this.setState({ historyCursor, value: history[historyCursor] }, () => this.setCursor(_editor));
     // e.preventDefault();
+  }
+
+  setCursor(_editor) {
+    const n = _editor.getSession().getValue().split('\n').length;
+    _editor.gotoLine(n);
+    _editor.navigateLineEnd();
   }
 
   render() {
@@ -182,7 +185,7 @@ class Input extends Component {
           theme="chrome"
           name="editor"
           className="ace-cli"
-          editorProps={{ $blockScrolling: Infinity, $maxLines: 100 }}
+          editorProps={{ $blockScrolling: Infinity }}
           width="100%"
           min-height="20px"
           value={this.state.value}
