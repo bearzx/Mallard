@@ -22,6 +22,13 @@ export var loadVideo = function(srcUrl) {
     window._video_.onloadstart = () => {
         console.log('Video loaded as window._video_');
     };
+
+    window._video_.oncanplay = () => {
+        window._video_.width = window._video_.videoWidth;
+        window._video_.height = window._video_.videoHeight;
+    }
+
+    window._video_.setAttribute('crossOrigin', 'anonymous');
     window._video_.setAttribute('src', srcUrl);
 }
 
