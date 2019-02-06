@@ -15,6 +15,14 @@ video.play();
 // second argument and the getClassification function as the third
 ml5.imageClassifier('MobileNet', video).then(classifier => loop(classifier));
 
+// loop = (classifier) => {
+//   classifier.predict()
+//     .then(results => {
+//       console.log(results[0].className);
+//       loop(classifier) // Call again to create a loop
+//     })
+// }
+
 const loop = (classifier) => {
   classifier.predict()
     .then(results => {
