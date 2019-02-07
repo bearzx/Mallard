@@ -3,6 +3,7 @@ import LineNav from './LineNav';
 import which from '../lib/which-type';
 import { Plot, Canvas } from '../../../PlotPanel';
 import ImagePanel from '../containers/ImagePanel';
+import { HTMLPanel } from '../../../HTMLPanel';
 
 class Line extends Component {
   constructor(props) {
@@ -50,6 +51,14 @@ class Line extends Component {
     if (type === 'dnd') {
       line = (
         <ImagePanel />
+      );
+    }
+
+    if (type == 'html') {
+      console._log(value);
+      // line = (value.text);
+      line = (
+        <HTMLPanel text={value.text} />
       );
     }
 

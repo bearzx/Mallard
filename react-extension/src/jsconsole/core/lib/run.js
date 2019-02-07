@@ -1,4 +1,4 @@
-/*global document window */
+/* global document window */
 import { parse } from 'babylon';
 import * as walk from 'babylon-walk';
 
@@ -20,6 +20,7 @@ export const bindConsole = __console => {
     'vis',
     'dnd',
     'showTensor',
+    'html',
     '_log'
   ];
 

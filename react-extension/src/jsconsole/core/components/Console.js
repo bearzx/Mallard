@@ -161,6 +161,13 @@ class Console extends Component {
     });
   }
 
+  html(_text) {
+    this.push({
+      type: 'html',
+      value: { text: _text }
+    });
+  }
+
   canvas(_canvasId) {
     this.push({
       type: 'canvas',
