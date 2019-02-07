@@ -55,8 +55,7 @@ class Line extends Component {
     }
 
     if (type == 'html') {
-      console._log(value);
-      // line = (value.text);
+      // console._log(value);
       line = (
         <HTMLPanel text={value.text} />
       );

@@ -64,12 +64,16 @@ class ConsoleApp extends Component {
         command,
         value: command,
       });
+
       const res = await run(command);
-      console.push({
-        command,
-        type: 'response',
-        ...res,
-      });
+
+      if (res.value !== undefined) {
+        console.push({
+          command,
+          type: 'response',
+          ...res,
+        });
+      }
       return;
     }
 

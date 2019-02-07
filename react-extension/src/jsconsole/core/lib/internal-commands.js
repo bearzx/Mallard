@@ -58,7 +58,7 @@ const _load = async ({ args: urls, console }) => {
     script.onerror = () => console.warn(`Failed to load ${url}`);
     document.body.appendChild(script);
   });
-  return 'Loading script…';
+  return 'Loading script...';
 };
 
 const load = async ({ args: url }) => {
