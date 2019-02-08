@@ -12,7 +12,9 @@ export var loadImg = function(srcUrl, imgOnload) {
     window._img_ = new Image();
     window._img_.onload = () => {
         console.log('Image loaded as window._img_');
-        imgOnload();
+        if (imgOnload) {
+            imgOnload();
+        }
     };
     window._img_.src = srcUrl;
 }

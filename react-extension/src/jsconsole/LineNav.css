@@ -64,6 +64,24 @@
   background-image: url(/search.svg);
 }
 
+.icon.play {
+  background-image: url(/play.svg);
+}
+
+.icon.play:hover {
+  background-color: #228B22;
+  box-shadow: 0 0 0 1px #228B22;
+}
+
+.icon.delete {
+  background-image: url(/substract.svg);
+}
+
+.icon.delete:hover {
+  background-color: #DC143C;
+  box-shadow: 0 0 0 1px #DC143C;
+}
+
 .icon.expand {
   background-image: url(/expand.svg);
   padding: 0;

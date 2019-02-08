@@ -82,6 +82,24 @@ class LineNav extends Component {
 
     return (
       <div className="LineNav">
+        <a
+          onClick={this.onPermalink}
+          title="Run Code"
+          className="icon play"
+          href={`?${escape(command)}`}
+        >
+          play
+        </a>
+
+        <a
+          onClick={this.onPermalink}
+          title="Delete Cell"
+          className="icon delete"
+          href={`?${escape(command)}`}
+        >
+          delete
+        </a>
+
         {typeof value === 'object' &&
           <Filter
             ref={e => (this.filter = e)}
