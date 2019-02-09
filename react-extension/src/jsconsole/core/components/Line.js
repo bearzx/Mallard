@@ -30,6 +30,7 @@ class Line extends Component {
       open = false,
       html = false,
       onFocus = () => { },
+      onHide = () => { },
     } = this.props;
 
     let line = null;
@@ -84,6 +85,7 @@ class Line extends Component {
             onFilter={filter => {
               this.setState({ filter });
             }}
+            onHide={onHide}
             value={
               type === 'log' && Array.isArray(value) && value.length === 1
                 ? value[0]

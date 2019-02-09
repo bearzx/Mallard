@@ -74,6 +74,7 @@ class Console extends Component {
     };
 
     this.state = {};
+    // TODO: add hidden property
     this.state.lines = (props.commands || []).reduce((acc, curr) => {
       acc[getNext()] = curr;
       return acc;
@@ -85,7 +86,12 @@ class Console extends Component {
 
   push(command) {
     const next = getNext();
-    const newLine = { [next]: command };
+    const newLine = {
+      [next]: {
+        ...command,
+        hidden: false
+      }
+    };
     this.setState({ lines: Object.assign(this.state.lines, newLine) });
   }
 
@@ -245,6 +251,12 @@ class Console extends Component {
     });
   }
 
+  onHide(i) {
+    return () => {
+      console._log(i);
+    }
+  }
+
   render() {
     const commands = this.state.lines || {};
     const keys = Object.keys(commands);
@@ -252,6 +264,7 @@ class Console extends Component {
       keys.reverse();
     }
 
+    // [Xiong] Bug TODO: why is the key order guaranteed?
     return (
       <div
         className="react-console-container"
@@ -259,7 +272,12 @@ class Console extends Component {
           e.stopPropagation(); // prevent the focus on the input element
         }}
       >
-        {keys.map(_ => <Line key={`line-${_}`} {...commands[_]} />)}
+        { keys.map(_ =>
+          <Line
+            key={`line-${_}`}
+            onHide={this.onHide(_)}
+            {...commands[_]}
+          />) }
       </div>
     );
   }

@@ -8,6 +8,7 @@ class LineNav extends Component {
     this.preCopy = this.preCopy.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.onPermalink = this.onPermalink.bind(this);
+    // this.onHide = this.onHide.bind(this);
 
     const type = {}.toString.call(props.value) || 'string';
     this.state = {
@@ -71,8 +72,12 @@ class LineNav extends Component {
     });
   }
 
+  // onHide(e) {
+  //   console._log(`hideing cell `);
+  // }
+
   render() {
-    const { command, value, onFilter } = this.props;
+    const { command, value, onFilter, onHide } = this.props;
     const { text, filter, copyAsHTML } = this.state;
 
     const copyAs =
@@ -92,12 +97,11 @@ class LineNav extends Component {
         </a>
 
         <a
-          onClick={this.onPermalink}
-          title="Delete Cell"
-          className="icon delete"
-          href={`?${escape(command)}`}
+          onClick={onHide}
+          title="Hide Cell"
+          className="icon hide"
         >
-          delete
+          hide
         </a>
 
         {typeof value === 'object' &&
