@@ -106,7 +106,8 @@ class Input extends Component {
     _editor.setOptions({
       minLines: 1,
       maxLines: 5,
-      autoScrollEditorIntoView: true
+      autoScrollEditorIntoView: true,
+      cursorStyle: 'wide'
     });
   }
 

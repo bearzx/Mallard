@@ -72,7 +72,7 @@ class Line extends Component {
     if (type === 'command') {
       line = (
         <div className="prompt input">
-          {/* <LineNav value={value} /> */}
+          <LineNav value={value} />
           {value}
         </div>
       );
