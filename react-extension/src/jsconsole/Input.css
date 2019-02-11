@@ -50,4 +50,6 @@
 
 .ace-cli {
   margin-left: 1.2rem;
+  /* border-left: 2px solid #367CF1; */
+  border-left: 2px solid #2196F3;
 }

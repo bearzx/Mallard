@@ -16,6 +16,24 @@ body, html, #root {
 
 .App.top {
   padding-top: 2.6rem;
+}
+
+.line-transition-enter {
+  opacity: 0.01;
+}
+
+.line-transition-enter.line-transition-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.line-transition-leave {
+  opacity: 1;
+}
+
+.line-transition-leave.line-transition-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }.ArrayType {
 
 }.Autocomplete {
@@ -171,6 +189,8 @@ body, html, #root {
 
 .ace-cli {
   margin-left: 1.2rem;
+  /* border-left: 2px solid #367CF1; */
+  border-left: 2px solid #2196F3;
 }.Line {
   line-height: 1.4rem;
   /* padding: 0.6rem;*/

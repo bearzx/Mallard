@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Line from './Line';
 import { Chrome } from '../../../LibWrappers';
 import run from '../lib/run';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 let guid = 0;
 const getNext = () => guid++;
@@ -265,7 +266,7 @@ class Console extends Component {
 
   render() {
     const commands = this.state.lines || {};
-    const keys = Object.keys(commands);
+    const keys = Object.keys(commands).filter((_) => !commands[_].hidden);
     if (this.props.reverse) {
       keys.reverse();
     }
@@ -278,12 +279,18 @@ class Console extends Component {
           e.stopPropagation(); // prevent the focus on the input element
         }}
       >
-        { keys.map(_ =>
-          <Line
-            key={`line-${_}`}
-            onHide={this.onHide(_)}
-            {...commands[_]}
-          />) }
+        <ReactCSSTransitionGroup
+          transitionName="line-transition"
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={300}
+        >
+          { keys.map(_ =>
+            <Line
+              key={`line-${_}`}
+              onHide={this.onHide(_)}
+              {...commands[_]}
+            />) }
+        </ReactCSSTransitionGroup>
       </div>
     );
   }
