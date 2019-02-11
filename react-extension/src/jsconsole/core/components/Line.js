@@ -18,6 +18,10 @@ class Line extends Component {
       return true;
     }
 
+    if (this.props.hidden !== nextProps.hidden) {
+      return true;
+    }
+
     return false; // this prevents bananas amount of rendering
   }
 
@@ -29,9 +33,12 @@ class Line extends Component {
       error = false,
       open = false,
       html = false,
+      hidden = false,
       onFocus = () => { },
       onHide = () => { },
     } = this.props;
+
+    console._log(this.props);
 
     let line = null;
 
@@ -79,7 +86,7 @@ class Line extends Component {
       // for LineNav I do a bit of a giggle so if it's a log, we copy the single
       // value, which is nicer for the user
       line = (
-        <div className={`prompt output ${type} ${error ? 'error' : ''}`}>
+        <div className={ `prompt output ${type} ${error ? 'error' : ''} ${hidden ? 'hidden' : ''}` }>
 
           <LineNav
             onFilter={filter => {

@@ -253,7 +253,13 @@ class Console extends Component {
 
   onHide(i) {
     return () => {
-      console._log(i);
+      let lines = {...this.state.lines};
+      let lineToHide = {
+        ...lines[i],
+        hidden: true
+      };
+      lines[i] = lineToHide;
+      this.setState({ lines: lines });
     }
   }
 

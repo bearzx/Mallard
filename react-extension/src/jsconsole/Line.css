@@ -72,6 +72,10 @@
   left: 0.5rem;
 }
 
+.Line .hidden {
+  display: none;
+}
+
 .Line em {
   user-select: none;
   padding-right: 5px;
