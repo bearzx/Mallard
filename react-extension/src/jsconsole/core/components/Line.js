@@ -34,6 +34,7 @@ class Line extends Component {
       open = false,
       html = false,
       hidden = false,
+      evaluated = true,
       onFocus = () => { },
       onHide = () => { },
     } = this.props;

@@ -87,12 +87,17 @@ class Console extends Component {
 
   push(command) {
     const next = getNext();
+    let addons = { hidden: false };
+    if (command.type === 'command') {
+      addons['evaluated'] = true;
+    }
     const newLine = {
       [next]: {
         ...command,
-        hidden: false
+        ...addons
       }
     };
+    console._log(newLine);
     this.setState({ lines: Object.assign(this.state.lines, newLine) });
   }
 
@@ -190,6 +195,16 @@ class Console extends Component {
 
   _log(...rest) {
     window.console._log(rest);
+  }
+
+  downloadCode() {
+    let commands = this.state.lines || {};
+    let blob = new Blob([JSON.stringify(commands)], { type: 'application/json' });
+    let url = URL.createObjectURL(blob);
+    Chrome.downloads.download({
+        url: url,
+        filename: 'pgxz3-backup.json'
+    });
   }
 
   showTensor(tensor, canvas) {

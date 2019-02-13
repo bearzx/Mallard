@@ -21,7 +21,8 @@ export const bindConsole = __console => {
     'dnd',
     'showTensor',
     'html',
-    '_log'
+    '_log',
+    'downloadCode'
   ];
 
   const _log = window.console.log;

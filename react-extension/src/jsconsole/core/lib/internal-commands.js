@@ -149,6 +149,10 @@ const showCode = async () => {
   window.show_code();
 };
 
+const backup = async() => {
+  console.downloadCode();
+}
+
 const run = async ({ args: [name], console }) => {
   console._run_(name);
   return `${name} evaled`; // [Xiong] more indicators?
@@ -267,6 +271,7 @@ const commands = {
   seqLoad,
   edit,
   showCode,
+  backup,
   run,
   seqrun,
   vis,

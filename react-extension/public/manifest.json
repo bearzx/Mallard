@@ -18,7 +18,8 @@
         "webRequest",
         "<all_urls>",
         "webRequestBlocking",
-        "<all_urls>"
+        "<all_urls>",
+        "downloads"
       ],
       "content_security_policy": "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'self'",
       "content_scripts": [{
