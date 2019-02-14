@@ -77,7 +77,7 @@ class LineNav extends Component {
   // }
 
   render() {
-    const { command, value, onFilter, onHide } = this.props;
+    const { command, value, evalable, onFilter, onHide, onReRun } = this.props;
     const { text, filter, copyAsHTML } = this.state;
 
     const copyAs =
@@ -87,14 +87,15 @@ class LineNav extends Component {
 
     return (
       <div className="LineNav">
-        <a
-          onClick={this.onPermalink}
-          title="Run Code"
-          className="icon play"
-          href={`?${escape(command)}`}
-        >
-          play
-        </a>
+        {evalable &&
+          <a
+            onClick={onReRun}
+            title="Run Code"
+            className="icon play"
+          >
+            run
+          </a>}
+
 
         <a
           onClick={onHide}

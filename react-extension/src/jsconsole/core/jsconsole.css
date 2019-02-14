@@ -34,6 +34,13 @@ body, html, #root {
 .line-transition-leave.line-transition-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
+}
+
+#code-upload {
+  display: none;
+  opacity: 0;
+  height: 0px;
+  width: 0px;
 }.ArrayType {
 
 }.Autocomplete {

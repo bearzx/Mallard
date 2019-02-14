@@ -34,12 +34,13 @@ class Line extends Component {
       open = false,
       html = false,
       hidden = false,
-      evaluated = true,
+      evalable = false,
       onFocus = () => { },
       onHide = () => { },
+      onReRun = () => { },
     } = this.props;
 
-    console._log(this.props);
+    // console._log(this.props);
 
     let line = null;
 
@@ -73,7 +74,7 @@ class Line extends Component {
     if (type === 'command') {
       line = (
         <div className="prompt input">
-          <LineNav value={value} />
+          <LineNav value={value} evalable={evalable} onReRun={onReRun} />
           {value}
         </div>
       );
@@ -100,6 +101,7 @@ class Line extends Component {
                 : value
             }
             command={command}
+            evalable={evalable}
           />
 
           {(type === 'log' && Array.isArray(value) ? value : [value]).map(

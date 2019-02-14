@@ -22,7 +22,8 @@ export const bindConsole = __console => {
     'showTensor',
     'html',
     '_log',
-    'downloadCode'
+    'downloadCode',
+    'uploadCode'
   ];
 
   const _log = window.console.log;

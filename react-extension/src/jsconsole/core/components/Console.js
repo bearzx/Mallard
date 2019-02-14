@@ -83,14 +83,15 @@ class Console extends Component {
     this.log = this.log.bind(this);
     this.clear = this.clear.bind(this);
     this.push = this.push.bind(this);
+    this.uploadCode = this.uploadCode.bind(this);
   }
 
   push(command) {
     const next = getNext();
     let addons = { hidden: false };
-    if (command.type === 'command') {
-      addons['evaluated'] = true;
-    }
+    // if (command.type === 'command') {
+    //   addons['evaluated'] = true;
+    // }
     const newLine = {
       [next]: {
         ...command,
@@ -207,6 +208,23 @@ class Console extends Component {
     });
   }
 
+  uploadCode(e) {
+    // console._log(e.target.files);
+    let backupCode = e.target.files[0];
+    let reader = new FileReader();
+    reader.onload = (_e) => {
+      let newLines = JSON.parse(_e.target.result);
+      for (let key of Object.keys(newLines)) {
+        if (newLines[key].type === 'command') {
+          newLines[key].evalable = true;
+        }
+      }
+      // console._log(newLines);
+      this.setState({ lines: newLines });
+    };
+    reader.readAsText(backupCode);
+  }
+
   showTensor(tensor, canvas) {
     const ctx = canvas.getContext('2d');
     const [height, width] = tensor.shape;
@@ -279,6 +297,12 @@ class Console extends Component {
     }
   }
 
+  onReRun(i) {
+    return () => {
+      console._log(`re-running ${this.state.lines[i].command}`);
+    }
+  }
+
   render() {
     const commands = this.state.lines || {};
     const keys = Object.keys(commands).filter((_) => !commands[_].hidden);
@@ -294,6 +318,12 @@ class Console extends Component {
           e.stopPropagation(); // prevent the focus on the input element
         }}
       >
+        <input
+          id="code-upload"
+          type="file"
+          name="backupCode"
+          onChange={(e) => this.uploadCode(e)}
+          multiple/>
         <ReactCSSTransitionGroup
           transitionName="line-transition"
           transitionEnterTimeout={300}
@@ -303,6 +333,7 @@ class Console extends Component {
             <Line
               key={`line-${_}`}
               onHide={this.onHide(_)}
+              onReRun={this.onReRun(_)}
               {...commands[_]}
             />) }
         </ReactCSSTransitionGroup>
