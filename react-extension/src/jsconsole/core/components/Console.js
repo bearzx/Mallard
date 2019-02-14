@@ -87,11 +87,8 @@ class Console extends Component {
   }
 
   push(command) {
-    const next = getNext();
+    const next = command.linei ? command.linei : getNext();
     let addons = { hidden: false };
-    // if (command.type === 'command') {
-    //   addons['evaluated'] = true;
-    // }
     const newLine = {
       [next]: {
         ...command,
@@ -213,13 +210,16 @@ class Console extends Component {
     let backupCode = e.target.files[0];
     let reader = new FileReader();
     reader.onload = (_e) => {
-      let newLines = JSON.parse(_e.target.result);
-      for (let key of Object.keys(newLines)) {
-        if (newLines[key].type === 'command') {
+      let _newLines = JSON.parse(_e.target.result);
+      let newLines = {};
+      for (let key of Object.keys(_newLines)) {
+        newLines[parseInt(key)] = _newLines[key];
+        if (_newLines[key].type === 'command') {
+          // newLines[key].linei = key;
           newLines[key].evalable = true;
         }
       }
-      // console._log(newLines);
+      guid = Math.max(...Object.keys(newLines));
       this.setState({ lines: newLines });
     };
     reader.readAsText(backupCode);
@@ -298,8 +298,17 @@ class Console extends Component {
   }
 
   onReRun(i) {
-    return () => {
-      console._log(`re-running ${this.state.lines[i].command}`);
+    return async () => {
+      // console._log(`re-running ${this.state.lines[i].command}`);
+      let lines = {...this.state.lines};
+      let lineToHide = {
+        ...lines[i],
+        evalable: false
+      };
+      lines[i] = lineToHide;
+      this.setState({ lines: lines });
+      console._log(typeof i);
+      this.props.onRun(this.state.lines[i].command, i);
     }
   }
 

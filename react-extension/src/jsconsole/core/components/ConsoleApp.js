@@ -54,15 +54,18 @@ class ConsoleApp extends Component {
     this.triggerFocus = this.triggerFocus.bind(this);
   }
 
-  async onRun(command) {
+  async onRun(command, _linei) {
     const console = this.console;
     // window.console._log(console);
+
+    // console._log(typeof _linei);
 
     if (command[0] !== ':') {
       console.push({
         type: 'command',
         command,
         value: command,
+        linei: _linei ? _linei : null
       });
 
       const res = await run(command);
@@ -71,6 +74,7 @@ class ConsoleApp extends Component {
         console.push({
           command,
           type: 'response',
+          linei: _linei ? (_linei + 1) : null,
           ...res,
         });
       }
@@ -148,6 +152,7 @@ class ConsoleApp extends Component {
           ref={e => (this.console = e)}
           commands={commands}
           reverse={layout === 'top'}
+          onRun={this.onRun}
         />
         <Input
           inputRef={e => (this.input = e)}
