@@ -149,9 +149,13 @@ const showCode = async () => {
   window.show_code();
 };
 
-const backup = async() => {
+const backup = async () => {
   console.downloadCode();
-}
+};
+
+const upload = async () => {
+  console.uploadCode();
+};
 
 const run = async ({ args: [name], console }) => {
   console._run_(name);
@@ -272,6 +276,7 @@ const commands = {
   edit,
   showCode,
   backup,
+  upload,
   run,
   seqrun,
   vis,

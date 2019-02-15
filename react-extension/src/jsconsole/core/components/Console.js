@@ -83,7 +83,7 @@ class Console extends Component {
     this.log = this.log.bind(this);
     this.clear = this.clear.bind(this);
     this.push = this.push.bind(this);
-    this.uploadCode = this.uploadCode.bind(this);
+    this.onUploadedCodeChange = this.onUploadedCodeChange.bind(this);
   }
 
   push(command) {
@@ -205,7 +205,12 @@ class Console extends Component {
     });
   }
 
-  uploadCode(e) {
+  uploadCode() {
+    // TODO: clean this up as a exported lib
+    window._$('#code-upload').click();
+  }
+
+  onUploadedCodeChange(e) {
     // console._log(e.target.files);
     let backupCode = e.target.files[0];
     let reader = new FileReader();
@@ -219,7 +224,7 @@ class Console extends Component {
           newLines[key].evalable = true;
         }
       }
-      guid = Math.max(...lineIndices);
+      guid = Math.max(...lineIndices) + 1;
       this.setState({ lines: newLines });
     };
     reader.readAsText(backupCode);
@@ -331,7 +336,7 @@ class Console extends Component {
           id="code-upload"
           type="file"
           name="backupCode"
-          onChange={(e) => this.uploadCode(e)}
+          onChange={(e) => this.onUploadedCodeChange(e)}
           multiple/>
         <ReactCSSTransitionGroup
           transitionName="line-transition"
