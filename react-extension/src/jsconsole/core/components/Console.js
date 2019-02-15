@@ -95,7 +95,7 @@ class Console extends Component {
         ...addons
       }
     };
-    console._log(newLine);
+    // console._log(newLine);
     this.setState({ lines: Object.assign(this.state.lines, newLine) });
   }
 
@@ -209,17 +209,17 @@ class Console extends Component {
     // console._log(e.target.files);
     let backupCode = e.target.files[0];
     let reader = new FileReader();
+    let lineIndices = [];
     reader.onload = (_e) => {
-      let _newLines = JSON.parse(_e.target.result);
-      let newLines = {};
-      for (let key of Object.keys(_newLines)) {
-        newLines[parseInt(key)] = _newLines[key];
-        if (_newLines[key].type === 'command') {
-          // newLines[key].linei = key;
+      let newLines = JSON.parse(_e.target.result);
+      for (let key of Object.keys(newLines)) {
+        newLines[key].linei = parseInt(key);
+        lineIndices.push(parseInt(key));
+        if (newLines[key].type === 'command') {
           newLines[key].evalable = true;
         }
       }
-      guid = Math.max(...Object.keys(newLines));
+      guid = Math.max(...lineIndices);
       this.setState({ lines: newLines });
     };
     reader.readAsText(backupCode);
@@ -307,14 +307,14 @@ class Console extends Component {
       };
       lines[i] = lineToHide;
       this.setState({ lines: lines });
-      console._log(typeof i);
-      this.props.onRun(this.state.lines[i].command, i);
+      this.props.onRun(this.state.lines[i].command, lines[i].linei);
     }
   }
 
   render() {
     const commands = this.state.lines || {};
     const keys = Object.keys(commands).filter((_) => !commands[_].hidden);
+    // console.log(typeof keys[0]);
     if (this.props.reverse) {
       keys.reverse();
     }

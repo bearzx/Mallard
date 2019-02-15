@@ -22,6 +22,14 @@ class Line extends Component {
       return true;
     }
 
+    if (this.props.evalable !== nextProps.evalable) {
+      return true;
+    }
+
+    if (this.props.value !== nextProps.value) {
+      return true;
+    }
+
     return false; // this prevents bananas amount of rendering
   }
 

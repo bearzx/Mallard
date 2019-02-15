@@ -65,6 +65,7 @@ class ConsoleApp extends Component {
         type: 'command',
         command,
         value: command,
+        evalable: false,
         linei: _linei ? _linei : null
       });
 
