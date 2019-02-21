@@ -5,7 +5,11 @@ import run from '../lib/run';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 let guid = 0;
+let visid = 0;
+let canvasid = 0;
 const getNext = () => guid++;
+const getNextVisid = () => visid++;
+const getNextCanvasid = () => canvasid++;
 
 function AssertError(message) {
   this.name = 'Assertion fail';
@@ -164,10 +168,10 @@ class Console extends Component {
     });
   }
 
-  vis(_plotId) {
+  vis() {
     this.push({
       type: 'vis',
-      value: { plotId: _plotId }
+      value: { plotId: getNextVisid() }
     });
   }
 
@@ -181,7 +185,7 @@ class Console extends Component {
   canvas(_canvasId) {
     this.push({
       type: 'canvas',
-      value: { canvasId: _canvasId }
+      value: { canvasId: getNextCanvasid() }
     });
   }
 

@@ -21,8 +21,13 @@ export class Plot extends Component {
 
   render() {
     return (
-      <div id={"plot-" + this.props.plotId} className="plot-slot">
-        <h3 className="plot-placeholder">{"#plot-" + this.props.plotId}</h3>
+      <div className="plot-slot">
+        <div>
+          <span>#plot-{this.props.plotId}</span>
+        </div>
+        <div id={"plot-" + this.props.plotId}>
+          {/* <h3 className="plot-placeholder">{"#plot-" + this.props.plotId}</h3> */}
+        </div>
       </div>
     )
   }
@@ -36,6 +41,9 @@ export class Canvas extends Component {
   render() {
     return (
       <div className="canvas-slot">
+        <div>
+          <span>#canvas-{this.props.canvasId}</span>
+        </div>
         <canvas id={"canvas-" + this.props.canvasId}></canvas>
       </div>
     )
