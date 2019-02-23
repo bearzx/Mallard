@@ -46,6 +46,7 @@ const libs = {
   lodash: 'https://cdn.jsdelivr.net/lodash/latest/lodash.min.js',
   moment: 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js',
   datefns: 'https://cdn.jsdelivr.net/gh/date-fns/date-fns/dist/date_fns.min.js',
+  faceapi: 'https://bearzx.com/pgxz3/face-api.js',
 };
 
 const _load = async ({ args: urls, console }) => {

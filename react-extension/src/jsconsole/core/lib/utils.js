@@ -12,6 +12,12 @@ export var loadImg = function(srcUrl, imgOnload) {
     window._img_ = new Image();
     window._img_.onload = () => {
         console.log('Image loaded as window._img_');
+        const imgWidth = window._img_.width;
+        const imgHeight = window._img_.height;
+        if (imgWidth > window.innerWidth) {
+            window._img_.width = window.innerWidth;
+            window._img_.height = imgHeight / (imgWidth / window.innerWidth);
+        }
         if (imgOnload) {
             imgOnload();
         }
