@@ -92,6 +92,12 @@ class App extends Component {
 
   onLoad = (_editor) => {
     // console.log('editor load');
+    _editor.setOptions({
+      minLines: 1,
+      maxLines: Infinity,
+      autoScrollEditorIntoView: true,
+      cursorStyle: 'wide'
+    });
   }
 
   saveCode = (_editor) => {
@@ -122,8 +128,8 @@ class App extends Component {
           <AceEditor
             mode="javascript"
             theme="chrome"
-            name="editor"
-            className="code-editor"
+            name="code-editor"
+            // className="code-editor"
             value={this.state.code}
             editorProps={{ $blockScrolling: Infinity }}
             width="100%"

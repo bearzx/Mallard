@@ -56,3 +56,26 @@ function set_canvas(plot_id) {
 function set_html(plot_id, html) {
     $(plot_id).html(html);
 }
+
+async function plotData(container, xs, ys) {
+    const xvals = await xs.data();
+    const yvals = await ys.data();
+
+    const values = Array.from(yvals).map((y, i) => {
+      return {'x': xvals[i], 'y': yvals[i]};
+    });
+
+    const spec = {
+      '$schema': 'https://vega.github.io/schema/vega-lite/v2.json',
+      'width': 300,
+      'height': 300,
+      'data': {'values': values},
+      'mark': 'point',
+      'encoding': {
+        'x': {'field': 'x', 'type': 'quantitative'},
+        'y': {'field': 'y', 'type': 'quantitative'}
+      }
+    };
+
+    return renderChart(container, spec, {actions: false});
+}

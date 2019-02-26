@@ -29,7 +29,9 @@
     "react-monaco-editor": "^0.22.0",
     "react-scripts": "1.1.4",
     "react-tabs": "^2.2.2",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "vega": "^5.0.0-rc2",
+    "vega-embed": "^3.29.0"
   },
   "scripts": {
     "start": "react-scripts start",

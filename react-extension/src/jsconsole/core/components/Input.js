@@ -105,7 +105,7 @@ class Input extends Component {
     // _editor.renderer.updateFontSize();
     _editor.setOptions({
       minLines: 1,
-      maxLines: 5,
+      maxLines: 10,
       autoScrollEditorIntoView: true,
       cursorStyle: 'wide'
     });
@@ -185,7 +185,7 @@ class Input extends Component {
         <AceEditor
           mode="javascript"
           theme="chrome"
-          name="editor"
+          name="input-editor"
           className="ace-cli"
           editorProps={{ $blockScrolling: Infinity }}
           width="100%"
