@@ -77,5 +77,39 @@ async function plotData(container, xs, ys) {
       }
     };
 
-    return renderChart(container, spec, {actions: false});
+    return vegaEmbed(container, spec, {actions: false});
+}
+
+function plotTemplate(_df, xtitle, ytitle, xtype = 'quantitative') {
+    let _values = [];
+    _df.forEach(function (row) {
+        _values.push({ 'x': parseInt(row[0]), 'y': parseInt(row[1]) });
+    });
+
+    let spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+        "data": { "values": _values },
+        "mark": "line",
+        "encoding": {
+            "x": {
+                "field": 'x',
+                "type": xtype,
+                "axis": {
+                    'ticks': _values.length
+                },
+                "title": xtitle
+            },
+            "y": {
+                "field": 'y',
+                "type": "quantitative",
+                "title": ytitle
+            }
+        },
+        "width": 600,
+        "height": 300,
+        "mode": "vega-lite",
+        actions: false
+    };
+
+    return spec;
 }
