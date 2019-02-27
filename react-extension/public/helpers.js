@@ -146,3 +146,39 @@ function barPlotTemplate(_df, xtitle, ytitle, xtype = 'nominal', ytype = 'quanti
 
     return spec;
 }
+
+function visPrediction(container, predictions) {
+    for (prediction of predictions) {
+        prediction.probability = prediction.probability * 100;
+    }
+
+    let spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+        "description": "bla",
+        "data": {
+            values: predictions
+        },
+        "mark": "bar",
+        "encoding": {
+            "y": {
+                "field": "className",
+                "type": "ordinal",
+                "scale": {"rangeStep": 20},
+                "axis": {"title": "Prediction"}
+            },
+            "x": {
+            "field": "probability",
+            "type": "quantitative",
+            "axis": {"title": "Probability"}
+            }
+        },
+        "config": {"axisY": {"minExtent": 30}},
+        actions: false
+    };
+
+    vegaEmbed(container, spec);
+}
+
+function modelLoaded() {
+    console.log('model <span class="sGreen">loaded</span>');
+}
