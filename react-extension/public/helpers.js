@@ -80,7 +80,7 @@ async function plotData(container, xs, ys) {
     return vegaEmbed(container, spec, {actions: false});
 }
 
-function plotTemplate(_df, xtitle, ytitle, xtype = 'quantitative') {
+function linePlotTemplate(_df, xtitle, ytitle, xtype = 'quantitative') {
     let _values = [];
     _df.forEach(function (row) {
         _values.push({ 'x': parseInt(row[0]), 'y': parseInt(row[1]) });
@@ -108,6 +108,39 @@ function plotTemplate(_df, xtitle, ytitle, xtype = 'quantitative') {
         "width": 600,
         "height": 300,
         "mode": "vega-lite",
+        actions: false
+    };
+
+    return spec;
+}
+
+function barPlotTemplate(_df, xtitle, ytitle, xtype = 'nominal', ytype = 'quantitative') {
+    let _values = [];
+    _df.forEach(function (row) {
+        _values.push({ 'x': row[0], 'y': parseInt(row[1]) });
+    });
+
+    let spec = {
+        "data": {
+            "values": _values
+        },
+        "mark": "bar",
+        "encoding": {
+            "x": {
+                "field": "x",
+                "title": xtitle,
+                "type": xtype
+            },
+            "y": {
+                // "aggregate": "average",
+                "field": "y",
+                "title": ytitle,
+                "type": ytype
+            }
+        },
+        "width": 600,
+        "height": 300,
+        'mode': 'vega-lite',
         actions: false
     };
 

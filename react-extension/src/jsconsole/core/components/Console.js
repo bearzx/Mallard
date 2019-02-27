@@ -159,7 +159,8 @@ class Console extends Component {
   info = (...args) => this.log(...args);
 
   log(...rest) {
-    const { html, args } = interpolate(...rest);
+    let { html, args } = interpolate(...rest);
+    html = true;
 
     this.push({
       value: args,

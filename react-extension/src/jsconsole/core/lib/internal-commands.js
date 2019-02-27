@@ -47,6 +47,7 @@ const libs = {
   moment: 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js',
   datefns: 'https://cdn.jsdelivr.net/gh/date-fns/date-fns/dist/date_fns.min.js',
   faceapi: 'https://bearzx.com/pgxz3/face-api.js',
+  ml5: 'https://bearzx.com/pgxz3/ml5.js',
 };
 
 const _load = async ({ args: urls, console }) => {
@@ -66,8 +67,9 @@ const load = async ({ args: url }) => {
   await remoteLoad({ args: url });
 }
 
-const seqLoad = async ({ args: urls, console }) => {
+const loadAll = async ({ args: urls, console }) => {
   for (const url of urls) {
+    // console._log(`loading ${url}`);
     await remoteLoad({ args: url });
   }
 };
@@ -273,7 +275,7 @@ const commands = {
   welcome,
   yo,
   remoteLoad,
-  seqLoad,
+  loadAll,
   edit,
   showCode,
   backup,

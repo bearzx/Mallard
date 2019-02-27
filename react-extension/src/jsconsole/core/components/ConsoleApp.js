@@ -37,8 +37,8 @@ class ConsoleApp extends Component {
       } else if (msg.action === 'inspect-audio' ) {
         // TODO
       } else if (msg.action === 'inspect-xsv') {
-        console._log(msg.linkUrl);
-        console.log(`${msg.linkUrl} loaded as window.df`);
+        // console._log(msg.linkUrl);
+        console.log(`${msg.linkUrl} loaded as <span class="sGreen">window.df</span>`);
         loadXSV(msg.linkUrl);
       } else if (msg.action === 'detect-table') {
         Chrome.devtools.inspectedWindow.eval(
