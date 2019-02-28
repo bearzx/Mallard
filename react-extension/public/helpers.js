@@ -57,6 +57,10 @@ function set_html(plot_id, html) {
     $(plot_id).html(html);
 }
 
+// visualization setups
+window.containerLogs = {};
+// end visualization setups
+
 async function plotData(container, xs, ys) {
     const xvals = await xs.data();
     const yvals = await ys.data();
@@ -80,12 +84,58 @@ async function plotData(container, xs, ys) {
     return vegaEmbed(container, spec, {actions: false});
 }
 
-function linePlotTemplate(_df, xtitle, ytitle, xtype = 'quantitative') {
+function dfLinePlot(_df, xtitle, ytitle, xtype = 'quantitative') {
     let _values = [];
     _df.forEach(function (row) {
         _values.push({ 'x': parseInt(row[0]), 'y': parseInt(row[1]) });
     });
 
+    return vglLinePlotTemplate(_values, xtitle, ytitle, xtype);
+}
+
+function logPlot(container, loss) {
+    if (window.containerLogs[container]) {
+        window.containerLogs[container].push({
+            x: window.containerLogs[container].length,
+            y: loss
+        });
+    } else {
+        window.containerLogs[container] = [{
+            x: 0,
+            y: loss
+        }];
+    }
+
+    vegaEmbed(container, vglLinePlotTemplateV3(window.containerLogs[container], 'iter', 'loss'));
+}
+
+function vglLinePlotTemplateV3(_values, xtitle, ytitle, xtype = 'quantitative') {
+    let spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+        "data": {"values": _values},
+        "mark": "line",
+        "encoding": {
+          "x": {
+              "field": "x",
+              "type": xtype,
+              'title': xtitle
+            },
+          "y": {
+              "field": "y",
+              "type": "quantitative",
+              'title': ytitle
+            }
+        },
+        "width": 600,
+        "height": 300,
+        "mode": "vega-lite",
+        actions: false
+    };
+
+    return spec;
+}
+
+function vglLinePlotTemplateV2(_values, xtitle, ytitle, xtype = 'quantative') {
     let spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
         "data": { "values": _values },

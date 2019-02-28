@@ -1,5 +1,9 @@
 import DataFrame from 'dataframe-js';
 
+// let imgid = 0;
+// const getNextImgid = () => imgid++;
+window._img_ = [];
+
 // requires tensorflow
 export var loadImgTensor = function(srcUrl) {
     loadImg(srcUrl, () => {
@@ -9,20 +13,21 @@ export var loadImgTensor = function(srcUrl) {
 }
 
 export var loadImg = function(srcUrl, imgOnload) {
-    window._img_ = new Image();
-    window._img_.onload = () => {
-        console.log('Image loaded as <span class="sGreen">window._img_<span>');
-        const imgWidth = window._img_.width;
-        const imgHeight = window._img_.height;
+    let img = new Image();
+    window._img_.push(img);
+    img.onload = () => {
+        console.log(`Image loaded as <span class="sGreen">window._img_[${window._img_.length - 1}]<span>`);
+        const imgWidth = img.width;
+        const imgHeight = img.height;
         if (imgWidth > window.innerWidth) {
-            window._img_.width = window.innerWidth;
-            window._img_.height = imgHeight / (imgWidth / window.innerWidth);
+            img.width = window.innerWidth;
+            img.height = imgHeight / (imgWidth / window.innerWidth);
         }
         if (imgOnload) {
             imgOnload();
         }
     };
-    window._img_.src = srcUrl;
+    img.src = srcUrl;
 }
 
 export var loadVideo = function(srcUrl) {
