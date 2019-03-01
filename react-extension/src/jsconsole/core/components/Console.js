@@ -84,7 +84,12 @@ class Console extends Component {
       acc[getNext()] = curr;
       return acc;
     }, {});
+
     this.log = this.log.bind(this);
+    this._log = this._log.bind(this);
+    this._error = this._error.bind(this);
+    this.warn = this.warn.bind(this);
+    this._warn = this._warn.bind(this);
     this.clear = this.clear.bind(this);
     this.push = this.push.bind(this);
     this.onUploadedCodeChange = this.onUploadedCodeChange.bind(this);
@@ -92,7 +97,7 @@ class Console extends Component {
 
   push(command) {
     const next = command.linei ? command.linei : getNext();
-    let addons = { hidden: false };
+    let addons = { hidden: command.level === 'warn' ? true : false };
     const newLine = {
       [next]: {
         ...command,
@@ -108,6 +113,8 @@ class Console extends Component {
   }
 
   error = (...rest) => {
+    this._error(...rest);
+
     const { html, args } = interpolate(...rest);
     this.push({
       error: true,
@@ -115,6 +122,10 @@ class Console extends Component {
       value: args,
       type: 'log',
     });
+  };
+
+  _error = (...rest) => {
+    window.console._error(...rest);
   };
 
   assert(test, ...rest) {
@@ -145,6 +156,8 @@ class Console extends Component {
   };
 
   warn(...rest) {
+    this._warn(...rest);
+
     const { html, args } = interpolate(...rest);
     this.push({
       error: true,
@@ -154,6 +167,10 @@ class Console extends Component {
       type: 'log',
     });
   }
+
+  _warn = (...rest) => {
+    window.console._warn(...rest);
+  };
 
   debug = (...args) => this.log(...args);
   info = (...args) => this.log(...args);

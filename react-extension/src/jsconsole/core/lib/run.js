@@ -10,10 +10,13 @@ export const bindConsole = __console => {
   // supported methods
   const apply = [
     'log',
+    '_log',
     'error',
+    '_error',
     'dir',
     'info',
     'warn',
+    '_warn',
     'assert',
     'debug',
     'clear',
@@ -21,12 +24,13 @@ export const bindConsole = __console => {
     'dnd',
     'showTensor',
     'html',
-    '_log',
     'downloadCode',
     'uploadCode'
   ];
 
   const _log = window.console.log;
+  const _error = window.console.error;
+  const _warn = window.console.warn;
 
   apply.forEach(method => {
     // container.contentWindow.console[method] = (...args) => {
@@ -39,6 +43,14 @@ export const bindConsole = __console => {
   window.console['_log'] = (...args) => {
     // _log(args);
     _log.apply(window.console, args);
+  };
+
+  window.console['_error'] = (...args) => {
+    _error.apply(window.console, args);
+  };
+
+  window.console['_warn'] = (...args) => {
+    _warn.apply(window.console, args);
   };
 };
 
@@ -124,6 +136,7 @@ export default async function run(command) {
         return resolve(res);
       }
     } catch (error) {
+      // console._error(error);
       res.error = true;
       res.value = error;
       return resolve(res);

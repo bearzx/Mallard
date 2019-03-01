@@ -65,11 +65,11 @@ const _load = async ({ args: urls, console }) => {
   return 'Loading script...';
 };
 
-const load = async ({ args: url }) => {
-  await remoteLoad({ args: url });
-}
+// const load = async ({ args: url }) => {
+//   await remoteLoad({ args: url });
+// }
 
-const loadAll = async ({ args: urls, console }) => {
+const load = async ({ args: urls, console }) => {
   for (const url of urls) {
     // console._log(`loading ${url}`);
     await remoteLoad({ args: url });
@@ -277,7 +277,6 @@ const commands = {
   welcome,
   yo,
   remoteLoad,
-  loadAll,
   edit,
   showCode,
   backup,
