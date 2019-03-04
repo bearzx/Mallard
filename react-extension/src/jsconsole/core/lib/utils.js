@@ -15,8 +15,9 @@ export var loadImgTensor = function(srcUrl) {
 export var loadImg = function(srcUrl, imgOnload) {
     let img = new Image();
     window._img_.push(img);
+    const imgid = window._img_.length - 1;
     img.onload = () => {
-        console.log(`Image loaded as <span class="sGreen">window._img_[${window._img_.length - 1}]<span>`);
+        console.log(`Image loaded as <span class="sGreen">window._img_[${imgid}]<span>`);
         const imgWidth = img.width;
         const imgHeight = img.height;
         if (imgWidth > window.innerWidth) {
@@ -24,11 +25,28 @@ export var loadImg = function(srcUrl, imgOnload) {
             img.height = imgHeight / (imgWidth / window.innerWidth);
         }
         if (imgOnload) {
-            imgOnload();
+            imgOnload(imgid);
         }
     };
     img.src = srcUrl;
 }
+
+window.addImageColumn = function(classifier, imageCol) {
+    let oCol = imageCol.toDict();
+    let label = Object.keys(oCol)[0];
+    let htmls = oCol[label];
+    for (let html of htmls) {
+        let wrapper = document.createElement('div');
+        wrapper.innerHTML = html;
+        let srcUrl = wrapper.firstChild.src.split('/').slice(3).join('/');
+        // console.log(srcUrl);
+        loadImg(window.hostUrlBase + '/' + srcUrl, (imgid) => {
+            if (classifier) {
+                classifier.addImage(window._img_[imgid], label);
+            }
+        });
+    }
+};
 
 export var loadVideo = function(srcUrl) {
     window._video_ = document.createElement('video');

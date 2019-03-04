@@ -124,9 +124,10 @@ class ConsoleApp extends Component {
       this.onRun(query);
     }
 
-    // else {
-    //   this.onRun(':welcome');
-    // }
+    // [TODO] what if we change the host page?
+    Chrome.tabs.getSelected(null, (tab) => {
+      window.hostUrlBase = tab.url.substr(0, tab.url.lastIndexOf('/'));
+    });
   }
 
   triggerFocus(e) {
