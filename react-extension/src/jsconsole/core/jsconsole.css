@@ -221,6 +221,7 @@ body, html, #root {
 .Line .input.prompt {
   white-space: pre-wrap;
   overflow-x: auto;
+  background-color: #eee;
 }
 
 .Line .prompt:before {

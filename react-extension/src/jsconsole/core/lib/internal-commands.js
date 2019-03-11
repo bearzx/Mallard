@@ -83,7 +83,7 @@ const remoteLoad = async ({ args: url }) => {
       fetch(url).then((res) => {
           res.text().then((code) => {
               eval.call(window, code);
-              console.log(`${url} loaded`);
+              console.log(`${url} <span class="sGreen">loaded</span>`);
               resolve();
           });
       });
