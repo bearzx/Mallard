@@ -216,6 +216,12 @@ function initDataDragger() {
     // addSelectionLayer();
 }
 
+function searchImg() {
+    // note that _$_ is the customized jquery
+    // console.log(_$_(window.clickedEl).attr('src'));
+    return _$_(window.clickedEl).attr('src');
+}
+
 function searchTable() {
     const tableTags = ['TD', 'TR', 'TH', 'TBODY', 'THEAD', 'TABLE'];
     if (tableTags.includes(window.clickedEl.tagName)) {
@@ -248,3 +254,14 @@ window.onload = function() {
         }
     }, true);
 };
+
+function mRender(dataUrl, relSrc, width, height) {
+    // console.log(dataUrl);
+    // console.log(relSrc);
+    // let img = new Image();
+    let html = `<div><img src="${dataUrl}" width="${width}" height="${height}"/></div>`;
+    // img.src = dataUrl;
+    // img.width = 300;
+    // img.height = 300;
+    _$_(`img[src="${relSrc}"]`).after(html);
+}

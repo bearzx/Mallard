@@ -31,7 +31,11 @@ class ConsoleApp extends Component {
       } else if (msg.action === 'img-drag-end') {
         this.props.dragEnd();
       } else if (msg.action === 'inspect-image') {
-        loadImg(msg.srcUrl);
+        Chrome.devtools.inspectedWindow.eval(
+          `searchImg()`,
+          (relSrc, isException) => {
+            loadImg(msg.srcUrl, relSrc);
+        });
       } else if (msg.action === 'inspect-video') {
         loadVideo(msg.srcUrl);
       } else if (msg.action === 'inspect-audio' ) {

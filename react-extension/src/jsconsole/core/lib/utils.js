@@ -12,8 +12,9 @@ export var loadImgTensor = function(srcUrl) {
     });
 }
 
-export var loadImg = function(srcUrl, imgOnload) {
+export var loadImg = function(srcUrl, relSrc, imgOnload) {
     let img = new Image();
+    img.relSrc = relSrc;
     window._img_.push(img);
     const imgid = window._img_.length - 1;
     img.onload = () => {

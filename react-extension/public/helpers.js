@@ -198,7 +198,9 @@ function barPlotTemplate(_df, xtitle, ytitle, xtype = 'nominal', ytype = 'quanti
 }
 
 function visPrediction(container, predictions) {
-    for (prediction of predictions) {
+    console._log(predictions);
+
+    for (let prediction of predictions) {
         prediction.probability = prediction.probability * 100;
     }
 
@@ -231,4 +233,12 @@ function visPrediction(container, predictions) {
 
 function modelLoaded() {
     console.log('model <span class="sGreen">loaded</span>');
+}
+
+function putBack(canvas, img) {
+    let dataUrl = canvas.toDataURL();
+    let width = canvas.width;
+    let height = canvas.height;
+    let relSrc = img.relSrc;
+    chrome.devtools.inspectedWindow.eval(`mRender("${dataUrl}", "${relSrc}", ${width}, ${height})`);
 }
