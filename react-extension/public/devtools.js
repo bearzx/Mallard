@@ -22,7 +22,7 @@ function create_vis_panel() {
   );
 }
 
-chrome.devtools.panels.create(">_",
+chrome.devtools.panels.create("Mallard >_",
     "MyPanelIcon.png", // todo change icon
     "index.html",
     function(panel) {
