@@ -231,10 +231,14 @@ function searchTable() {
         }
         if (cur) {
             console.log('table detected');
-            console.log(cur);
-            let columns = _$_(cur).parsetable(true, true);
-            console.log(columns);
-            return columns;
+            // console.log(cur);
+            let _columns = _$_(cur).parsetable(true, true);
+            let _ePath = predict_element_locator(cur);
+            // console.log(_columns);
+            return {
+                columns: _columns,
+                ePath: _ePath
+            };
         } else {
             // [Xiong] todo
             // throw out an exception since we didn't find a table
@@ -253,15 +257,45 @@ window.onload = function() {
             window.clickedEl = event.target;
         }
     }, true);
+
+    _$_.fn.extend({
+        getPath: function () {
+            var path, node = this;
+            while (node.length) {
+                var realNode = node[0], name = realNode.localName;
+                if (!name) break;
+                name = name.toLowerCase();
+                var parent = node.parent();
+                var sameTagSiblings = parent.children(name);
+                if (sameTagSiblings.length > 1) {
+                    allSiblings = parent.children();
+                    var index = allSiblings.index(realNode) + 1;
+                    if (index > 1) {
+                        name += ':nth-child(' + index + ')';
+                    }
+                }
+                path = name + (path ? '>' + path : '');
+                node = parent;
+            }
+            return path;
+        }
+    });
 };
 
-function mRender(dataUrl, relSrc, width, height) {
-    // console.log(dataUrl);
-    // console.log(relSrc);
-    // let img = new Image();
+function predict_element_locator(o) {
+    if (_$_(o).attr('id')) {
+        return '#' + _$_(o).attr('id');
+    } else {
+        return _$_(o).getPath();
+    }
+}
+
+function mRenderImage(dataUrl, relSrc, width, height) {
     let html = `<div><img src="${dataUrl}" width="${width}" height="${height}"/></div>`;
-    // img.src = dataUrl;
-    // img.width = 300;
-    // img.height = 300;
     _$_(`img[src="${relSrc}"]`).after(html);
 }
+
+function mRenderTable(_html, ePath) {
+    _$_(ePath).html(_html);
+}
+

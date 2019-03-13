@@ -240,5 +240,31 @@ function putBack(canvas, img) {
     let width = canvas.width;
     let height = canvas.height;
     let relSrc = img.relSrc;
-    chrome.devtools.inspectedWindow.eval(`mRender("${dataUrl}", "${relSrc}", ${width}, ${height})`);
+    chrome.devtools.inspectedWindow.eval(`mRenderImage("${dataUrl}", "${relSrc}", ${width}, ${height})`);
+}
+
+function df2HTML(df, className) {
+    let headers = df.listColumns();
+    let rows = df.toArray();
+    let html = className ? `<table class="${className}">` : `<table>`;
+    html += `<thead>`;
+    for (header of headers) {
+        html += `<td>${header}</td>`;
+    }
+    html += `</thead>`;
+
+    for (row of rows) {
+        html += `<tr>`;
+        for (item of row) {
+            html += `<td>${item}</td>`
+        }
+        html += `</tr>`;
+    }
+    html += `</table>`;
+    return html;
+}
+
+function putBackTable(df, ePath) {
+    let html = df2HTML(df);
+    chrome.devtools.inspectedWindow.eval(`mRenderTable("${html}", "${ePath}")`);
 }

@@ -79,6 +79,13 @@ class Line extends Component {
       );
     }
 
+    if (type == 'table') {
+      let html = window.df2HTML(value.df);
+      line = (
+        <HTMLPanel text={html} />
+      );
+    }
+
     if (type === 'command') {
       line = (
         <div className="prompt input">

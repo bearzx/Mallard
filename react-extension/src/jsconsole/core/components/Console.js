@@ -186,6 +186,15 @@ class Console extends Component {
     });
   }
 
+  table(df) {
+    this.push({
+      type: 'table',
+      value: {
+        df: df
+      }
+    });
+  }
+
   vis() {
     this.push({
       type: 'vis',

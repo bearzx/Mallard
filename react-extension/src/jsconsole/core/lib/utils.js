@@ -67,19 +67,20 @@ export var loadVideo = function(srcUrl) {
 export var loadXSV = function(link) {
     let p;
     if (link.endsWith('.tsv')) {
-        p = DataFrame.fromTSV(link).then(df => { window.df = df });
+        p = DataFrame.fromTSV(link).then(df => { window._df_ = df });
     } else if (link.endsWith('.csv')) {
-        p = DataFrame.fromCSV(link).then(df => { window.df = df });
+        p = DataFrame.fromCSV(link).then(df => { window._df_ = df });
     }
     Promise.resolve(p);
 }
 
-export var cols2DF = function(_columns) {
+export var cols2DF = function(_columns, _ePath) {
     let data = {};
     let columns = [];
     _columns.forEach((c) => {
         data[c[0]] = c.slice(1);
         columns.push(c[0]);
     });
-    window.df = new DataFrame(data, columns);
+    window._df_ = new DataFrame(data, columns);
+    window._df_.ePath = _ePath;
 }

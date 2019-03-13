@@ -343,7 +343,26 @@ body, html, #root {
 .Line > .output > .type {
   overflow-x: auto;
 }
-.LineNav {
+
+.Line table {
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-bottom: none;
+}
+
+.Line thead {
+  /* background-color: #ddd; */
+}
+
+.Line td {
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+.Line td:last-child {
+  border-bottom: 1px solid #ddd;
+  border-right: none;
+}.LineNav {
   position: absolute;
   right: .25rem;
   top: .5rem;

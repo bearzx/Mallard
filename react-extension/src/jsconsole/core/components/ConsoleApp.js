@@ -42,14 +42,14 @@ class ConsoleApp extends Component {
         // TODO
       } else if (msg.action === 'inspect-xsv') {
         // console._log(msg.linkUrl);
-        console.log(`${msg.linkUrl} loaded as <span class="sGreen">window.df</span>`);
+        console.log(`${msg.linkUrl} loaded as <span class="sGreen">window._df_</span>`);
         loadXSV(msg.linkUrl);
       } else if (msg.action === 'detect-table') {
         Chrome.devtools.inspectedWindow.eval(
           `searchTable()`,
-          (_columns, isException) => {
-            // console._log(result);
-            cols2DF(_columns);
+          (res, isException) => {
+            console.log(`Table loaded as <span class="sGreen">window._df_</span>`);
+            cols2DF(res.columns, res.ePath);
         });
       }
     });
