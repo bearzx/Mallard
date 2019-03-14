@@ -26,7 +26,8 @@ export const bindConsole = __console => {
     'html',
     'downloadCode',
     'uploadCode',
-    'table'
+    'table',
+    'img'
   ];
 
   const _log = window.console.log;

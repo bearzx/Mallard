@@ -72,17 +72,23 @@ class Line extends Component {
       );
     }
 
-    if (type == 'html') {
+    if (type === 'html') {
       // console._log(value);
       line = (
         <HTMLPanel text={value.text} />
       );
     }
 
-    if (type == 'table') {
+    if (type === 'table') {
       let html = window.df2HTML(value.df);
       line = (
         <HTMLPanel text={html} />
+      );
+    }
+
+    if (type === 'img') {
+      line = (
+        <img src={value.src} />
       );
     }
 

@@ -109,6 +109,55 @@ function logPlot(container, loss) {
     vegaEmbed(container, vglLinePlotTemplateV3(window.containerLogs[container], 'iter', 'loss'));
 }
 
+function vgLayers(layers) {
+    return {
+        "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+        "layer": layers,
+        "width": 600,
+        "height": 300,
+        "mode": "vega-lite",
+        actions: false
+    };
+}
+
+function vglLinePlotLayer(_values, xtitle, ytitle, xtype = 'quantitative') {
+    return {
+        "data": {"values": _values},
+        "mark": "line",
+        "encoding": {
+          "x": {
+              "field": "x",
+              "type": xtype,
+              'title': xtitle
+            },
+          "y": {
+              "field": "y",
+              "type": "quantitative",
+              'title': ytitle
+            }
+        }
+    };
+}
+
+function vglScatterPlotLayer(_values, xtitle, ytitle, xtype = 'quantitative') {
+    return {
+        "data": {"values": _values},
+        "mark": "point",
+        "encoding": {
+          "x": {
+              "field": "x",
+              "type": xtype,
+              'title': xtitle
+            },
+          "y": {
+              "field": "y",
+              "type": "quantitative",
+              'title': ytitle
+            }
+        }
+    };
+}
+
 function vglLinePlotTemplateV3(_values, xtitle, ytitle, xtype = 'quantitative') {
     let spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
@@ -135,7 +184,7 @@ function vglLinePlotTemplateV3(_values, xtitle, ytitle, xtype = 'quantitative') 
     return spec;
 }
 
-function vglLinePlotTemplateV2(_values, xtitle, ytitle, xtype = 'quantative') {
+function vglLinePlotTemplateV2(_values, xtitle, ytitle, xtype = 'quantitative') {
     let spec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
         "data": { "values": _values },

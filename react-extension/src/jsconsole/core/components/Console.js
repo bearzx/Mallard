@@ -195,6 +195,15 @@ class Console extends Component {
     });
   }
 
+  img(img) {
+    this.push({
+      type: 'img',
+      value: {
+        src: img.src
+      }
+    });
+  }
+
   vis() {
     this.push({
       type: 'vis',
