@@ -3,7 +3,7 @@ import LineNav from './LineNav';
 import which from '../lib/which-type';
 import { Plot, Canvas } from '../../../PlotPanel';
 import ImagePanel from '../containers/ImagePanel';
-import { HTMLPanel } from '../../../HTMLPanel';
+import { HTMLPanel, WebcamPanel } from '../../../HTMLPanel';
 
 class Line extends Component {
   constructor(props) {
@@ -89,6 +89,12 @@ class Line extends Component {
     if (type === 'img') {
       line = (
         <img src={value.src} />
+      );
+    }
+
+    if (type == 'webcam') {
+      line = (
+        <WebcamPanel />
       );
     }
 

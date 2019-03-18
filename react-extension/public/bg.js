@@ -26,6 +26,9 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         window.sharedVariables[msg.tabId] = {};
     } else if (msg.action == 'console-closed') {
         console.log(`console closed ${msg.tabId}`);
+    } else if (msg.action == 'direction') {
+        console.log(`direction: ${msg.direction}`);
+        window.devtoolPort.postMessage(msg);
     }
 
     return true;
@@ -85,3 +88,12 @@ function inspectData(info) {
         window.devtoolPort.postMessage({ action: 'detect-table' });
     }
 }
+
+
+// navigator.mediaDevices.getUserMedia({ video: true })
+//     .then(stream => {
+//         console.log('bla');
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });

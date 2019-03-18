@@ -3,7 +3,16 @@
     "version": "1.0",
     "description": "yo",
     "manifest_version": 2,
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_title": "mallard"
+    },
     "devtools_page": "devtools.html",
+    "options_ui": {
+        "page": "options.html",
+        "chrome_style": true,
+        "open_in_tab": true
+    },
     "background": {
         "scripts": ["jquery-3.2.1.js", "helpers.js", "bg.js"],
         "persistent": true
@@ -19,7 +28,8 @@
         "<all_urls>",
         "webRequestBlocking",
         "<all_urls>",
-        "downloads"
+        "downloads",
+        "videoCapture"
       ],
       "content_security_policy": "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'self'",
       "content_scripts": [{

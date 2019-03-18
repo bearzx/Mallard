@@ -225,6 +225,12 @@ class Console extends Component {
     });
   }
 
+  webcam() {
+    this.push({
+      type: 'webcam'
+    });
+  }
+
   dnd() {
     this.push({
       type: 'dnd'

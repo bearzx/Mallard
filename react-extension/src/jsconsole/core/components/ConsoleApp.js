@@ -51,6 +51,12 @@ class ConsoleApp extends Component {
             console.log(`Table loaded as <span class="sGreen">window._df_</span>`);
             cols2DF(res.columns, res.ePath);
         });
+      } else if (msg.action === 'direction') {
+        const CONTROLS = ['up', 'down', 'left', 'right'];
+        const CONTROL_CODES = [38, 40, 37, 39];
+        let code = CONTROL_CODES[CONTROLS.indexOf(msg.direction)];
+        Chrome.devtools.inspectedWindow.eval(`console.log(${code})`);
+        Chrome.devtools.inspectedWindow.eval(`google.pacman.keyPressed(${code})`);
       }
     });
 

@@ -14,6 +14,14 @@ window.addEventListener('message', function(e) {
         chrome.runtime.sendMessage({ action: 'img-drag-start' }, () => {});
     } else if (e.data.type == 'img-drag-end') {
         chrome.runtime.sendMessage({ action: 'img-drag-end' }, () => {});
+    } else if (e.data.type == 'direction') {
+        console.log(e.data.direction);
+    }
+});
+
+chrome.extension.onMessage.addListener((msg, sender, sendResponse) => {
+    if (msg.type == 'direction') {
+        console.log(msg.direction);
     }
 });
 
