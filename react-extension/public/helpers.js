@@ -315,5 +315,5 @@ function df2HTML(df, className) {
 
 function putBackTable(df, ePath) {
     let html = df2HTML(df);
-    chrome.devtools.inspectedWindow.eval(`mRenderTable("${html}", "${ePath}")`);
+    chrome.devtools.inspectedWindow.eval(`mRenderTable(\`${html}\`, \`${ePath}\`)`);
 }

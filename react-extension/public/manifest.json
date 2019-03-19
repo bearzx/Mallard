@@ -29,7 +29,7 @@
         "webRequestBlocking",
         "<all_urls>",
         "downloads",
-        "videoCapture"
+        "contentSettings"
       ],
       "content_security_policy": "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'self'",
       "content_scripts": [{

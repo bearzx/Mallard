@@ -32,6 +32,8 @@ export var loadImg = function(srcUrl, relSrc, imgOnload) {
     img.src = srcUrl;
 }
 
+window.loadImg = loadImg;
+
 window.addImageColumn = function(classifier, imageCol) {
     let oCol = imageCol.toDict();
     let label = Object.keys(oCol)[0];
@@ -78,7 +80,9 @@ export var cols2DF = function(_columns, _ePath) {
     let data = {};
     let columns = [];
     _columns.forEach((c) => {
-        data[c[0]] = c.slice(1);
+        // console._log(c);
+        c = c.map(x => x.trim());
+        data[c[0]] = c.slice(1)
         columns.push(c[0]);
     });
     window._df_ = new DataFrame(data, columns);
