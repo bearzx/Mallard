@@ -317,3 +317,25 @@ function putBackTable(df, ePath) {
     let html = df2HTML(df);
     chrome.devtools.inspectedWindow.eval(`mRenderTable(\`${html}\`, \`${ePath}\`)`);
 }
+
+function canvasMask(img) {
+    let ePath = `img[src="${img.relSrc}"]`;
+    chrome.devtools.inspectedWindow.eval(`mAddCanvas(\`${ePath}\`)`);
+}
+
+function textSearch(tResults, pattern) {
+    let div = document.createElement('div');
+    div.innerHTML = tResults.html;
+    let bbox = div.firstChild.title.split(';')[1].split(' ');
+    let oWidth = parseInt(bbox[4]);
+    let oHeight = parseInt(bbox[5]);
+    let matched = tResults.words.filter(o => o.text == pattern);
+    chrome.devtools.inspectedWindow.eval(`window.mCtx.beginPath()`);
+    chrome.devtools.inspectedWindow.eval(`clearMCanvas()`);
+    matched.forEach(o => {
+        let m = o.bbox;
+        // console.log(`drawBBox(${m.x0}, ${m.x1}, ${m.y0}, ${m.y1}, ${oWidth}, ${oHeight})`);
+        chrome.devtools.inspectedWindow.eval(`drawBBox(${m.x0}, ${m.x1}, ${m.y0}, ${m.y1}, ${oWidth}, ${oHeight}, false)`);
+    });
+    chrome.devtools.inspectedWindow.eval(`window.mCtx.stroke()`);
+}

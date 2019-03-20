@@ -299,3 +299,36 @@ function mRenderTable(_html, ePath) {
     _$_(ePath).html(_html);
 }
 
+function mAddCanvas(ePath) {
+    let mask = document.createElement('canvas');
+    mask.id = 'mCanvas';
+    let rel = document.querySelector(ePath);
+    let rect = rel.getBoundingClientRect();
+    _$_(mask).css({
+        position: 'absolute',
+        'background-color': 'rgba(0, 0, 0, 0)',
+        'z-index': 10
+        // top: 0,
+        // left: 0
+    });
+    mask.style.top = rect.top + 'px';
+    mask.style.left = rect.left + 'px';
+    mask.width = rect.width;
+    mask.height = rect.height;
+    document.body.appendChild(mask);
+    window.mCtx = mask.getContext("2d");
+}
+
+function clearMCanvas() {
+    let mask = document.querySelector('#mCanvas');
+    mCtx.clearRect(0, 0, mask.width, mask.height);
+}
+
+function drawBBox(x0, x1, y0, y1, oWidth, oHeight) {
+    let mask = document.querySelector('#mCanvas');
+    // mCtx.clearRect(0, 0, mask.width, mask.height);
+    let wratio = mask.width / oWidth;
+    let hratio = mask.height / oHeight;
+    mCtx.fillStyle = 'rgba(255, 140, 0, 0.5)';
+    mCtx.fillRect(x0 * wratio, y0 * hratio, (x1 - x0) * wratio, (y1 - y0) * hratio);
+}
