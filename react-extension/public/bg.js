@@ -85,7 +85,7 @@ function inspectData(info) {
             window.devtoolPort.postMessage({ action: 'inspect-xsv', linkUrl: info.linkUrl });
         }
     } else {
-        window.devtoolPort.postMessage({ action: 'detect-table' });
+        window.devtoolPort.postMessage({ action: 'detect-table', selectionText: info.selectionText });
     }
 }
 

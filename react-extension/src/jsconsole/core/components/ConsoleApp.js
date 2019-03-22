@@ -12,7 +12,7 @@ import { Chrome } from '../../../LibWrappers';
 
 import DataFrame from 'dataframe-js';
 
-import { loadImg, loadVideo, loadImgTensor, loadXSV, cols2DF } from  '../lib/utils';
+import { loadImg, loadVideo, loadText, loadImgTensor, loadXSV, cols2DF } from  '../lib/utils';
 
 // this is lame, but it's a list of key.code that do stuff in the input that we _want_.
 const doStuffKeys = /^(Digit|Key|Num|Period|Semi|Comma|Slash|IntlBackslash|Backspace|Delete|Enter)/;
@@ -48,8 +48,16 @@ class ConsoleApp extends Component {
         Chrome.devtools.inspectedWindow.eval(
           `searchTable()`,
           (res, isException) => {
-            console.log(`Table loaded as <span class="sGreen">window._df_</span>`);
-            cols2DF(res.columns, res.ePath);
+            if (isException) {
+              console._log(isException);
+            }
+
+            if (res.found) {
+              console.log(`Table loaded as <span class="sGreen">window._df_</span>`);
+              cols2DF(res.columns, res.ePath);
+            } else {
+              loadText(msg.selectionText);
+            }
         });
       } else if (msg.action === 'direction') {
         console.log(msg);
@@ -104,7 +112,7 @@ class ConsoleApp extends Component {
       console.push({
         command,
         error: true,
-        value: new Error(`No such jsconsole command "${command}"`),
+        value: new Error(`No such :command "${command}"`),
         type: 'response',
       });
       return;

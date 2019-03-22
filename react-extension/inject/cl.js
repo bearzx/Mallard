@@ -236,6 +236,7 @@ function searchTable() {
             let _ePath = predict_element_locator(cur);
             // console.log(_columns);
             return {
+                found: true,
                 columns: _columns,
                 ePath: _ePath
             };
@@ -243,17 +244,25 @@ function searchTable() {
             // [Xiong] todo
             // throw out an exception since we didn't find a table
             console.log('no table was found');
+            return {
+                found: false
+            };
         }
+    } else {
+        console.log('no table was found');
+        return {
+            found: false
+        };
     }
 }
 
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', (e) => {
     initDataDragger();
 
     document.addEventListener("mousedown", function(event) {
         //right click
         if(event.button == 2) {
-            // console.log(event.target);
+            console.log(event.target);
             window.clickedEl = event.target;
         }
     }, true);
@@ -280,6 +289,44 @@ window.onload = function() {
             return path;
         }
     });
+});
+
+window.onload = function() {
+    // [Xiong] comment the code here for now
+    // migrating the hooks to the document ready event
+
+    // initDataDragger();
+
+    // document.addEventListener("mousedown", function(event) {
+    //     //right click
+    //     if(event.button == 2) {
+    //         console.log(event.target);
+    //         window.clickedEl = event.target;
+    //     }
+    // }, true);
+
+    // _$_.fn.extend({
+    //     getPath: function () {
+    //         var path, node = this;
+    //         while (node.length) {
+    //             var realNode = node[0], name = realNode.localName;
+    //             if (!name) break;
+    //             name = name.toLowerCase();
+    //             var parent = node.parent();
+    //             var sameTagSiblings = parent.children(name);
+    //             if (sameTagSiblings.length > 1) {
+    //                 allSiblings = parent.children();
+    //                 var index = allSiblings.index(realNode) + 1;
+    //                 if (index > 1) {
+    //                     name += ':nth-child(' + index + ')';
+    //                 }
+    //             }
+    //             path = name + (path ? '>' + path : '');
+    //             node = parent;
+    //         }
+    //         return path;
+    //     }
+    // });
 };
 
 function predict_element_locator(o) {

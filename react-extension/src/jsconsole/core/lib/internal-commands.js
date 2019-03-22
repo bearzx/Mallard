@@ -164,7 +164,7 @@ const upload = async () => {
 
 const run = async ({ args: [name], console }) => {
   console._run_(name);
-  return `${name} evaled`; // [Xiong] more indicators?
+  console.log(`${name} <span class="sGreen">evaled</span>`); // [Xiong] more indicators?
 };
 
 const seqrun = async ({ args: names, console }) => {

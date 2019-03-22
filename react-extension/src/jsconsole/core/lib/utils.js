@@ -3,6 +3,7 @@ import DataFrame from 'dataframe-js';
 // let imgid = 0;
 // const getNextImgid = () => imgid++;
 window._img_ = [];
+window._text_ = [];
 
 // requires tensorflow
 export var loadImgTensor = function(srcUrl) {
@@ -12,13 +13,19 @@ export var loadImgTensor = function(srcUrl) {
     });
 }
 
+export var loadText = function(selectionText) {
+    window._text_.push(selectionText);
+    const textid = window._text_.length - 1;
+    console.log(`Text loaded as <span class="sGreen">window._text_[${textid}]</span>`);
+}
+
 export var loadImg = function(srcUrl, relSrc, imgOnload) {
     let img = new Image();
     img.relSrc = relSrc;
     window._img_.push(img);
     const imgid = window._img_.length - 1;
     img.onload = () => {
-        console.log(`Image loaded as <span class="sGreen">window._img_[${imgid}]<span>`);
+        console.log(`Image loaded as <span class="sGreen">window._img_[${imgid}]</span>`);
         const imgWidth = img.width;
         const imgHeight = img.height;
         if (imgWidth > window.innerWidth) {
