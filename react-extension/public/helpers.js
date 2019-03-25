@@ -277,14 +277,24 @@ function visPrediction(container, predictions) {
         actions: false
     };
 
-    vegaEmbed(container, spec);
+    vegaEmbed(_$(container), spec);
 }
 
 function modelLoaded() {
     console.log('model <span class="sGreen">loaded</span>');
 }
 
-function putBack(canvas, img) {
+function replaceBack(img, id) {
+    let canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    canvas.getContext('2d').drawImage(img, 0, 0);
+    let dataUrl = canvas.toDataURL();
+    chrome.devtools.inspectedWindow.eval(`mReplaceImage("${dataUrl}", "${id}")`);
+}
+
+function putBack(visid, img) {
+    let canvas = _$(`${visid} canvas`);
     let dataUrl = canvas.toDataURL();
     let width = canvas.width;
     let height = canvas.height;
@@ -338,4 +348,32 @@ function textSearch(tResults, pattern) {
         chrome.devtools.inspectedWindow.eval(`drawBBox(${m.x0}, ${m.x1}, ${m.y0}, ${m.y1}, ${oWidth}, ${oHeight}, false)`);
     });
     chrome.devtools.inspectedWindow.eval(`window.mCtx.stroke()`);
+}
+
+function faceSearchUI(recognitions, detections) {
+    let html = `
+        <select>
+            <option value="thor">thor</option>
+            <option value="ironman">ironman</option>
+        </select>
+        <button>search</button>
+    `;
+    console.html(html);
+}
+
+function faceSearch(detections, i) {
+    let oWidth = _img_[0].width;
+    let oHeight = _img_[0].height;
+    let d = detections[i].detection._box;
+    chrome.devtools.inspectedWindow.eval(`drawBBox(${d.x}, ${d.x + d.width}, ${d.y}, ${d.y + d.height}, ${oWidth}, ${oHeight}, false)`);
+}
+
+function styleTransferUI() {
+    let html = `
+        <input type="radio" name="transfer-style" value="scream" /> scream
+        <input type="radio" name="transfer-style" value="rain_princess" /> rain princess
+        <input type="radio" name="transfer-style" value="la_muse" /> la muse
+        <button>Transfer</button>
+    `;
+    console.html(html);
 }

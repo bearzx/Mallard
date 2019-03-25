@@ -105,7 +105,8 @@ class LineNav extends Component {
           hide
         </a>
 
-        {typeof value === 'object' &&
+        {/* comment out for taking screenshots */}
+        {/* {typeof value === 'object' &&
           <Filter
             ref={e => (this.filter = e)}
             onFilter={onFilter}
@@ -136,7 +137,7 @@ class LineNav extends Component {
           >
             copy
           </button>
-        </CopyToClipboard>
+        </CopyToClipboard> */}
       </div>
     );
   }

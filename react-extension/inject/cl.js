@@ -218,8 +218,17 @@ function initDataDragger() {
 
 function searchImg() {
     // note that _$_ is the customized jquery
-    // console.log(_$_(window.clickedEl).attr('src'));
-    return _$_(window.clickedEl).attr('src');
+    console.log(_$_(window.clickedEl).attr('src'));
+    return {
+        id: _$_(window.clickedEl).attr('id'),
+        relSrc: _$_(window.clickedEl).attr('src')
+    };
+}
+
+function searchAllImgs() {
+    let imgs = document.querySelectorAll('img.rg_ic.rg_i');
+    let availableImgs = [...Array(imgs.length).keys()].filter(i => imgs[i].id !== "").map(i => imgs[i]);
+    return availableImgs.map(x => { return { relSrc: x.src, id: x.id } });
 }
 
 function searchTable() {
@@ -337,6 +346,10 @@ function predict_element_locator(o) {
     }
 }
 
+function mReplaceImage(dataUrl, id) {
+    _$_(`img[id="${id}"]`).attr('src', dataUrl);
+}
+
 function mRenderImage(dataUrl, relSrc, width, height) {
     let html = `<div><img src="${dataUrl}" width="${width}" height="${height}"/></div>`;
     _$_(`img[src="${relSrc}"]`).after(html);
@@ -358,8 +371,9 @@ function mAddCanvas(ePath) {
         // top: 0,
         // left: 0
     });
-    mask.style.top = rect.top + 'px';
-    mask.style.left = rect.left + 'px';
+    // console.log(`${window.scrollY + rect.top} px`);
+    mask.style.top = `${window.scrollY + rect.top}px`;
+    mask.style.left = `${rect.left}px`;
     mask.width = rect.width;
     mask.height = rect.height;
     document.body.appendChild(mask);

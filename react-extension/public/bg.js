@@ -72,6 +72,16 @@ chrome.contextMenus.create({
     onclick: inspectData
 });
 
+chrome.contextMenus.create({
+    title: 'Inspect All Images',
+    contexts: ['selection', 'link', 'image', 'video'],
+    onclick: inspectAllImgs
+});
+
+function inspectAllImgs() {
+    window.devtoolPort.postMessage({ action: 'inspect-all-images' });
+}
+
 function inspectData(info) {
     console.log(info);
 

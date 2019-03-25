@@ -212,9 +212,10 @@ const vimport = async ({ args: [_tabId, _vname], console }) => {
     vname: _vname
   };
   Chrome.runtime.sendMessage(msg, (response) => {
-    console.log('import response bla');
-    console._log(response['vname']);
-    console._log(response['vvalue']);
+    console._log('import response bla');
+    console._log(response.vname);
+    console._log(response.vvalue);
+    window[response.vname] = response.vvalue;
   });
 };
 

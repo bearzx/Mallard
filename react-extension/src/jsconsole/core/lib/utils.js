@@ -19,9 +19,10 @@ export var loadText = function(selectionText) {
     console.log(`Text loaded as <span class="sGreen">window._text_[${textid}]</span>`);
 }
 
-export var loadImg = function(srcUrl, relSrc, imgOnload) {
+export var loadImg = function(srcUrl, info, imgOnload) {
     let img = new Image();
-    img.relSrc = relSrc;
+    img.relSrc = info.relSrc;
+    img.id = info.id;
     window._img_.push(img);
     const imgid = window._img_.length - 1;
     img.onload = () => {
@@ -39,6 +40,13 @@ export var loadImg = function(srcUrl, relSrc, imgOnload) {
     img.src = srcUrl;
 }
 
+export var loadAllImgs = function(imgs) {
+    // console.log(imgs);
+    for (let info of imgs) {
+        loadImg(info.relSrc, info);
+    }
+}
+
 window.loadImg = loadImg;
 
 window.addImageColumn = function(classifier, imageCol) {
@@ -50,7 +58,7 @@ window.addImageColumn = function(classifier, imageCol) {
         wrapper.innerHTML = html;
         let srcUrl = wrapper.firstChild.src.split('/').slice(3).join('/');
         // console.log(srcUrl);
-        loadImg(window.hostUrlBase + '/' + srcUrl, (imgid) => {
+        loadImg(window.hostUrlBase + '/' + srcUrl, {}, (imgid) => {
             if (classifier) {
                 classifier.addImage(window._img_[imgid], label);
             }
