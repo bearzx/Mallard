@@ -350,6 +350,19 @@ function textSearch(tResults, pattern) {
     chrome.devtools.inspectedWindow.eval(`window.mCtx.stroke()`);
 }
 
+function textSearchUI() {
+    let html = `
+        <input type="text" id="ocr-text" /><button id="ocr-search">search</button>
+    `;
+    console.html(html);
+}
+
+function setupTextSearchUI() {
+    _$('#ocr-search').onclick = (e) => {
+        textSearch(res, _$('#ocr-text').value)
+    };
+}
+
 function faceSearchUI(recognitions, detections) {
     let html = `
         <select>
@@ -401,10 +414,10 @@ function tweetFilterUI() {
 }
 
 function setupTweetUI() {
-    document.querySelector('#tweet-slider').onchange = () => {
-        let valueView = document.querySelector('#tweet-slider-value');
-        let barScore = parseFloat(document.querySelector('#tweet-slider').value) / 100;
-        valueView.textContent = barScore;
+    _$('#tweet-slider').onchange = () => {
+        let valueView = _$('#tweet-slider-value');
+        let barScore = parseFloat(_$('#tweet-slider').value) / 100;
+        valueView.textContent = `Hide tweets below ${barScore}`;
         for (let i = 0; i < _tweets_.length; i++) {
             if (_tweets_[i].score < barScore) {
                 hideTweet(_tweets_[i].id);
@@ -413,4 +426,209 @@ function setupTweetUI() {
             }
         }
     };
+}
+
+async function confusionMatrix(container, data, opts) {
+    const defaultOpts = {
+        xLabel: null,
+        yLabel: null,
+        xType: 'nominal',
+        yType: 'nominal',
+        shadeDiagonal: true,
+        fontSize: 12,
+        showTextOverlay: true,
+        height: 400,
+    };
+
+    const options = Object.assign({}, defaultOpts, opts);
+
+    // Format data for vega spec; an array of objects, one for for each cell
+    // in the matrix.
+    const values = [];
+
+    const inputArray = data.values;
+    const tickLabels = data.tickLabels || [];
+    const generateLabels = tickLabels.length === 0;
+
+    let nonDiagonalIsAllZeroes = true;
+    for (let i = 0; i < inputArray.length; i++) {
+        const label = generateLabels ? `Class ${i}` : tickLabels[i];
+
+        if (generateLabels) {
+            tickLabels.push(label);
+        }
+
+        for (let j = 0; j < inputArray[i].length; j++) {
+            const prediction = generateLabels ? `Class ${j}` : tickLabels[j];
+
+            const count = inputArray[i][j];
+            if (i === j && !options.shadeDiagonal) {
+                values.push({
+                    label,
+                    prediction,
+                    diagCount: count,
+                    noFill: true,
+                });
+            } else {
+                values.push({
+                    label,
+                    prediction,
+                    count,
+                });
+                // When not shading the diagonal we want to check if there is a non
+                // zero value. If all values are zero we will not color them as the
+                // scale will be invalid.
+                if (count !== 0) {
+                    nonDiagonalIsAllZeroes = false;
+                }
+            }
+        }
+    }
+
+    if (!options.shadeDiagonal && nonDiagonalIsAllZeroes) {
+        // User has specified requested not to shade the diagonal but all the other
+        // values are zero. We have two choices, don't shade the anything or only
+        // shade the diagonal. We choose to shade the diagonal as that is likely
+        // more helpful even if it is not what the user specified.
+        for (const val of values) {
+            if (val.noFill === true) {
+                val.noFill = false;
+                val.count = val.diagCount;
+            }
+        }
+    }
+
+    const embedOpts = {
+        actions: false,
+        mode: 'vega-lite',
+        defaultStyle: false,
+    };
+
+    const spec = {
+        'width': 600,
+        'height': 600,
+        'padding': 0,
+        'autosize': {
+            'type': 'fit',
+            'contains': 'padding',
+            'resize': true,
+        },
+        'config': {
+            'axis': {
+                'labelFontSize': options.fontSize,
+                'titleFontSize': options.fontSize,
+            },
+            'text': { 'fontSize': options.fontSize },
+            'legend': {
+                'labelFontSize': options.fontSize,
+                'titleFontSize': options.fontSize,
+            }
+        },
+        'data': { 'values': values },
+        'encoding': {
+            'x': {
+                'field': 'prediction',
+                'type': 'ordinal',
+                // Maintain sort order of the axis if labels is passed in
+                'scale': { 'domain': tickLabels },
+            },
+            'y': {
+                'field': 'label',
+                'type': 'ordinal',
+                // Maintain sort order of the axis if labels is passed in
+                'scale': { 'domain': tickLabels },
+            },
+        },
+        'layer': [
+            {
+                // The matrix
+                'mark': {
+                    'type': 'rect',
+                },
+                'encoding': {
+                    'fill': {
+                        'condition': {
+                            'test': 'datum["noFill"] == true',
+                            'value': 'white',
+                        },
+                        'field': 'count',
+                        'type': 'quantitative',
+                        'scale': { 'range': ['#f7fbff', '#4292c6'] },
+                    },
+                    'tooltip': {
+                        'condition': {
+                            'test': 'datum["noFill"] == true',
+                            'field': 'diagCount',
+                            'type': 'nominal',
+                        },
+                        'field': 'count',
+                        'type': 'nominal',
+                    }
+                },
+
+            },
+        ]
+    };
+
+    if (options.showTextOverlay) {
+        spec.layer.push({
+            // The text labels
+            'mark': { 'type': 'text', 'baseline': 'middle' },
+            'encoding': {
+                'text': {
+                    'condition': {
+                        'test': 'datum["noFill"] == true',
+                        'field': 'diagCount',
+                        'type': 'nominal',
+                    },
+                    'field': 'count',
+                    'type': 'nominal',
+                },
+            }
+        });
+    }
+
+    await vegaEmbed(container, spec, embedOpts);
+    return Promise.resolve();
+}
+
+async function computeConfusionMatrix(labels, predictions, numClasses, weights) {
+    const labelsInt = labels.cast('int32');
+    const predictionsInt = predictions.cast('int32');
+
+    if (numClasses == null) {
+        numClasses =
+            tf.tidy(() => {
+                const max =
+                    tf.maximum(labelsInt.max(), predictionsInt.max()).cast('int32');
+                return max.dataSync()[0] + 1;
+            });
+    }
+
+    let weightsPromise = Promise.resolve(null);
+    if (weights != null) {
+        weightsPromise = weights.data();
+    }
+
+    return Promise.all([labelsInt.data(), predictionsInt.data(), weightsPromise])
+        .then(([labelsArray, predsArray, weightsArray]) => {
+            const result = Array(numClasses).fill(0);
+            // Initialize the matrix
+            for (let i = 0; i < numClasses; i++) {
+                result[i] = Array(numClasses).fill(0);
+            }
+
+            for (let i = 0; i < labelsArray.length; i++) {
+                const label = labelsArray[i];
+                const pred = predsArray[i];
+
+                if (weightsArray != null) {
+                    result[label][pred] += weightsArray[i];
+                } else {
+                    result[label][pred] += 1;
+                }
+            }
+
+            return result;
+        });
 }
