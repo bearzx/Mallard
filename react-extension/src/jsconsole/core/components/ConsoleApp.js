@@ -43,6 +43,22 @@ class ConsoleApp extends Component {
             loadAllImgs(res);
           }
         );
+      } else if (msg.action === 'inspect-all-reviews') {
+        Chrome.devtools.inspectedWindow.eval(
+          `searchAllReviews()`,
+          (res, e) => {
+            console.log(`reviews loaded as <span class="sGreen">_reviews_</span>`);
+            window._reviews_ = res;
+          }
+        );
+      } else if (msg.action === 'inspect-all-tweets') {
+        Chrome.devtools.inspectedWindow.eval(
+          `searchAllTweets()`,
+          (res, e) => {
+            console.log(`tweets loaded as <span class="sGreen">_tweets_</span>`);
+            window._tweets_ = res;
+          }
+        );
       } else if (msg.action === 'inspect-video') {
         loadVideo(msg.srcUrl);
       } else if (msg.action === 'inspect-audio' ) {

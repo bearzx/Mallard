@@ -231,6 +231,48 @@ function searchAllImgs() {
     return availableImgs.map(x => { return { relSrc: x.src, id: x.id } });
 }
 
+function searchAllReviews() {
+    let reviews = document.querySelectorAll('.review-text');
+    return [...Array(reviews.length).keys()].map(i => {
+        return {
+            i: i,
+            review: reviews[i].textContent
+        }
+    });
+}
+
+function searchAllTweets() {
+    let tweets = document.querySelectorAll('.js-stream-item');
+    return [...Array(tweets.length).keys()].map(i => {
+        return {
+            id: tweets[i].id,
+            tweet: tweets[i].querySelector('.tweet-text').firstChild.textContent
+        }
+    });
+}
+
+function augmentReview(i, score) {
+    let reviews = document.querySelectorAll('.review-text');
+    if (score > 0.5) {
+        reviews[i].firstChild.style.backgroundColor = `rgba(0, 255, 0, ${(score - 0.5) / 0.5})`;
+    } else {
+        reviews[i].firstChild.style.backgroundColor = `rgba(255, 0, 0, ${(0.5 - score) / 0.5})`;
+    }
+
+}
+
+function hideTweet(id) {
+    console.log(`hiding ${id}`);
+    let tweet = document.querySelector(id);
+    tweet.style.display = 'none';
+}
+
+function showTweet(id) {
+    console.log(`showing ${id}`);
+    let tweet = document.querySelector(id);
+    tweet.style.display = 'block';
+}
+
 function searchTable() {
     const tableTags = ['TD', 'TR', 'TH', 'TBODY', 'THEAD', 'TABLE'];
     if (tableTags.includes(window.clickedEl.tagName)) {

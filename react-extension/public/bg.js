@@ -78,8 +78,28 @@ chrome.contextMenus.create({
     onclick: inspectAllImgs
 });
 
+chrome.contextMenus.create({
+    title: 'Inspect All Amazon Reviews',
+    contexts: ['selection', 'link', 'image', 'video'],
+    onclick: inspectAllReviews
+});
+
+chrome.contextMenus.create({
+    title: 'Inspect All Tweets',
+    contexts: ['selection', 'link', 'image', 'video'],
+    onclick: inspectAllTweets
+});
+
 function inspectAllImgs() {
     window.devtoolPort.postMessage({ action: 'inspect-all-images' });
+}
+
+function inspectAllReviews() {
+    window.devtoolPort.postMessage({ action: 'inspect-all-reviews' });
+}
+
+function inspectAllTweets() {
+    window.devtoolPort.postMessage({ action: 'inspect-all-tweets' });
 }
 
 function inspectData(info) {

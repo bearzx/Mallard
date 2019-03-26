@@ -377,3 +377,40 @@ function styleTransferUI() {
     `;
     console.html(html);
 }
+
+function colorReview(review, score) {
+    chrome.devtools.inspectedWindow.eval(`augmentReview(${review.i}, ${score})`);
+}
+
+function hideTweet(id) {
+    // console.log(`hideTweet("#${id}")`);
+    chrome.devtools.inspectedWindow.eval(`hideTweet("#${id}")`);
+}
+
+function showTweet(id) {
+    // console.log(`hideTweet("#${id}")`);
+    chrome.devtools.inspectedWindow.eval(`showTweet("#${id}")`);
+}
+
+function tweetFilterUI() {
+    let html = `
+        <input id="tweet-slider" type="range" min="0" max="100" value="50"/>
+        <span id="tweet-slider-value"></span>
+    `;
+    console.html(html);
+}
+
+function setupTweetUI() {
+    document.querySelector('#tweet-slider').onchange = () => {
+        let valueView = document.querySelector('#tweet-slider-value');
+        let barScore = parseFloat(document.querySelector('#tweet-slider').value) / 100;
+        valueView.textContent = barScore;
+        for (let i = 0; i < _tweets_.length; i++) {
+            if (_tweets_[i].score < barScore) {
+                hideTweet(_tweets_[i].id);
+            } else {
+                showTweet(_tweets_[i].id);
+            }
+        }
+    };
+}
