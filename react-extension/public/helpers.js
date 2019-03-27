@@ -428,7 +428,12 @@ function setupTweetUI() {
     };
 }
 
-async function confusionMatrix(container, data, opts) {
+async function drawConfusionMatrix(container, predictions, labels, classNames) {
+    let v = await computeConfusionMatrix(labels, predictions);
+    await vegaConfusionMatrix(_$(container), { values: v, tickLabels: classNames });
+}
+
+async function vegaConfusionMatrix(container, data, opts) {
     const defaultOpts = {
         xLabel: null,
         yLabel: null,

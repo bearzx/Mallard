@@ -21,8 +21,12 @@ export var loadText = function(selectionText) {
 
 export var loadImg = function(srcUrl, info, imgOnload) {
     let img = new Image();
-    img.relSrc = info.relSrc;
-    img.id = info.id;
+    if (info) {
+        img.relSrc = info.relSrc;
+        img.id = info.id;
+    } else {
+        img.relSrc = srcUrl;
+    }
     window._img_.push(img);
     const imgid = window._img_.length - 1;
     img.onload = () => {

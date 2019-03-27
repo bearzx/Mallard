@@ -226,8 +226,10 @@ function searchImg() {
 }
 
 function searchAllImgs() {
-    let imgs = document.querySelectorAll('img.rg_ic.rg_i');
-    let availableImgs = [...Array(imgs.length).keys()].filter(i => imgs[i].id !== "").map(i => imgs[i]);
+    // for google image
+    // let imgs = document.querySelectorAll('img.rg_ic.rg_i');
+    // let availableImgs = [...Array(imgs.length).keys()].filter(i => imgs[i].id !== "").map(i => imgs[i]);
+    let imgs = document.querySelectorAll('img');
     return availableImgs.map(x => { return { relSrc: x.src, id: x.id } });
 }
 
