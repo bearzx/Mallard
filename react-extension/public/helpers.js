@@ -637,3 +637,49 @@ async function computeConfusionMatrix(labels, predictions, numClasses, weights) 
             return result;
         });
 }
+
+function rocCurve(_values) {
+    let spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+        "layer": [
+        {
+            "data": {
+                "values": _values
+            },
+            "mark": {
+            "type": "line",
+            "point": false
+            },
+            "encoding": {
+            "x": {"field": "x", "type": "quantitative", "title": "FPR"},
+            "y": {"field": "y", "type": "quantitative", "title": "TPR"},
+            "order": {"field": "x","type": "quantitative"}
+            }
+        },
+        {
+          "data": {
+              "values": [
+                  {"x":0, "y":0},
+                  {"x":1, "y":1}
+                ]
+            },
+            "mark": {
+                "type": "line" ,
+                "strokeDash": [6, 4]
+            },
+            "encoding": {
+            "x": {
+                "field": "x",
+                "type": "quantitative"
+            },
+            "y": {
+                "field": "y",
+                "type": "quantitative"
+            },
+            "color": { "value": "red" }
+            }
+        }],
+        "width": 500,
+        "height": 500
+      }
+}

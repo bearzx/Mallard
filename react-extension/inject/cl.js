@@ -256,11 +256,10 @@ function searchAllTweets() {
 function augmentReview(i, score) {
     let reviews = document.querySelectorAll('.review-text');
     if (score > 0.5) {
-        reviews[i].firstChild.style.backgroundColor = `rgba(0, 255, 0, ${(score - 0.5) / 0.5})`;
+        reviews[i].firstChild.style.backgrounda = `rgba(0, 255, 0, ${(score - 0.5) / 0.5})`;
     } else {
         reviews[i].firstChild.style.backgroundColor = `rgba(255, 0, 0, ${(0.5 - score) / 0.5})`;
     }
-
 }
 
 function hideTweet(id) {

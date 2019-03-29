@@ -67,8 +67,9 @@ function pingDevtool() {
 }
 
 chrome.contextMenus.create({
-    title: 'Inspect Data',
+    title: 'Import Data',
     contexts: ['selection', 'link', 'image', 'video'],
+    // contexts: ['all'],
     onclick: inspectData
 });
 
