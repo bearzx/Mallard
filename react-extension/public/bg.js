@@ -91,6 +91,12 @@ chrome.contextMenus.create({
     onclick: inspectAllTweets
 });
 
+chrome.contextMenus.create({
+    title: 'Inspect All Pets',
+    contexts: ['image'],
+    onclick: inspectAllPets
+});
+
 function inspectAllImgs() {
     window.devtoolPort.postMessage({ action: 'inspect-all-images' });
 }
@@ -101,6 +107,10 @@ function inspectAllReviews() {
 
 function inspectAllTweets() {
     window.devtoolPort.postMessage({ action: 'inspect-all-tweets' });
+}
+
+function inspectAllPets() {
+    window.devtoolPort.postMessage({ action: 'inspect-all-pets' });
 }
 
 function inspectData(info) {

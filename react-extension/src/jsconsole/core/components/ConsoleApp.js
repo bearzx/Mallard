@@ -59,6 +59,13 @@ class ConsoleApp extends Component {
             window._tweets_ = res;
           }
         );
+      } else if (msg.action === 'inspect-all-pets') {
+        Chrome.devtools.inspectedWindow.eval(
+          `searchAllPets()`,
+          (res, e) => {
+            loadAllImgs(res);
+          }
+        );
       } else if (msg.action === 'inspect-video') {
         loadVideo(msg.srcUrl);
       } else if (msg.action === 'inspect-audio' ) {

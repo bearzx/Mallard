@@ -11,6 +11,8 @@ import { Chrome } from './LibWrappers';
 import ConsoleApp from './jsconsole/core/containers/ConsoleApp';
 import DataFrame from 'dataframe-js';
 
+window.styleTransferModel = 'https://www.bearzx.com/pgxz3/fast-style-transfer/la_muse';
+
 class App extends Component {
   constructor(props) {
     super(props);

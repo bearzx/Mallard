@@ -378,6 +378,7 @@ function faceSearch(detections, i) {
     let oWidth = _img_[0].width;
     let oHeight = _img_[0].height;
     let d = detections[i].detection._box;
+    console._log(`drawBBox(${d.x}, ${d.x + d.width}, ${d.y}, ${d.y + d.height}, ${oWidth}, ${oHeight}, false)`);
     chrome.devtools.inspectedWindow.eval(`drawBBox(${d.x}, ${d.x + d.width}, ${d.y}, ${d.y + d.height}, ${oWidth}, ${oHeight}, false)`);
 }
 
@@ -393,6 +394,10 @@ function styleTransferUI() {
 
 function colorReview(review, score) {
     chrome.devtools.inspectedWindow.eval(`augmentReview(${review.i}, ${score})`);
+}
+
+function augmentPetCard(i, label) {
+    chrome.devtools.inspectedWindow.eval(`augmentPetCard(${i}, "${label}")`);
 }
 
 function hideTweet(id) {

@@ -117,7 +117,7 @@ function addSelectionLayer() {
 function addImgHandler() {
     let imgs = document.querySelectorAll('img');
     imgs.forEach((img, i) => {
-        console.log(`adding drag handler to img ${i}`);
+        // console.log(`adding drag handler to img ${i}`);
         img.draggable = true;
         // let imgSrc = img.getAttribute('src');
         // img.crossOrigin = "Anonymous";
@@ -130,7 +130,7 @@ function addImgHandler() {
         });
 
         img.addEventListener('dragend', function(event) {
-            console.log('drag end');
+            // console.log('drag end');
             window.postMessage({ type: 'img-drag-end' }, '*');
         });
     });
@@ -162,7 +162,7 @@ function addLinkHandler() {
 }
 
 function addDragHanlder() {
-    // addImgHandler();
+    addImgHandler();
     // addTableHandler();
     // addLinkHandler();
 }
@@ -227,9 +227,9 @@ function searchImg() {
 
 function searchAllImgs() {
     // for google image
-    // let imgs = document.querySelectorAll('img.rg_ic.rg_i');
-    // let availableImgs = [...Array(imgs.length).keys()].filter(i => imgs[i].id !== "").map(i => imgs[i]);
-    let imgs = document.querySelectorAll('img');
+    let imgs = document.querySelectorAll('img.rg_ic.rg_i');
+    let availableImgs = [...Array(imgs.length).keys()].filter(i => imgs[i].id !== "").map(i => imgs[i]);
+    // let imgs = document.querySelectorAll('img');
     return availableImgs.map(x => { return { relSrc: x.src, id: x.id } });
 }
 
@@ -253,12 +253,22 @@ function searchAllTweets() {
     });
 }
 
+function searchAllPets() {
+    let imgs = document.querySelectorAll('img.pet-card__container');
+    return [...Array(imgs.length).keys()].map(i => {
+        return {
+            id: i,
+            relSrc: imgs[i].src
+        }
+    });
+}
+
 function augmentReview(i, score) {
     let reviews = document.querySelectorAll('.review-text');
     if (score > 0.5) {
-        reviews[i].firstChild.style.backgrounda = `rgba(0, 255, 0, ${(score - 0.5) / 0.5})`;
+        reviews[i].firstChild.style.backgroundColor = `rgba(144, 238, 144, ${(score - 0.5) / 0.5})`;
     } else {
-        reviews[i].firstChild.style.backgroundColor = `rgba(255, 0, 0, ${(0.5 - score) / 0.5})`;
+        reviews[i].firstChild.style.backgroundColor = `rgba(250, 128, 114, ${(0.5 - score) / 0.5})`;
     }
 }
 
@@ -272,6 +282,13 @@ function showTweet(id) {
     console.log(`showing ${id}`);
     let tweet = document.querySelector(id);
     tweet.style.display = 'block';
+}
+
+function augmentPetCard(i, label) {
+    let cards = document.querySelectorAll('.pet-card-act__details');
+    let color = label === 'cat' ? 'red' : 'blue';
+    let _html = `<span style="color: ${color}; font-size: 40px">${label}</span>`;
+    _$_(cards[i]).html(_html);
 }
 
 function searchTable() {
@@ -347,38 +364,38 @@ window.onload = function() {
     // [Xiong] comment the code here for now
     // migrating the hooks to the document ready event
 
-    // initDataDragger();
+    initDataDragger();
 
-    // document.addEventListener("mousedown", function(event) {
-    //     //right click
-    //     if(event.button == 2) {
-    //         console.log(event.target);
-    //         window.clickedEl = event.target;
-    //     }
-    // }, true);
+    document.addEventListener("mousedown", function(event) {
+        //right click
+        if(event.button == 2) {
+            console.log(event.target);
+            window.clickedEl = event.target;
+        }
+    }, true);
 
-    // _$_.fn.extend({
-    //     getPath: function () {
-    //         var path, node = this;
-    //         while (node.length) {
-    //             var realNode = node[0], name = realNode.localName;
-    //             if (!name) break;
-    //             name = name.toLowerCase();
-    //             var parent = node.parent();
-    //             var sameTagSiblings = parent.children(name);
-    //             if (sameTagSiblings.length > 1) {
-    //                 allSiblings = parent.children();
-    //                 var index = allSiblings.index(realNode) + 1;
-    //                 if (index > 1) {
-    //                     name += ':nth-child(' + index + ')';
-    //                 }
-    //             }
-    //             path = name + (path ? '>' + path : '');
-    //             node = parent;
-    //         }
-    //         return path;
-    //     }
-    // });
+    _$_.fn.extend({
+        getPath: function () {
+            var path, node = this;
+            while (node.length) {
+                var realNode = node[0], name = realNode.localName;
+                if (!name) break;
+                name = name.toLowerCase();
+                var parent = node.parent();
+                var sameTagSiblings = parent.children(name);
+                if (sameTagSiblings.length > 1) {
+                    allSiblings = parent.children();
+                    var index = allSiblings.index(realNode) + 1;
+                    if (index > 1) {
+                        name += ':nth-child(' + index + ')';
+                    }
+                }
+                path = name + (path ? '>' + path : '');
+                node = parent;
+            }
+            return path;
+        }
+    });
 };
 
 function predict_element_locator(o) {
@@ -430,9 +447,12 @@ function clearMCanvas() {
 
 function drawBBox(x0, x1, y0, y1, oWidth, oHeight) {
     let mask = document.querySelector('#mCanvas');
-    // mCtx.clearRect(0, 0, mask.width, mask.height);
+    mCtx.clearRect(0, 0, mask.width, mask.height);
     let wratio = mask.width / oWidth;
     let hratio = mask.height / oHeight;
-    mCtx.fillStyle = 'rgba(255, 140, 0, 0.5)';
+    // mCtx.fillStyle = 'rgba(255, 140, 0, 0.5)';
+    mCtx.lineWidth = 5;
     mCtx.fillRect(x0 * wratio, y0 * hratio, (x1 - x0) * wratio, (y1 - y0) * hratio);
+    // mCtx.rect(x0 * wratio, y0 * hratio, (x1 - x0) * wratio, (y1 - y0) * hratio);
+    mCtx.stroke();
 }
