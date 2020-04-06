@@ -1,7 +1,7 @@
 {
     "name": "Mallard",
     "version": "1.0",
-    "description": "yo",
+    "description": "Machine Learning Lightweight Breadboard",
     "manifest_version": 2,
     "browser_action": {
         "default_popup": "popup.html",
