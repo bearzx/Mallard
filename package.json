@@ -7,7 +7,6 @@
     "babylon-walk": "^1.0.2",
     "copy-to-clipboard": "^3.3.1",
     "dataframe-js": "^1.4.3",
-    "eslint": "^5.16.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "^1.9.0",
@@ -42,5 +41,17 @@
   },
   "devDependencies": {
     "react-redux": "^5.1.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
