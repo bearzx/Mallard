@@ -49,12 +49,12 @@ export class ImagePanel extends Component {
     switch(dragType) {
       case 'img':
         console._log('dropping img');
-        let imgi = e.dataTransfer.getData('imgi');
+        let _id = e.dataTransfer.getData('id');
         let imgCode = e.dataTransfer.getData('imgCode');
         this.setState({
           imgCode: imgCode
         });
-        loadImg(imgCode);
+        loadImg(imgCode, { relSrc: imgCode, id: _id });
         break;
       case 'table':
         console._log('dropping table');

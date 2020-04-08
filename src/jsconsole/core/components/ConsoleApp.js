@@ -25,7 +25,7 @@ class ConsoleApp extends Component {
     window.port = Chrome.runtime.connect({ name: 'devtool' });
 
     window.port.onMessage.addListener((msg) => {
-      // console.log(msg);
+      console._log(msg);
       if (msg.action === 'img-drag-start') {
         this.props.dragStart();
       } else if (msg.action === 'img-drag-end') {
@@ -34,6 +34,8 @@ class ConsoleApp extends Component {
         Chrome.devtools.inspectedWindow.eval(
           `searchImg()`,
           (res, e) => {
+            console._log(e);
+            console._log(`searchImg info ` + res);
             loadImg(msg.srcUrl, res);
         });
       } else if (msg.action === 'inspect-all-images') {

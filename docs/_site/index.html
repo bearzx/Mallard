@@ -16,10 +16,10 @@
 <meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="pgxz3" />
 <script type="application/ld+json">
-{"description":"Machine learning lightweight breadboard","headline":"pgxz3","@type":"WebSite","url":"http://localhost:4000/","name":"pgxz3","@context":"https://schema.org"}</script>
+{"description":"Machine learning lightweight breadboard","@type":"WebSite","url":"http://localhost:4000/","headline":"pgxz3","name":"pgxz3","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=ad3b89240f7cd0c53d4153a8eed245586dab5cb1">
+    <link rel="stylesheet" href="/assets/css/style.css?v=16ffe0bcd5c40d09a30ebfc9ee638f86f513e5d2">
   </head>
   <body>
     <div class="container-lg px-3 my-5 markdown-body">
@@ -37,6 +37,79 @@
 <p>Currently, Mallard is distributed as an unpacked extension. You will need to use the <strong>Load unpacked</strong> functionality in the <code class="language-plaintext highlighter-rouge">chrome://extension</code> panel to install it. Use this link to download the latest build.</p>
 
 <h1 id="mallard-workflow">Mallard Workflow</h1>
+<p>Here we show show some of the Mallard basic functionalities by walking through an example of transfering image styles on Google Image Search using Convolutional Neural Nets, TensorFlow.js and ml5.js. This is also the example we primarily demonstrated in the paper.</p>
+
+<h2 id="activate-mallard-from-devtools">Activate Mallard from Devtools</h2>
+<p>Mallard sits in the devtool panel of the browser. To activate it, first open the devtool by “View ➔ Developer ➔ Developer Tools” (or <span class="shortcut">⌘ + ⌥ + I</span>), then find the Mallard pane.</p>
+<blockquote>
+  <p>GIF Demo
+<img src="/imgs/open-mallard-lo.gif" alt="Open Mallard" class="gif" /></p>
+</blockquote>
+
+<h2 id="acquire-data-from-webpage-context">Acquire Data from Webpage Context</h2>
+<p>To convert multi-media data into programmable obejcts in Mallard, we have two options: simply drag and drop the data of interest, or right click on it. Mallard supports data acquiring of text, images, videos, and tabular datasets.</p>
+
+<h3 id="drag-and-drop">Drag and Drop</h3>
+<p>Use a <code class="language-plaintext highlighter-rouge">console.dnd()</code> function to open the drop area first, then drag the data from the original host page to the drop area.</p>
+<blockquote>
+  <p>GIF Demo
+<img src="/imgs/dnd-image.gif" alt="Drag and Drop Image" class="gif" /></p>
+</blockquote>
+
+<h3 id="right-click-and-inspect">Right click and inspect</h3>
+<p>Right click on the data then choose “Mallard ➔ Import Data” to acquire.</p>
+<blockquote>
+  <p>GIF Demo
+<img src="/imgs/rightclick-image.gif" alt="Right Click Image" class="gif" /></p>
+</blockquote>
+
+<p>The acquired data is stored in dedicated arrays (e.g. <code class="language-plaintext highlighter-rouge">_img_</code> for image).</p>
+
+<h2 id="import-external-libraries">Import External Libraries</h2>
+<p>Mallard has a few handy JS libraries built-in (e.g. ml5, TensorFlow, dataframe-js) that can be imported by a name. You can also import any library available on the web via a URL. To import, use <code class="language-plaintext highlighter-rouge">:load &lt;lib&gt;</code>, where <code class="language-plaintext highlighter-rouge">&lt;lib&gt;</code> is the name or URL of the library.</p>
+
+<blockquote>
+  <p>GIF Demo
+<img src="/imgs/import-lib.gif" alt="Import Library" class="gif" /></p>
+</blockquote>
+
+<h2 id="code-in-the-repl">Code in the REPL</h2>
+<p>Once we have the data and library ready, we can start writing our code to load or train models, and test on the data. Mallard mimics the built-in browser console to provide a REPL style experience.</p>
+
+<blockquote>
+  <p>GIF Demo
+<img src="/imgs/code-repl.gif" alt="Code in REPL" class="gif" /></p>
+</blockquote>
+
+<p>In the adove demo we first use ml5 to load a CNN model from a remote URL:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">style</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">ml5</span><span class="p">.</span><span class="nx">styleTransfer</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://www.bearzx.com/pgxz3/fast-style-transfer/la_muse</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Note here we use <code class="language-plaintext highlighter-rouge">await</code> to resolve async function calls.</p>
+
+<p>Then we use the model to transfer the image we just acquired:</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">newImg</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">style</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="nx">_img_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div></div>
+<p>Now, <code class="language-plaintext highlighter-rouge">newImg</code> holds our results.</p>
+
+<h2 id="visualize-code-outputs">Visualize Code Outputs</h2>
+<p>To help better understand and debug code, Mallard provides several visualization functions to show data in different forms. For example, <code class="language-plaintext highlighter-rouge">console.img</code> can be used to show images.</p>
+<blockquote>
+  <p>GIF Demo
+<img src="/imgs/visualize.gif" alt="Visualize Code Outputs" class="gif" /></p>
+</blockquote>
+
+<h2 id="augment-host-webpage">Augment Host Webpage</h2>
+<p>In addition to viewing the result of our code from the output cell, we can also put it back to the location on the host webpage. Mallard keeps track of all the acquired data, using a <code class="language-plaintext highlighter-rouge">replaceBack</code> function, we can augment the host page with our code outputs.</p>
+<blockquote>
+  <p>GIF Demo
+<img src="imgs/augment-single.gif" alt="Augment Single" class="gif" /></p>
+</blockquote>
+
+<p>Replacing a single image doesn’t look very exciting, but what if we can replace all the images? Then essentially we will be able to prototype a feature of using deep learning to augment Google Image Search, without accessing Google’s code base. Sounds a bit more cool, isn’t it?</p>
+<blockquote>
+  <p>Demo
+<img src="imgs/augment-all.png" alt="Augment Single" /></p>
+</blockquote>
 
 <h1 id="build-instructions">Build Instructions</h1>
 <p>We are able to build the system with the following environment: macOS 10.15.4, node 10, webpack 4.</p>

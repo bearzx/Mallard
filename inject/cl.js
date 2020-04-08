@@ -1,3 +1,5 @@
+window.mallardImgs = {};
+
 function addSelectionLayer() {
     let selection_layer_template = `<div id="fs-selection-layer"></div>`;
     _$_(selection_layer_template).css({
@@ -123,8 +125,10 @@ function addImgHandler() {
         // img.crossOrigin = "Anonymous";
         // img.src = imgSrc;
         img.addEventListener('dragstart', function(event) {
+            let _id = Math.random().toString(36).slice(2);
+            window.mallardImgs[_id] = event.target;
             event.dataTransfer.setData('dragType', 'img');
-            event.dataTransfer.setData('imgi', i);
+            event.dataTransfer.setData('id', _id);
             event.dataTransfer.setData('imgCode', img2base64URL(img));
             window.postMessage({ type: 'img-drag-start' }, '*');
         });
@@ -218,19 +222,28 @@ function initDataDragger() {
 
 function searchImg() {
     // note that _$_ is the customized jquery
-    console.log(_$_(window.clickedEl).attr('src'));
+    // console.log(_$_(window.clickedEl).attr('src'));
+    let _id = Math.random().toString(36).slice(2);
+    window.mallardImgs[_id] = window.clickedEl;
+    console.log(window.mallardImgs);
     return {
-        id: _$_(window.clickedEl).attr('id'),
+        id: _id,
         relSrc: _$_(window.clickedEl).attr('src')
     };
 }
 
 function searchAllImgs() {
     // for google image
-    let imgs = document.querySelectorAll('img.rg_ic.rg_i');
-    let availableImgs = [...Array(imgs.length).keys()].filter(i => imgs[i].id !== "").map(i => imgs[i]);
+    let imgs = document.querySelectorAll('img.rg_i');
+    // let availableImgs = [...Array(imgs.length).keys()].filter(i => imgs[i].id !== "").map(i => imgs[i]);
     // let imgs = document.querySelectorAll('img');
-    return availableImgs.map(x => { return { relSrc: x.src, id: x.id } });
+    let ret = [];
+    for (let img of imgs) {
+        let _id = Math.random().toString(36).slice(2);
+        window.mallardImgs[_id] = img;
+        ret.push({ relSrc: img.src, id: _id });
+    }
+    return ret;
 }
 
 function searchAllReviews() {
@@ -407,7 +420,9 @@ function predict_element_locator(o) {
 }
 
 function mReplaceImage(dataUrl, id) {
-    _$_(`img[id="${id}"]`).attr('src', dataUrl);
+    // _$_(`img[id="${id}"]`).attr('src', dataUrl);
+    // console.log(dataUrl, id);
+    window.mallardImgs[id].src = dataUrl;
 }
 
 function mRenderImage(dataUrl, relSrc, width, height) {
