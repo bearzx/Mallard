@@ -30,7 +30,9 @@ chrome.devtools.panels.create("Mallard >_",
       console.log('repl panel created');
 
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        console.log(tabs);
         let tab = tabs[0];
+        console.log(tab.id);
         chrome.runtime.sendMessage({
           action: 'console-created',
           tabId: tab.id
